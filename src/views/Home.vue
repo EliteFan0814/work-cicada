@@ -3,6 +3,8 @@
     <BaseSearchClass></BaseSearchClass>
     <BaseInput />
     <BaseSearchList></BaseSearchList>
+    <BaseFilterForm></BaseFilterForm>
+    <BaseForm></BaseForm>
   </div>
 </template>
 
@@ -11,13 +13,15 @@
 import BaseInput from '@/components/BaseInput.vue'
 import BaseSearchClass from '@/components/BaseSearchClass.vue'
 import BaseSearchList from '@/components/BaseSearchList.vue'
+import BaseFilterForm from '@/components/BaseFilterForm.vue'
 
 export default {
   name: 'Home',
   components: {
     BaseInput,
     BaseSearchClass,
-    BaseSearchList
+    BaseSearchList,
+    BaseFilterForm
   }
 }
 </script>

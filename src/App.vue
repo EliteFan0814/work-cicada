@@ -16,8 +16,20 @@ export default {
   font-weight: normal;
   font-stretch: normal;
   letter-spacing: 0px;
-  color: #ccc;
+  // color: #ccc;
+  color: rgba(0, 0, 0, 0.85);
   min-width: 1200px;
   line-height: 1;
+  .base-hover {
+    &:hover {
+      color: #3168d9;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
+  .base-active {
+    color: #3168d9;
+    font-weight: bold;
+  }
 }
 </style>

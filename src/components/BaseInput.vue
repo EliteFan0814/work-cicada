@@ -1,7 +1,7 @@
 <template>
   <div
     class="base-input"
-    :style="`width:${width}px`"
+    :style="`width:${width}`"
   >
     <input
       type="text"
@@ -26,7 +26,7 @@ export default {
     width: {
       type: [String, Number],
       required: false,
-      default: '400'
+      default: '400px'
     }
   },
   data() {
@@ -45,6 +45,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .base-input {
+  box-sizing: border-box;
   padding: 12px 20px;
   border-radius: 22px;
   border: solid 1px #cccccc;

@@ -2,9 +2,8 @@
   <div class="base-search-list">
     <div class="title common">搜索条件：</div>
     <div class="common">
-      <el-popover placement="bottom" width="300" trigger="click" popper-class="search-list-pop" @show="handleClick"
-        @hide="handleClick">
-        <div class="pop-wrap">
+      <BasePopover :plain="false" width="300" :popshowflag="popshowflag">
+        <div slot="popContent" class="link-pop-wrap">
           <ul class="pop">
             <li v-for="item in popData" :key="item.value" :class="{'pop-item':true,'selected-item':item.selected}"
               @click="handlePopSelect(item)">
@@ -16,33 +15,46 @@
             <el-button size="mini" round type="primary" @click="handleConfirm">确定</el-button>
           </div>
         </div>
-        <div slot="reference" class="linkages common">
-          <span>关联检索</span>
-          <img src="@/assets/imgs/arrow.png" :class="{active:active}">
-        </div>
-      </el-popover>
+      </BasePopover>
     </div>
     <div class="key-list common">
       <span class="key-item">{{searchKey}}</span>
     </div>
     <div class="filter-key-wrap">
-      <el-button size="mini" round @click="handleCancel" class="reset">重置</el-button>
+      <el-button v-if="filterKeyList.length" size="mini" round @click="handleReset" class="reset">重置</el-button>
       <div class="filter-list" ref="filterList">
         <div class="item-wrap" ref="itemWrap">
-          <div class="item" v-for="item in 3" :key="item">
+          <div class="item" v-for="(item,index) in filterKeyList" :key="item.value">
             <div>
-              <span>百岁鱼</span>
-              <i class="el-icon-close clear"></i>
+              <span>{{item.label}}</span>
+              <i class="el-icon-close clear" @click="handleDelete(index)"></i>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div v-if="showMore" class="more">更多</div>
+    <BasePopover v-if="!showMore" :width="800">
+      <div slot="popContent" class="filter-pop-wrap">
+        <ul>
+          <li class="key-item">{{searchKey}}</li>
+          <li v-for="item in filterKeyList" :key="item.value">
+            <div>
+              <span>{{item.label}}</span>
+              <i class="el-icon-close clear" @click="handleDelete(index)"></i>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </BasePopover>
   </div>
 </template>
 <script>
+import BasePopover from '@/components/BasePopover'
 export default {
+  name: 'BaseSearchList',
+  components: {
+    BasePopover
+  },
   data() {
     return {
       active: false,
@@ -57,8 +69,17 @@ export default {
         { label: '3', value: '11', selected: false },
         { label: '4', value: '44', selected: false }
       ],
+      filterKeyList: [
+        { label: '百岁鱼', value: 1 },
+        { label: '百岁鱼', value: 2 },
+        { label: '百百百岁百百岁鱼百岁鱼百岁鱼岁鱼鱼岁百岁鱼鱼岁鱼', value: 3 },
+        { label: '百岁鱼', value: 4 },
+        { label: '百百岁百百岁鱼百岁鱼百岁鱼岁鱼鱼岁百岁鱼鱼', value: 5 },
+        { label: '百岁鱼', value: 6 }
+      ],
       searchKey: '百岁鱼',
-      showMore: false
+      showMore: false,
+      popshowflag: new Date()
     }
   },
   methods: {
@@ -69,15 +90,6 @@ export default {
       item.selected = !item.selected
     },
     handleCancel() {
-      const filterListLength = this.$refs.filterList.scrollWidth
-      const itemWrapLength = this.$refs.itemWrap.scrollWidth
-      console.log(filterListLength, itemWrapLength)
-      if (filterListLength < itemWrapLength) {
-        this.showMore = true
-      } else {
-        this.showMore = false
-      }
-
       this.popData.map((item) => {
         item.selected = false
       })
@@ -88,7 +100,15 @@ export default {
       })
     },
     handleConfirm() {
-      console.log(this.$refs.filterList.width)
+      this.popshowflag = new Date()
+    },
+    // 重置搜索关键词
+    handleReset() {
+      this.filterKeyList.splice(0)
+    },
+    // 删除搜索条件关键词
+    handleDelete(index) {
+      this.filterKeyList.splice(index, 1)
     }
   }
 }
@@ -96,8 +116,6 @@ export default {
 <style lang="scss" scoped>
 .base-search-list {
   padding: 20px;
-  // width: 100%;
-  border: 1px solid red;
   display: flex;
   align-items: center;
   .common {
@@ -133,7 +151,6 @@ export default {
     }
   }
   .filter-key-wrap {
-    border: 1px solid red;
     overflow: hidden;
     flex-grow: 1;
     display: flex;
@@ -172,38 +189,65 @@ export default {
       }
     }
   }
-  .more {
-    padding-left: 5px;
-    flex-shrink: 0;
-  }
 }
 </style>
 <style lang="scss">
-.search-list-pop {
-  .pop-wrap {
-    ul {
-      display: flex;
-      flex-wrap: wrap;
-      .pop-item {
-        box-sizing: border-box;
-        padding: 5px;
-        width: 60px;
-        text-align: center;
-        color: #000;
-        &:hover {
-          cursor: pointer;
-          color: #3168d9;
-          font-weight: bold;
-        }
-      }
-      .selected-item {
+.link-pop-wrap {
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    .pop-item {
+      box-sizing: border-box;
+      padding: 5px;
+      width: 60px;
+      text-align: center;
+      color: #000;
+      &:hover {
+        cursor: pointer;
         color: #3168d9;
         font-weight: bold;
       }
     }
-    .operate {
-      text-align: right;
-      padding: 10px 0 0;
+    .selected-item {
+      color: #3168d9;
+      font-weight: bold;
+    }
+  }
+  .operate {
+    text-align: right;
+    padding: 10px 0 0;
+  }
+}
+.filter-pop-wrap {
+  ul {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    .key-item {
+      padding: 0 10px;
+      color: #3168d9;
+    }
+    li {
+      > div {
+        display: flex;
+        align-items: center;
+        color: #fff;
+        background-color: #3168d9;
+        margin: 5px;
+        padding: 0px 0 0px 5px;
+        border-radius: 15px;
+        font-size: 14px;
+        &:hover {
+          background-color: #4f84ec;
+        }
+        .clear {
+          cursor: pointer;
+          padding: 0 5px;
+        }
+        span {
+          flex-shrink: 0;
+        }
+      }
     }
   }
 }

@@ -1,21 +1,12 @@
 <template>
   <header class="header-wrap">
-    <img
-      src="@/assets/imgs/logo.png"
-      class="logo"
-    />
+    <img src="@/assets/imgs/logo.png" class="logo" />
     <ul>
-      <li
-        v-for="item in routerList"
-        :key="item.name"
+      <li v-for="item in routerList" :key="item.name"
         :class="{ normal: true, 'normal-active': item.router === activeRouter }"
-        @click="handleNormalRouter(item.router)"
-      >{{ item.name }}</li>
+        @click="handleNormalRouter(item.router)">{{ item.name }}</li>
       <li class="member">
-        <img
-          src="@/assets/imgs/crown.png"
-          alt
-        />
+        <img src="@/assets/imgs/crown.png" alt />
         <span>开通会员</span>
       </li>
       <li class="free">全模块免费试用</li>
