@@ -5,10 +5,10 @@
       <BaseFilterItem title="申请类别" :show="false" :dataList="dataList2"></BaseFilterItem>
       <BaseFilterItem title="申请组群"></BaseFilterItem>
     </div>
-    <div class="btm">
+    <!-- <div class="btm">
       <div class="left item common">ddd</div>
       <div class="right item common">ddd</div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -71,13 +71,13 @@ export default {
     border-radius: 2px;
   }
 
-  .btm {
-    display: flex;
-    justify-content: space-between;
-    .item {
-      flex: 1;
-      border: 1px solid red;
-    }
-  }
+  // .btm {
+  //   display: flex;
+  //   justify-content: space-between;
+  //   .item {
+  //     flex: 1;
+  //     border: 1px solid red;
+  //   }
+  // }
 }
 </style>

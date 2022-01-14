@@ -1,12 +1,8 @@
 <template>
   <div class="base-search-class">
     <ul>
-      <li
-        v-for="item in searchList"
-        :key="item.value"
-        :class="{active:item.value === activeValue}"
-        @click="handleSelect(item.value)"
-      >{{item.label}}</li>
+      <li v-for="item in searchList" :key="item.value" :class="{active:item.value === activeValue}"
+        @click="handleSelect(item.value)">{{item.label}}</li>
     </ul>
   </div>
 </template>

@@ -5,6 +5,7 @@
     <BaseSearchList></BaseSearchList>
     <BaseFilterForm></BaseFilterForm>
     <BaseForm></BaseForm>
+    <BaseDownload exl pdf :doc="false"></BaseDownload>
   </div>
 </template>
 

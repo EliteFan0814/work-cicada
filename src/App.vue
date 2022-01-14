@@ -31,5 +31,10 @@ export default {
     color: #3168d9;
     font-weight: bold;
   }
+  .pointer {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 </style>

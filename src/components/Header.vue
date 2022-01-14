@@ -32,6 +32,7 @@ export default {
   },
   methods: {
     handleNormalRouter(router) {
+      this.activeRouter = router
       this.$router.push({ name: router })
     }
   }
@@ -71,6 +72,7 @@ export default {
     }
     .normal-active {
       color: #ffffff;
+      opacity: 1;
       font-weight: bold;
     }
     .member {

@@ -1,17 +1,7 @@
 <template>
-  <div
-    class="base-input"
-    :style="`width:${width}`"
-  >
-    <input
-      type="text"
-      v-model="value"
-      :placeholder="placeHolder"
-    >
-    <img
-      src="@/assets/imgs/search.png"
-      @click="handleEmit"
-    >
+  <div class="base-input" :style="`width:${width}`">
+    <input type="text" v-model="value" :placeholder="placeHolder">
+    <img src="@/assets/imgs/search.png" @click="handleEmit">
   </div>
 </template>
 <script>

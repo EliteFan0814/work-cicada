@@ -115,7 +115,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .base-search-list {
-  padding: 20px;
   display: flex;
   align-items: center;
   .common {

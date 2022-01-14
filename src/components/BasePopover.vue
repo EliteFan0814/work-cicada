@@ -4,14 +4,17 @@
       @hide="handleClick">
       <slot name="popContent"></slot>
       <div slot="reference">
-        <div v-if="plain">
-          <img src="@/assets/imgs/arrow.png" :class="{active:active}">
-        </div>
-        <div v-else class="linkages">
-          <span>{{title}}</span>
-          <img src="@/assets/imgs/arrow.png" :class="{active:active}">
-        </div>
+        <slot>
+          <div v-if="plain">
+            <img src="@/assets/imgs/arrow.png" :class="{active:active}">
+          </div>
+          <div v-else class="linkages">
+            <span>{{title}}</span>
+            <img src="@/assets/imgs/arrow.png" :class="{active:active}">
+          </div>
+        </slot>
       </div>
+
     </el-popover>
   </div>
 </template>
@@ -27,7 +30,7 @@ export default {
       type: Date
     },
     title: {
-      type: String,
+      type: [String, Number],
       default: '关联检索'
     },
     width: {
@@ -80,5 +83,11 @@ export default {
   .active {
     transform: rotate(-180deg);
   }
+}
+</style>
+
+<style lang="scss">
+.el-popover {
+  min-width: 0 !important;
 }
 </style>
