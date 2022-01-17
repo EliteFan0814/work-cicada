@@ -118,6 +118,7 @@ export default {
   }
   .key-list-wrap {
     flex-grow: 1;
+    width: 100px; //解决纯英文字符过长bug fpcbug
     .key-list {
       overflow: hidden;
       color: rgba(0, 0, 0, 0.65);

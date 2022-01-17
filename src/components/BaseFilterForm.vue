@@ -18,19 +18,19 @@ export default {
   data() {
     return {
       dataList: [
-        { label: '百百岁鱼百岁鱼岁鱼', value: 1, selected: false },
+        { label: '第一个', value: 1, selected: false },
         { label: '百岁百岁鱼百岁鱼鱼', value: 2, selected: false },
         { label: '百岁鱼', value: 3, selected: false },
-        { label: '百百百岁鱼岁鱼百岁鱼百岁鱼岁鱼', value: 11, selected: false },
+        { label: '百百百岁岁鱼', value: 11, selected: false },
         { label: '百岁鱼', value: 21, selected: false },
         {
-          label: '百岁百岁鱼百岁鱼百岁鱼百岁鱼百岁鱼百岁鱼鱼',
+          label: '百岁百岁',
           value: 31,
           selected: false
         },
-        { label: '百岁fsdfefefe鱼', value: 42, selected: false },
-        { label: '百岁fdfeffd百岁鱼鱼', value: 34, selected: false },
-        { label: '百岁百岁鱼百岁鱼百岁鱼鱼', value: 141, selected: false },
+        { label: '草草草草', value: 42, selected: false },
+        { label: '百岁百岁鱼鱼', value: 34, selected: false },
+        { label: '百岁百岁鱼百岁鱼百岁百岁鱼百岁鱼百岁鱼鱼百岁百岁鱼百岁鱼百岁鱼鱼百岁鱼鱼', value: 141, selected: false },
         { label: '百岁鱼', value: 241, selected: false },
         { label: '百岁百岁鱼百岁鱼百岁鱼鱼', value: 341, selected: false },
         { label: '百岁鱼', value: 44, selected: false },
@@ -38,7 +38,7 @@ export default {
         { label: '百岁鱼', value: 454, selected: false },
         { label: '百岁鱼', value: 464, selected: false },
         { label: '嘿嘿嘿', value: 474, selected: false },
-        { label: '哈哈哈', value: 484, selected: false }
+        { label: '最后一个', value: 484, selected: false }
       ],
       dataList2: [
         { label: '百岁鱼', value: 454, selected: false },

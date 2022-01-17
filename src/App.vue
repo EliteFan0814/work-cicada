@@ -27,6 +27,12 @@ export default {
       cursor: pointer;
     }
   }
+  .base-hb {
+    &:hover {
+      cursor: pointer;
+      border: 1px solid #3168d9;
+    }
+  }
   .base-active {
     color: #3168d9;
     font-weight: bold;
@@ -35,6 +41,12 @@ export default {
     &:hover {
       cursor: pointer;
     }
+  }
+  .omit-1 {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    overflow: hidden;
   }
 }
 </style>

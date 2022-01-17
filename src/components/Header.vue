@@ -30,6 +30,9 @@ export default {
       activeRouter: 'Home'
     }
   },
+  mounted() {
+    this.activeRouter = this.$route.name
+  },
   methods: {
     handleNormalRouter(router) {
       this.activeRouter = router

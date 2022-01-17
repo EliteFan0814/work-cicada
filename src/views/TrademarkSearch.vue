@@ -27,12 +27,18 @@
             </div>
           </div>
         </div>
-        <div class="table"></div>
+        <div class="table">
+          <BaseTable></BaseTable>
+        </div>
       </div>
     </div>
   </div>
 </template>
-
+<script>
+export default {
+  name: 'TrademarkSearch'
+}
+</script>
 <style lang="scss" scoped>
 .trademark-search {
   padding: 40px;
@@ -40,8 +46,10 @@
     display: flex;
     align-items: flex-end;
     .left-input {
+      box-sizing: border-box;
       min-width: 500px;
       width: 30%;
+      flex-shrink: 0;
       .class-wrap {
         padding-left: 10px;
       }
@@ -54,8 +62,10 @@
   .content {
     display: flex;
     .left-wheel {
+      box-sizing: border-box;
       min-width: 500px;
       width: 30%;
+      flex-shrink: 0;
     }
     .right-content {
       flex-grow: 1;
