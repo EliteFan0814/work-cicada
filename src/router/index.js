@@ -37,10 +37,18 @@ const routes = [
         name: 'TrademarkWatch',
         meta: { title: '商标监控', icon: 'dashboard' }
       },
+      // 商标分析
       {
         path: 'trademarkAnalyse',
-        component: () => import('@/views/TrademarkAnalyse.vue'),
+        component: () => import('@/views/trademarkAnalyse/index.vue'),
         name: 'TrademarkAnalyse',
+        meta: { title: '商标分析', icon: 'dashboard' }
+      },
+      {
+        path: 'trademarkAnalyse/analyseDetail',
+        component: () =>
+          import('@/views/trademarkAnalyse/analyseDetail/index.vue'),
+        name: 'AnalyseDetail',
         meta: { title: '商标分析', icon: 'dashboard' }
       },
       {

@@ -11,7 +11,7 @@
     <!-- table 列表 -->
     <div v-if="selectedStyle === 'list'" class="table-style">
       <el-table :data="tableData" border size="small" :header-cell-style="{background:'#fafafa',color: '#666666'}"
-        row-class-name="row-style">
+        @row-click="handleRowclick" row-class-name="row-style">
         <el-table-column show-overflow-tooltip type="selection">
         </el-table-column>
         <el-table-column show-overflow-tooltip prop="date" label="分析类别">
@@ -169,6 +169,10 @@ export default {
     },
     handleSelectType(value) {
       this.selected = value
+    },
+    handleRowclick(row, column, event) {
+      console.log(row, column)
+      this.$router.push({ name: 'AnalyseDetail' })
     }
   }
 }
