@@ -49,12 +49,8 @@
   </div>
 </template>
 <script>
-import BasePopover from '@/components/BasePopover'
 export default {
   name: 'BaseSearchList',
-  components: {
-    BasePopover
-  },
   data() {
     return {
       active: false,

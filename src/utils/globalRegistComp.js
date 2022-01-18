@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-globalRegistCompCustom(require.context('@/components', true, /.vue$/))
+globalRegistCompCustom(require.context('@/baseComponents', true, /.vue$/))
 
 // 把自定义组件进行全局注册
 function globalRegistCompCustom(context) {

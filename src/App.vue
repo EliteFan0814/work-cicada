@@ -10,6 +10,7 @@ export default {
 </script>
 
 <style lang="scss">
+$activeColor: #3168d9;
 #app {
   font-family: MicrosoftYaHei-Bold;
   font-size: 14px;
@@ -22,7 +23,7 @@ export default {
   line-height: 1;
   .base-hover {
     &:hover {
-      color: #3168d9;
+      color: $activeColor;
       font-weight: bold;
       cursor: pointer;
     }
@@ -30,11 +31,11 @@ export default {
   .base-hb {
     &:hover {
       cursor: pointer;
-      border: 1px solid #3168d9;
+      border: 1px solid $activeColor;
     }
   }
   .base-active {
-    color: #3168d9;
+    color: $activeColor;
     font-weight: bold;
   }
   .pointer {
@@ -47,6 +48,36 @@ export default {
     text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     overflow: hidden;
+  }
+  .flex {
+    display: flex;
+  }
+  // 垂直水平居中
+  .flex-sc {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .flex-cc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .flex-ec {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .flex-c {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .flex-ccc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }
 </style>
