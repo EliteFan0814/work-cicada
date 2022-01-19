@@ -1,6 +1,6 @@
 <template>
   <div class="trademark-search">
-
+    商标监控
   </div>
 </template>
 

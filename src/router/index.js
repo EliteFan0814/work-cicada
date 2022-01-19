@@ -27,7 +27,7 @@ const routes = [
       },
       {
         path: 'trademarkDetail',
-        component: () => import('@/views/TrademarkDetail.vue'),
+        component: () => import('@/views/TrademarkDetail/index.vue'),
         name: 'TrademarkDetail',
         meta: { title: '商标详情', icon: 'dashboard' }
       },
@@ -39,7 +39,7 @@ const routes = [
       },
       {
         path: 'trademarkWatch',
-        component: () => import('@/views/TrademarkWatch.vue'),
+        component: () => import('@/views/trademarkWatch/index.vue'),
         name: 'TrademarkWatch',
         meta: { title: '商标监控', icon: 'dashboard' }
       },

@@ -1,10 +1,6 @@
 <template>
   <div class="home">
-    <BaseSearchClass></BaseSearchClass>
-    <BaseInput />
-    <BaseSearchList></BaseSearchList>
-    <BaseFilterForm></BaseFilterForm>
-    <BaseDownload exl pdf :doc="false"></BaseDownload>
+    首页
   </div>
 </template>
 
