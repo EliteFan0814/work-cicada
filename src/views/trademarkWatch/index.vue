@@ -1,7 +1,15 @@
 <template>
   <div class="trademark-watch">
     <div class="update flex-cc  pointer">
-      <img src="@/assets/img/update.png" alt="">
+      <el-popover placement="bottom" width="200" trigger="click">
+        <img slot="reference" src="@/assets/img/update.png" alt="">
+        <div class="pop-wrap">
+          <div @click="openDialog('first')">初审公告监测</div>
+          <div @click="openDialog('second')">具体商标监控</div>
+          <div @click="openDialog('third')">撤三商标监控</div>
+          <div @click="openDialog('fourth')">持续商标监控</div>
+        </div>
+      </el-popover>
     </div>
     <div class="tabs">
       <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -17,19 +25,41 @@
         <BasePagination :total="100" :nowPageNum.sync="nowPageNum" :pageSize.sync="pageSize"></BasePagination>
         <BaseDownload></BaseDownload>
       </div>
-      <div class="table-list"></div>
+      <div class="table-list">
+        <firstTable></firstTable>
+      </div>
       <BasePagination :total="100" :nowPageNum.sync="nowPageNum" :pageSize.sync="pageSize"></BasePagination>
-
     </div>
+    <dialogCommit v-if="showDialog" title="初审公告监控" @submit="handleSubmit"></dialogCommit>
   </div>
 </template>
 <script>
+import firstTable from './firstTable'
+import dialogCommit from './dialogCommit'
 export default {
+  components: { firstTable, dialogCommit },
   data() {
     return {
       activeName: 'first',
       nowPageNum: 2,
-      pageSize: 30
+      pageSize: 30,
+      showDialog: true
+    }
+  },
+  watch: {
+    activeName(newVal) {
+      console.log(newVal)
+    }
+  },
+  methods: {
+    handleClick(value) {
+      console.log(value)
+    },
+    handleSubmit(flag) {
+      this.showDialog = false
+    },
+    openDialog(flag) {
+      this.showDialog = true
     }
   }
 }
@@ -51,6 +81,17 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+}
+.pop-wrap {
+  div {
+    padding: 8px 0;
+    cursor: pointer;
+    text-align: center;
+    &:hover {
+      color: #3168d9;
+      font-weight: bold;
+    }
   }
 }
 </style>

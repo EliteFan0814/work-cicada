@@ -1,13 +1,17 @@
 <template>
   <div class="base-input" :style="`width:${width}`">
     <input type="text" v-model="value" :placeholder="placeHolder">
-    <img src="@/assets/imgs/search.png" @click="handleEmit">
+    <i :class="['iconfont',`icon-${icon}`]" @click="handleEmit"></i>
   </div>
 </template>
 <script>
 export default {
   name: 'BaseInput',
   props: {
+    icon: {
+      type: String,
+      default: ''
+    },
     placeHolder: {
       type: String,
       required: false,
@@ -35,6 +39,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .base-input {
+  background-color: #fff;
   box-sizing: border-box;
   padding: 12px 20px;
   border-radius: 22px;
@@ -52,7 +57,7 @@ export default {
     border: none; /*去除边框*/
     -webkit-appearance: none; /*常用于IOS下移除原生样式*/
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /*点击高亮的颜色*/
-    width: 80%;
+    width: 90%;
     // border: 1px solid red;
     &::placeholder {
       font-size: 14px;
@@ -62,12 +67,9 @@ export default {
       color: #bfbfbf;
     }
   }
-  img {
-    width: 16px;
-    display: block;
-    &:hover {
-      cursor: pointer;
-    }
+  .iconfont {
+    font-size: 20px;
+    cursor: pointer;
   }
 }
 </style>

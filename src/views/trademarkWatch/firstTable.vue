@@ -1,5 +1,5 @@
 <template>
-  <div class="first">
+  <div class="first-wrap">
     <el-table :data="tableData" border size="small" :header-cell-style="{background:'#fafafa',color: '#666666'}"
       row-class-name="row-style">
       <el-table-column v-for="(item,index) in tableHead" :key="index" show-overflow-tooltip :prop="item.prop"
@@ -7,11 +7,9 @@
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="address" label="操作">
         <template slot-scope="scope">
-          <div class="class-wrap">
-            <span>项目</span>
-            <span class="operate">
-              <i class="el-icon-sort"></i>
-            </span>
+          <div class="operate-wrap">
+            <i class="el-icon-edit"></i>
+            <i class="el-icon-delete"></i>
           </div>
         </template>
       </el-table-column>
@@ -21,7 +19,7 @@
 
 <script>
 export default {
-  name: 'first',
+  name: 'firstTable',
   data() {
     return {
       tableHead: [
@@ -83,4 +81,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.first-wrap {
+  .operate-wrap {
+    i {
+      font-size: 20px;
+      padding-right: 10px;
+      cursor: pointer;
+    }
+    .el-icon-edit {
+      color: #99ccff;
+    }
+    .el-icon-delete {
+      color: #ff6666;
+    }
+  }
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="base-popover">
-    <el-popover v-model="visible" placement="bottom" :width="width" trigger="click" @show="handleClick"
+    <el-popover v-model="visible" :placement="placement" :width="width" trigger="click" @show="handleClick"
       @hide="handleClick">
       <slot name="popContent"></slot>
       <div slot="reference">
@@ -14,7 +14,6 @@
           </div>
         </slot>
       </div>
-
     </el-popover>
   </div>
 </template>
@@ -22,6 +21,10 @@
 export default {
   name: 'BasePopover',
   props: {
+    placement: {
+      type: String,
+      default: 'bottom'
+    },
     plain: {
       type: Boolean,
       default: true
