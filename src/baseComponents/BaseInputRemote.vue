@@ -134,9 +134,12 @@ export default {
     box-shadow: 0px 0px 9px 0px rgba(50, 50, 50, 0.57);
     padding: 10px;
     font-size: 14px;
-    .res-item{
+    .res-item {
       padding: 5px 0;
       cursor: pointer;
+      &:hover {
+        background: rgba(140, 197, 255, 0.1);
+      }
     }
   }
 }
