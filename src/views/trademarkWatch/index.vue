@@ -31,6 +31,7 @@
       <BasePagination :total="100" :nowPageNum.sync="nowPageNum" :pageSize.sync="pageSize"></BasePagination>
     </div>
     <dialogCommit v-if="showDialog" title="初审公告监控" @submit="handleSubmit"></dialogCommit>
+    <BasePopConfirm v-if="showDel" @close="handleConfirm"></BasePopConfirm>
   </div>
 </template>
 <script>
@@ -43,7 +44,8 @@ export default {
       activeName: 'first',
       nowPageNum: 2,
       pageSize: 30,
-      showDialog: true
+      showDialog: false,
+      showDel: true
     }
   },
   watch: {
@@ -60,6 +62,9 @@ export default {
     },
     openDialog(flag) {
       this.showDialog = true
+    },
+    handleConfirm(flag) {
+      this.showDel = false
     }
   }
 }

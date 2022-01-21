@@ -5,6 +5,7 @@
       <router-view />
     </div>
     <Footer></Footer>
+    <BaseLogin></BaseLogin>
   </div>
 </template>
 

@@ -25,7 +25,7 @@ export default {
         // { name: '图形查询', router: 'Graphics' },
         { name: '商标监控', router: 'TrademarkWatch' },
         { name: '商标分析', router: 'TrademarkAnalyse' },
-        { name: '会员登录', router: 'MemberLogin' }
+        { name: '登录', router: 'Login' }
       ],
       activeRouter: 'Home'
     }

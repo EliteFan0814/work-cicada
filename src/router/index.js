@@ -50,13 +50,7 @@ const routes = [
         name: 'TrademarkAnalyse',
         meta: { title: '商标分析', icon: 'dashboard' }
       },
-      // {
-      //   path: 'trademarkAnalyse/analyseDetail',
-      //   component: () =>
-      //     import('@/views/trademarkAnalyse/analyseDetail/index.vue'),
-      //   name: 'AnalyseDetail',
-      //   meta: { title: '商标分析', icon: 'dashboard' }
-      // },
+      // 商标分析 详情
       {
         path: 'report/holder/',
         name: 'AnalyseDetail',

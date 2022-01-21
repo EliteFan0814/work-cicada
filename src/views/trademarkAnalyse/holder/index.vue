@@ -174,6 +174,10 @@ export default {
           this.mainsList = res.data.apply_info
           this.holderType = res.data.type
           this.nameList = res.data.nameArr
+          this.$router.push({
+            ...this.navList[0].routerInfo,
+            query: { id: this.id }
+          })
         } else if (res.data.code == 201) {
           this.error = true
         }
@@ -187,6 +191,11 @@ const API = api()
 @import '@/assets/sass/base.scss';
 
 .holder-page {
+  .icon-kehujingli-svg {
+    &::before {
+      color: #3168d9;
+    }
+  }
   // min-height: 100vh;
   background-color: #fff;
   .main {
