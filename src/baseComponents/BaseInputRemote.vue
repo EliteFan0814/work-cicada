@@ -1,17 +1,16 @@
 <template>
   <div class="base-input" :style="`width:${width}`">
     <div class="selected-list flex">
-      <div v-for="item in 10" :key="item" class="select-item">
-        <span>百岁鱼</span>
+      <div v-for="(item,index) in selectList" :key="item.value" class="select-item">
+        <span>{{item.label}}</span>
         <i class="el-icon-close clear" @click="handleDelete(index)"></i>
       </div>
     </div>
-    <input type="text" v-model="value" :placeholder="placeHolder">
+    <input type="text" v-model="value" :placeholder="placeholder" @input="handleShowSuggest">
     <i slot="reference" :class="['iconfont',`icon-${icon}`]" @click="handleEmit"></i>
-    <div class="remote-res">
-      <div class="res-item">房山</div>
-      <div class="res-item">中细软</div>
-      <div class="res-item">类哈哈</div>
+    <div v-if="showSuggest" class="remote-res">
+      <div v-for="(item) in suggestList" :key="item.value" class="res-item" @click="handleSelect(item)">
+        {{item.label}}</div>
     </div>
     <!-- <el-popover placement="bottom-end" width="200" trigger="click">
       <div class="pop-wrap">
@@ -27,11 +26,15 @@
 export default {
   name: 'BaseInputRemote',
   props: {
+    multi: {
+      type: Boolean,
+      default: false
+    },
     icon: {
       type: String,
       default: ''
     },
-    placeHolder: {
+    placeholder: {
       type: String,
       required: false,
       default: '请输入搜索关键字'
@@ -44,7 +47,20 @@ export default {
   },
   data() {
     return {
-      value: null
+      value: null,
+      showSuggest: false,
+      selectList: [
+        { label: '百岁鱼', value: 1 },
+        { label: '百鱼', value: 2 },
+        { label: '岁鱼', value: 3 }
+      ],
+      suggestList: [
+        { label: '百岁鱼', value: 1 },
+        { label: '百鱼', value: 2 },
+        { label: '岁鱼', value: 3 },
+        { label: '鱼', value: 4 },
+        { label: '岁', value: 5 }
+      ]
     }
   },
   methods: {
@@ -53,7 +69,28 @@ export default {
         this.$emit('search', this.value)
       }
     },
-    handleDelete() {}
+    handleDelete(index) {
+      this.selectList.splice(index, 1)
+    },
+    // 处理结果的展示
+    handleShowSuggest() {
+      if (this.value) {
+        this.showSuggest = true
+      } else {
+        this.showSuggest = false
+      }
+    },
+    // 处理选择
+    handleSelect(item) {
+      // 多选
+      if (this.multi) {
+        this.selectList.push(item)
+      } else {
+        // 单选
+        this.selectList = [item]
+      }
+      this.showSuggest = false
+    }
   }
 }
 </script>

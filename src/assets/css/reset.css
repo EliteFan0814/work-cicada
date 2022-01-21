@@ -1,0 +1,61 @@
+@charset "utf-8" ;
+body,button,input,select,textarea{font-family:Tahoma,Helvetica,"Microsoft YaHei",Arial,sans-serif; color:#333;font-size: 14px;word-wrap:break-word}
+body,div,h1,h2,h3,h4,h5,h6,dl,dt,dd,ul,ol,li,th,td,p,blockquote,pre,form,fieldset,legend,input,button,textarea,article,aside,footer,header,hgroup,nav,section,menu,figure,figcaption,dialog{margin:0;padding:0;}
+table,tr,td{border-collapse:separate;border-spacing:0;}
+h1,h2,h3,h4,h5,h6{font-weight: normal;}
+li{list-style:none;}
+fieldset,img,dialog{border:0;vertical-align:middle;}
+input,textarea,select{outline-style:none;}
+textarea{resize:none;}
+article,aside,footer,header,hgroup,nav,section,menu{display:block;}
+address,caption,cite,code,dfn,em,i,th,var{font-style:normal;font-weight:400;}
+input,textarea, select{outline: none;border:none;}
+textarea::-webkit-input-placeholder,
+input::-webkit-input-placeholder{
+    color: #A2A7B0;
+}
+a{text-decoration:none;outline:none; color:#333;
+-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+-webkit-user-select: none;
+-moz-user-focus: none;
+-moz-user-select: none;}
+::-webkit-scrollbar {
+width: 6px; /*对垂直流动条有效*/
+height: 6px; /*对水平流动条有效*/
+}
+/*定义滚动条的轨道颜色、内阴影及圆角*/
+::-webkit-scrollbar-track{
+background-color: transparent;
+border-radius: 6px;
+}
+/*定义滑块颜色、内阴影及圆角*/
+::-webkit-scrollbar-thumb{
+border-radius: 6px;
+background-color: #ccc;
+}
+/*定义两端按钮的样式*/
+::-webkit-scrollbar-button {
+background-color:transparent;
+}
+/*定义右下角汇合处的样式*/
+::-webkit-scrollbar-corner {
+background:transparent;
+}
+a:hover{text-decoration:none;}
+.clearfix:after{content:"";display:block;height:0;clear:both;visibility:hidden;}
+.clearfix{zoom:1;}
+.clear{ overflow: hidden; zoom:1;}
+.clr{ clear: both!important;}
+.style_box em{
+    color: #D9001B;
+  }
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0;
+}
+/*在firefox下移除input[number]的上下箭头*/
+input[type="number"] {
+  -moz-appearance: textfield;
+}

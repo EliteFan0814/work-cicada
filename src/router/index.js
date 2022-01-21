@@ -69,10 +69,8 @@ const routes = [
           {
             path: 'index',
             name: 'reportReport',
-            component: (resolve) =>
-              require([
-                '@/views/trademarkAnalyse/holder/report/index.vue'
-              ], resolve),
+            component: () =>
+              import('@/views/trademarkAnalyse/holder/report/index.vue'),
             meta: {
               auth: true
             }

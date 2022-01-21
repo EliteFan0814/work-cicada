@@ -12,7 +12,7 @@
           <div class="form-item flex-sc">
             <div class="label">商标名称：</div>
             <div class="value">
-              <BaseInput class="input-style" width="100%" placeHolder="请输入商标名称"></BaseInput>
+              <BaseInput class="input-style" width="100%" placeholder="请输入商标名称"></BaseInput>
             </div>
           </div>
           <div class="form-item flex-sc">
@@ -24,13 +24,14 @@
           <div class="form-item flex-sc">
             <div class="label">申请主体：</div>
             <div class="value more-show">
-              <BaseInputRemote class="input-style" width="100%" placeHolder="若不输入，默认为所有申请主体"></BaseInputRemote>
+              <BaseInputRemote class="input-style" width="100%" multi placeholder="若不输入，默认为所有申请主体"></BaseInputRemote>
             </div>
           </div>
           <div class="form-item flex-sc">
             <div class="label">代理机构：</div>
-            <div class="value">
-              <BaseInput class="input-style" width="100%" placeHolder="若不输入，默认为所有代理机构"></BaseInput>
+            <div class="value more-show">
+              <BaseInputRemote class="input-style" width="100%" placeholder="若不输入，默认为所有代理机构"></BaseInputRemote>
+              <!-- <BaseInput class="input-style" width="100%" placeholder="若不输入，默认为所有代理机构"></BaseInput> -->
             </div>
           </div>
           <div class="form-item flex-sc">
@@ -50,7 +51,7 @@
           <div class="form-item flex-sc">
             <div class="label">发送邮箱：</div>
             <div class="value">
-              <BaseInput class="input-style" width="100%" placeHolder="请输入您的电子邮箱"></BaseInput>
+              <BaseInput class="input-style" width="100%" placeholder="请输入您的电子邮箱"></BaseInput>
             </div>
           </div>
           <div class="form-item flex-sc">

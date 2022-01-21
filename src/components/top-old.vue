@@ -93,7 +93,7 @@
             <ul>
               <li v-for="(item,ind) of logList" :key="ind" class="clearfix">
                 <div class="name">分组：{{item.name}}</div>
-                <div class="detail" v-for="(i,index) of item.logs" :key="index"><!--多个分组时  可循环class="detail"标签-->  
+                <div class="detail" v-for="(i,index) of item.logs" :key="index"><!--多个分组时  可循环class="detail"标签-->
                   <a href="javascript:void(0)" class="btn" v-if="i.downloadBtn" @click="loadContentFn(i.tid,ind,index)">查看报告</a>
                   <!-- <a href="javascript:void(0)" class="btn gray" v-else><i class="icon icon-download"></i>下载已失效</a> -->
                   <span class="tag" v-if="i.type==1">商标名</span><span class="tag" v-if="i.type==2">注册号</span><span class="tag" v-if="i.type==3">申请人</span><span class="txt">{{i.keyword}}</span><span class="msg">有商标更新</span>
@@ -134,7 +134,7 @@
                       <label btn class="up-head">上传图片<input @change="headFileFn" ref="headerImg" class="file" type="file"></label>
                       <div btn class="default-btn" @click="imgDefaultFn" >使用默认</div>
                   </div>
-                 
+
                 </td>
               </tr>
               <tr>
@@ -220,173 +220,172 @@
       </div>
       <!--/下载删除-->
 
-
     <prompt :prompt="prompt" :promptType="promptType"></prompt>
   </div>
 </template>
 
 <script>
 import prompt from '@/components/prompt.vue'
-import loading from '@/components/loading';
+import loading from '@/components/loading'
 import Cookies from 'js-cookie'
-import {api,requestUrl,apikey, downJs} from '@/assets/js/util.js'
-const API = api();
+import { api, requestUrl, apikey, downJs } from '@/assets/js/util.js'
+
+import qs from 'qs'
+const API = api()
 export default {
-  props:['types','navIndex','pageTxt'],   //types='team' 为团队管理相关页   types='report' 为商标分析报告相关页   types='work' 为工作台和团队大厅相关页   types='detail' 为商标详情页  'doc'是法律文书详情  types='qzh' 千纸鹤关页  types='calendar' 商机雷达  
-  data () {
+  props: ['types', 'navIndex', 'pageTxt'], // types='team' 为团队管理相关页   types='report' 为商标分析报告相关页   types='work' 为工作台和团队大厅相关页   types='detail' 为商标详情页  'doc'是法律文书详情  types='qzh' 千纸鹤关页  types='calendar' 商机雷达
+  data() {
     return {
-     teamShow:false,
-     personSlider:false,
-     user:'',
-     list:[],
-     curObj:'',
-     orgid:'',   //团队列表orgid
-     complainShow:false,
-     err:'',
-     prompt:'',
-     promptType:'success',
-     content:'',  //意见反馈输入框
-     messageShow:false,
-     delShow:false,
-     msgList:[],  //监测消息列表
-     readList:[],  //是否有未读的监测消息   为空时小红点不显示
-     taskDetail:'',
-     logList:[],
-     logLoading:false,
+      teamShow: false,
+      personSlider: false,
+      user: '',
+      list: [],
+      curObj: '',
+      orgid: '', // 团队列表orgid
+      complainShow: false,
+      err: '',
+      prompt: '',
+      promptType: 'success',
+      content: '', // 意见反馈输入框
+      messageShow: false,
+      delShow: false,
+      msgList: [], // 监测消息列表
+      readList: [], // 是否有未读的监测消息   为空时小红点不显示
+      taskDetail: '',
+      logList: [],
+      logLoading: false,
 
-     layerPersonalShow: false,
-     personForm: {
-      head_img: '',
-      mobile: '',
-      qq: '',
-      weixin: '',
+      layerPersonalShow: false,
+      personForm: {
+        head_img: '',
+        mobile: '',
+        qq: '',
+        weixin: ''
 
-     },
-     headerImg: '',
-     holderErr: '',
-     is_default_headimg: 1,
+      },
+      headerImg: '',
+      holderErr: '',
+      is_default_headimg: 1,
 
-     downLayerShow: false,
-     downLoading: false,
-     getDownMore: false,
-     getDown: false,
-     downList: [],
-     downError: false,
-     downPageId: 1,
-     downPageAll: 1,
-     downDelLayerShow: false,
-     layerSize: 0,
-     isDownloading: -1,
-     downName: ''
+      downLayerShow: false,
+      downLoading: false,
+      getDownMore: false,
+      getDown: false,
+      downList: [],
+      downError: false,
+      downPageId: 1,
+      downPageAll: 1,
+      downDelLayerShow: false,
+      layerSize: 0,
+      isDownloading: -1,
+      downName: ''
     }
   },
-  components:{
+  components: {
     prompt,
     loading
   },
-  methods:{
-    delFn(id){
-      //单个删除消息列表
+  methods: {
+    delFn(id) {
+      // 单个删除消息列表
       this.delMsgFn(id)
     },
-    delAllFn(){
-      //删除所有已读消息   全部时传1
+    delAllFn() {
+      // 删除所有已读消息   全部时传1
       this.delMsgFn(1)
     },
-    updateMsgFn(){
-      //消息全部改为已读
-      API.put('/monitor/task_msg/update/1','').then((r)=>{
-        if(r.data.code==200){
+    updateMsgFn() {
+      // 消息全部改为已读
+      API.put('/monitor/task_msg/update/1', '').then((r) => {
+        if (r.data.code == 200) {
           this.getMsgListFn()
         }
       })
     },
-    delMsgFn(id){
-      //清空消息
-      API.delete(`/monitor/task_msg/delete/${id}`,'').then((r)=>{
-        if(r.data.code==200){
+    delMsgFn(id) {
+      // 清空消息
+      API.delete(`/monitor/task_msg/delete/${id}`, '').then((r) => {
+        if (r.data.code == 200) {
           this.getMsgListFn()
           this.err = ''
-          this.delShow = false 
+          this.delShow = false
           this.logList = []
-        }else{
+        } else {
           this.err = r.data.msg
         }
       })
     },
-    delShowFn(){
+    delShowFn() {
       this.delShow = true
     },
     loadContentFn(id, ind, ind_2) {
-      let path = this.$router.resolve({
+      const path = this.$router.resolve({
         path: '/monitor/report',
-        query: {id: id}
+        query: { id: id }
       })
       window.open(path.href, '_blank')
     },
-    messageShowFn(){
-      //打开监测消息层
+    messageShowFn() {
+      // 打开监测消息层
       this.messageShow = true
-
     },
-    complainFn(){
-      //打开意见反馈
+    complainFn() {
+      // 打开意见反馈
       this.complainShow = true
     },
-    
-    closeFn(txt){
-      let messageShow = false;
-      if(txt && txt=='del'){
+
+    closeFn(txt) {
+      let messageShow = false
+      if (txt && txt == 'del') {
         messageShow = true
       }
       this.complainShow = false
       this.messageShow = messageShow
       this.delShow = false
-      this.err = '';
-      
+      this.err = ''
     },
-    complainSubmitFn(){
-      //意见反馈提交 
-      if(!(this.content.trim()!='')){
+    complainSubmitFn() {
+      // 意见反馈提交
+      if (!(this.content.trim() != '')) {
         this.err = '问题描述不为空'
         return false
       }
-      let data = {
-        title:'',
-        content:this.content,
+      const data = {
+        title: '',
+        content: this.content
       }
-      API.post('/team/suggestion',data).then((r)=>{
-        if(r.data.code==200){
+      API.post('/team/suggestion', data).then((r) => {
+        if (r.data.code == 200) {
           this.promptType = 'success'
           this.prompt = '操作成功'
           this.err = ''
-        }else if(r.data.code==300){
-          this.$router.push({path: '/login'})
-        }else{
+        } else if (r.data.code == 300) {
+          this.$router.push({ path: '/login' })
+        } else {
           this.err = r.data.msg
         }
       })
     },
-    getListFn(){
-      //获取拥有的和加入的团队列表
-      API.get('/team/org/my','').then((r)=>{
-        if(r.data.code==200){
+    getListFn() {
+      // 获取拥有的和加入的团队列表
+      API.get('/team/org/my', '').then((r) => {
+        if (r.data.code == 200) {
           if ((!r.data.list || r.data.list.length == 0) && this.types != 'team') {
             this.$router.push('/team/new')
           }
-          if(r.data.list && r.data.list.length){
-            r.data.list.map((i,index)=>{
-              if(i.is_check){
-                if(this.pageTxt && this.pageTxt=='tool'){
+          if (r.data.list && r.data.list.length) {
+            r.data.list.map((i, index) => {
+              if (i.is_check) {
+                if (this.pageTxt && this.pageTxt == 'tool') {
                   document.title = `工作台-${i.name}-细软图思`
                 }
-                if(this.pageTxt && this.pageTxt=='frame'){
+                if (this.pageTxt && this.pageTxt == 'frame') {
                   document.title = `团队大厅-${i.name}-细软图思`
                 }
                 this.curObj = i
-                this.$emit('groupNameFn',i.name)
+                this.$emit('groupNameFn', i.name)
                 this.orgid = i.org_id
-                Cookies.set('orgid',i.org_id,{expires: 5})
+                Cookies.set('orgid', i.org_id, { expires: 5 })
               }
             })
           }
@@ -394,40 +393,40 @@ export default {
         }
       })
     },
-    tabListFn(ind){
-      //切换团队 
-      this.list.map((i,index)=>{
+    tabListFn(ind) {
+      // 切换团队
+      this.list.map((i, index) => {
         i.is_check = 0
-        if(ind==index){
+        if (ind == index) {
           i.is_check = 1
           this.curObj = i
           this.orgid = i.org_id
-          Cookies.set('orgid',i.org_id,{expires: 5})
-          this.$router.push('/work/index?id='+i.org_id)
+          Cookies.set('orgid', i.org_id, { expires: 5 })
+          this.$router.push('/work/index?id=' + i.org_id)
           this.$router.go(0)
         }
       })
     },
-    personShowFn(){
+    personShowFn() {
       this.teamShow = false
       this.personSlider = true
     },
-    teamShowFn(){
+    teamShowFn() {
       this.teamShow = true
       this.personSlider = false
     },
-    exitFn(){
+    exitFn() {
       Cookies.remove('token')
       Cookies.remove('user')
       Cookies.remove('orgid')
       // this.$router.push('/')
-      window.location="/"
+      window.location = '/'
     },
-    sliderFn(){
+    sliderFn() {
       this.teamShow = !this.teamShow
     },
-    personSliderFn(){
-       this.personSlider = !this.personSlider
+    personSliderFn() {
+      this.personSlider = !this.personSlider
     },
     // getMsgListFn(){
     //   //消息通知列表
@@ -448,29 +447,29 @@ export default {
     //     }
     //   })
     // },
-    tabFn(ind){
-      //切换消息列表
-      this.msgList.map((i,index)=>{
+    tabFn(ind) {
+      // 切换消息列表
+      this.msgList.map((i, index) => {
         i.cur = false
-        if(ind==index){
+        if (ind == index) {
           i.cur = true
           i.is_read = 1
           this.getMsgFn(i.msg_id)
         }
       })
     },
-    getMsgFn(id){
-      //获取消息详情
+    getMsgFn(id) {
+      // 获取消息详情
       this.logLoading = true
-      API.get(`/monitor/task_msg/read/${id}`,'').then((r)=>{
-        if(r.data.code==200){
-          API.get('/monitor/task_msg/index','').then((r)=>{   //获取详情后  刷新列表数据   用于更改未读状态为已读
-            if(r.data.code==200){
+      API.get(`/monitor/task_msg/read/${id}`, '').then((r) => {
+        if (r.data.code == 200) {
+          API.get('/monitor/task_msg/index', '').then((r) => { // 获取详情后  刷新列表数据   用于更改未读状态为已读
+            if (r.data.code == 200) {
               this.logLoading = false
-              let readList = [];
-              if(r.data.list && r.data.list.length){
-                r.data.list.map((i,index)=>{
-                  if(!i.is_read){
+              const readList = []
+              if (r.data.list && r.data.list.length) {
+                r.data.list.map((i, index) => {
+                  if (!i.is_read) {
                     readList.push(i)
                   }
                 })
@@ -478,11 +477,11 @@ export default {
               this.readList = readList
             }
           })
-          if(r.data.list && r.data.list.length){
-            r.data.list.map((i,index)=>{
-              if(i.logs && i.logs.length){
-                i.logs.map((i_2,index_2)=>{
-                  i_2.leave.indexOf('天')!=-1 && parseInt(i_2.leave)>30 ? i_2.downloadBtn = false : i_2.downloadBtn = true
+          if (r.data.list && r.data.list.length) {
+            r.data.list.map((i, index) => {
+              if (i.logs && i.logs.length) {
+                i.logs.map((i_2, index_2) => {
+                  i_2.leave.indexOf('天') != -1 && parseInt(i_2.leave) > 30 ? i_2.downloadBtn = false : i_2.downloadBtn = true
                 })
               }
             })
@@ -491,52 +490,52 @@ export default {
         }
       })
     },
-    //图片上传
+    // 图片上传
     headFileFn(el) {
-      let that = this;
-      let file = el.target.files[0];
-      let read = new FileReader();
-      read.readAsDataURL(file);
+      const that = this
+      const file = el.target.files[0]
+      const read = new FileReader()
+      read.readAsDataURL(file)
       read.onload = res => {
-        that.headerImg = res['target']['result'];
-        that.is_default_headimg = 0;
+        that.headerImg = res.target.result
+        that.is_default_headimg = 0
       }
     },
-    imgDefaultFn () {
-      this.headerImg = '';
-      this.personForm['head_img'] = 'default'
-      this.is_default_headimg = 1;
+    imgDefaultFn() {
+      this.headerImg = ''
+      this.personForm.head_img = 'default'
+      this.is_default_headimg = 1
     },
-    personalFn (bl) {
-      this.layerPersonalShow = bl;
-      this.personSlider = false;
+    personalFn(bl) {
+      this.layerPersonalShow = bl
+      this.personSlider = false
       if (!bl) {
         this.holderErr = ''
       }
       if (bl) {
-        
+
       }
     },
-    userSubmitFn () {
-      let that = this;
-      let data = new FormData();
-      for (let key in this.personForm) {
+    userSubmitFn() {
+      const that = this
+      const data = new FormData()
+      for (const key in this.personForm) {
         data.append(key, this.personForm[key])
       }
-      let file = this.$refs.headerImg.files[0];
+      const file = this.$refs.headerImg.files[0]
       if (file) {
         data.append('head_img', file)
       }
-      if (this.personForm['head_img'] == 'default') {
+      if (this.personForm.head_img == 'default') {
         data.append('head_img', 'default')
       }
       API.upload('/user/user/save', data).then( res => {
         if (res.data.code == 200) {
-          this.prompt = '修改成功';
+          this.prompt = '修改成功'
           setTimeout(() => {
-            this.prompt = '';
-          }, 3000);
-          this.layerPersonalShow = false;
+            this.prompt = ''
+          }, 3000)
+          this.layerPersonalShow = false
         } else {
           this.holderErr = res.data.msg
         }
@@ -544,112 +543,112 @@ export default {
     },
 
     // 获取个人信息
-    getHolderFn () {
+    getHolderFn() {
       API.get('/user/user/read', {}).then( res => {
         if (res.data.code == 200) {
-          this.headerImg = res.data.info['head_img'];
-          this.is_default_headimg = res.data.info['is_default_headimg']
-          this.personForm['head_img'] = res.data.info['head_img']
-          this.personForm['qq'] = res.data.info['qq']
-          this.personForm['mobile'] = res.data.info['mobile']
-          this.personForm['weixin'] = res.data.info['weixin']
+          this.headerImg = res.data.info.head_img
+          this.is_default_headimg = res.data.info.is_default_headimg
+          this.personForm.head_img = res.data.info.head_img
+          this.personForm.qq = res.data.info.qq
+          this.personForm.mobile = res.data.info.mobile
+          this.personForm.weixin = res.data.info.weixin
         }
       })
     },
     // 下载第一页的时候20秒刷新一次列表
-    downLayerShowFn (bl) {
-      let that = this;
-      let timer = null;
-      let box = this.$refs.downList
-      this.downLayerShow = bl;
-      this.downPageId = 1;
+    downLayerShowFn(bl) {
+      const that = this
+      let timer = null
+      const box = this.$refs.downList
+      this.downLayerShow = bl
+      this.downPageId = 1
       if (bl) {
         that.getDownFn(true)
       }
       timer = setInterval( () => {
         if (!that.downLayerShow || this.downPageId > 2) {
-          clearInterval(timer);
-          timer = null;
-          return false;
+          clearInterval(timer)
+          timer = null
+          return false
         }
-        that.reDownLoadFn();
+        that.reDownLoadFn()
       }, 20000)
     },
     // 打开下载列表后20秒请求
-    reDownLoadFn (){
-      API.get(`/user/download/index?page=1`, {}).then( res => {
+    reDownLoadFn() {
+      API.get('/user/download/index?page=1', {}).then( res => {
         if (res.data.code == 200) {
-          this.downList = res.data.list;
+          this.downList = res.data.list
           if (this.downList.length == 0) {
-            this.downError = true;
+            this.downError = true
           }
           this.isDownloading = res.data.is_downloading
         }
       })
     },
-    //获取下载列表
-    getDownFn (bl = false) {
+    // 获取下载列表
+    getDownFn(bl = false) {
       if (bl) {
-        this.downList = [];
-        this.downPageId = 1;
+        this.downList = []
+        this.downPageId = 1
       }
-      this.downLoading = true;
+      this.downLoading = true
       API.get(`/user/download/index?page=${this.downPageId}`, {}).then( res => {
-        this.downLoading = false;
+        this.downLoading = false
         if (res.data.code == 200) {
-          this.downList = this.downList.concat(res.data.list);
+          this.downList = this.downList.concat(res.data.list)
           if (this.downList.length == 0) {
-            this.downError = true;
+            this.downError = true
           }
           this.isDownloading = res.data.is_downloading
           this.downPageId++
-          this.downPageAll = res.data.totalPage;
+          this.downPageAll = res.data.totalPage
         }
       })
     },
     // 下载删除
-    downDelLayerShowFn (index) {
-      this.layerSize = index;
-      this.downDelLayerShow = true;
-      if (this.downList[index]['type'] != '推荐函') {
-        this.downName = `${this.downList[index]['title']} - ${this.downList[index]['type']}`
+    downDelLayerShowFn(index) {
+      this.layerSize = index
+      this.downDelLayerShow = true
+      if (this.downList[index].type != '推荐函') {
+        this.downName = `${this.downList[index].title} - ${this.downList[index].type}`
       } else {
-        this.downName =  this.downList[index]['title']
+        this.downName = this.downList[index].title
       }
     },
     // 下载任务删除
-    downDelFn () {
-      let that = this;
-      API.post(`/user/download/delete/${this.downList[this.layerSize]['download_id']}`, {}).then( res => {
+    downDelFn() {
+      const that = this
+      API.post(`/user/download/delete/${this.downList[this.layerSize].download_id}`, {}).then( res => {
         if (res.data.code == 200) {
-          this.prompt = '删除成功';
-          this.promptType = 'success';
-          this.downDelLayerShow = false;
-          this.downList.splice(this.layerSize, 1);
+          this.prompt = '删除成功'
+          this.promptType = 'success'
+          this.downDelLayerShow = false
+          this.downList.splice(this.layerSize, 1)
         } else {
-          this.prompt = res.data.msg;
+          this.prompt = res.data.msg
           this.promptType = 'err'
         }
         setTimeout(() => {
-          this.prompt = '';
-        }, 2000);
+          this.prompt = ''
+        }, 2000)
       })
     },
-    downFn (url) {
+    downFn(url) {
       downJs(url)
     }
   },
-  mounted(){
-    document.addEventListener('click',(e)=>{
+  mounted() {
+    document.addEventListener('click', (e) => {
       this.teamShow = false
       this.personSlider = false
-      this.downLayerShow = false;
+      this.downLayerShow = false
     })
-    if(Cookies.get('user')){
-      let user = JSON.parse(Cookies.get('user'))
-      if(user){
+    if (Cookies.get('user')) {
+      const user = JSON.parse(Cookies.get('user'))
+      if (user) {
         this.user = user
-        if(this.types && (this.types=='work' || this.types=='brand' || this.types=='monitor' || this.types == 'qzh' || this.types == 'calendar')){
+        if (this.types && (this.types == 'work' || this.types == 'brand' || this.types == 'monitor' || this.types == 'qzh' || this.types == 'calendar')) {
           this.getListFn()
           // if(this.navIndex >=0){
           //   this.getMsgListFn()
@@ -657,18 +656,14 @@ export default {
         }
       }
     }
-    this.getHolderFn();
-    this.getDownFn(true);
-    
-  },
+    this.getHolderFn()
+    this.getDownFn(true)
+  }
 }
-
-import qs from 'qs'
 
 </script>
 <style scoped  lang="scss">
 @import "@/assets/sass/base.scss";
-
 
 .layer{
   &.del_msg_layer{
@@ -787,7 +782,7 @@ import qs from 'qs'
 .top_box{
   height: 50px;box-shadow: 0 2px 4px #E1E6EF;padding:0 40px 0 10px;background:#fff;position: relative;z-index: 50;
   position: relative;
-  
+
   .area_box{
     background: #ECEEF2;height:130px;border-radius: 4px;
     textarea{
@@ -874,7 +869,7 @@ import qs from 'qs'
       }
     }
     .nav{
-      display: inline-block;position: absolute;top:0;left:50%;transform:translate(-50%,0); 
+      display: inline-block;position: absolute;top:0;left:50%;transform:translate(-50%,0);
       li{
         margin-right: 20px;line-height:48px;font-size:16px;display: inline-block;
         &:last-child{
@@ -932,7 +927,7 @@ import qs from 'qs'
     @include flex(both, center);
     width: 290px; margin-bottom: 24px;
     .default{
-      text-align: center; 
+      text-align: center;
       width: 100px; height: 100px; line-height: 100px; font-size: 50px; border-radius: 50%;
       background-color: $inpcol; color:$white;
     }
@@ -952,7 +947,7 @@ import qs from 'qs'
       background-color: $red2; color:$white;
       .file{
         position: absolute;
-        left:-999px; top:-999px; 
+        left:-999px; top:-999px;
       }
     }
     .default-btn{
@@ -971,7 +966,7 @@ import qs from 'qs'
       text-align: left;
       color:$red2;
     }
-    
+
   }
 }
 
@@ -983,17 +978,17 @@ import qs from 'qs'
   .header{
     padding:0 15px 15px;
     border-bottom:1px solid $border;
-    .tit{ 
+    .tit{
       font-weight: bold;
       line-height: 20px; padding-bottom:10px;
       .icon{
         margin-right: 14px; font-size: 20px; line-height: 20px; vertical-align: middle;
-        color:$inpcol; 
+        color:$inpcol;
       }
     }
     .close{
       position: absolute;
-      right:18px;top: 18px; 
+      right:18px;top: 18px;
       .icon{color: #aaa; font-size: 16px; font-weight: bold; }
     }
     .info{
@@ -1044,8 +1039,8 @@ import qs from 'qs'
         overflow: hidden;
         .btn{
           float: right;
-          margin-left: 10px; 
-          color:$blue; 
+          margin-left: 10px;
+          color:$blue;
           &:hover{
             color:$bluehover;
           }
@@ -1069,7 +1064,7 @@ import qs from 'qs'
   .red{
     color:$red2;
   }
-  
+
 }
 
 </style>

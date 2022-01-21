@@ -1,35 +1,35 @@
+import { api } from '@/assets/js/util.js'
+
 export default {
   methods: {
     // 删除
     delEmailFn(id) {
-      let data = {
+      const data = {
         goods_id: id
-      };
-      API.post("/qzh/rcmd_id/delete", data).then(res => {
+      }
+      API.post('/qzh/rcmd_id/delete', data).then((res) => {
         if (res.data.code == 200) {
           // mixinsGetEmailListFn 传递函数，以防其他文件调用是出现命名冲突的特别命名，请将其加入到引入mixins的文件中并执行获取推荐函列表的函数
           if (this.mixinsGetEmailListFn != undefined) {
-            this.mixinsGetEmailListFn(false);
+            this.mixinsGetEmailListFn(false)
           }
         }
-      });
+      })
     },
     // 添加
     pushEmailFn(id) {
-      let data = {
+      const data = {
         goods_id: id
-      };
-      API.post("/qzh/rcmd_id/add", data).then(res => {
+      }
+      API.post('/qzh/rcmd_id/add', data).then((res) => {
         if (res.data.code == 200) {
           // mixinsGetEmailListFn 传递函数，以防其他文件调用是出现命名冲突的特别命名，请将其加入到引入mixins的文件中并执行获取推荐函列表的函数
           if (this.mixinsGetEmailListFn != undefined) {
-            this.mixinsGetEmailListFn(true);
+            this.mixinsGetEmailListFn(true)
           }
         }
-      });
+      })
     }
   }
-};
-
-import { api } from "@/assets/js/util.js";
-const API = api();
+}
+const API = api()

@@ -1,6 +1,6 @@
 <template>
   <article class="holder-page">
-    <top ref="top" :types="name"></top>
+    <!-- <top ref="top" :types="name"></top> -->
     <div v-if="loading">
       <loading></loading>
     </div>
@@ -29,7 +29,7 @@
         <div btn class="down-btn" @click="allDownFn"><em class="icon icon-download"></em>下载报告</div>
       </div>
       <nav class="menu-list">
-        <router-link class="menu-box " :to=" {path: '/report/holder/index', query: {id: id}}"><i
+        <!-- <router-link class="menu-box " :to=" {path: '/report/holder/index', query: {id: id}}"><i
             class="icon icon-leidatu"></i>报告总览</router-link>
         <router-link class="menu-box " :to="{path: '/report/holder/risk', query: {id: id}}"><i
             class="icon icon-cuiban"></i>风险分析</router-link>
@@ -40,7 +40,11 @@
         <router-link class="menu-box" :to="{path: '/report/holder/goods', query: {id: id}}"><i
             class="icon icon-shangbiao"></i>商标档案</router-link>
         <router-link class="menu-box" :to="{path: '/report/holder/agent', query: {id: id}}"><i
-            class="icon icon-xitongguanliyuan"></i>代理机构档案</router-link>
+            class="icon icon-xitongguanliyuan"></i>代理机构档案</router-link> -->
+
+        <el-tabs v-model="activeNav" @tab-click="handleChangeTab" style="width:100%;">
+          <el-tab-pane v-for="item in navList" :key="item.label" :label="item.label" :name="item.name"></el-tab-pane>
+        </el-tabs>
       </nav>
       <template>
         <router-view :id='id' :nameList="nameList" />
@@ -55,15 +59,74 @@
 import prompt from '@/components/prompt'
 
 import loading from '@/components/loading'
-import top from '@/components/top'
 import { api, formatDate } from '@/assets/js/util.js'
 
 export default {
+  components: {
+    loading,
+    prompt
+  },
+  data() {
+    return {
+      activeNav: '0',
+      navList: [
+        {
+          label: '报告总览',
+          name: '0',
+          routerInfo: { path: '/report/holder/index' }
+        },
+        {
+          label: '风险分析',
+          name: '1',
+          routerInfo: { path: '/report/holder/risk' }
+        },
+        {
+          label: '申请人档案',
+          name: '2',
+          routerInfo: { path: '/report/holder/owner' }
+        },
+        {
+          label: '品牌分析',
+          name: '3',
+          routerInfo: { path: '/report/holder/brand' }
+        },
+        {
+          label: '商标档案',
+          name: '4',
+          routerInfo: { path: '/report/holder/goods' }
+        },
+        {
+          label: '代理机构档案',
+          name: '5',
+          routerInfo: { path: '/report/holder/agent' }
+        }
+      ],
+      menuIndex: 0,
+      id: 0,
+      name: '客户分析报告',
+      loading: true,
+      error: false,
+
+      mainsList: [],
+      nameList: [],
+      holderType: 1,
+
+      prompt: '',
+      promptType: 'success'
+    }
+  },
   mounted() {
-    this.id = this.$route.query.id
+    // this.id = this.$route.query.id
+    this.id = 'f8b2160a7a97723ca453935e382f3b2e'
     this.getMainFn()
   },
   methods: {
+    handleChangeTab(item) {
+      this.$router.push({
+        ...this.navList[item.name].routerInfo,
+        query: { id: this.id }
+      })
+    },
     promptFn(msg, type = 'success') {
       const that = this
       this.prompt = msg
@@ -116,27 +179,6 @@ export default {
         }
       })
     }
-  },
-  data() {
-    return {
-      menuIndex: 0,
-      id: 0,
-      name: '客户分析报告',
-      loading: true,
-      error: false,
-
-      mainsList: [],
-      nameList: [],
-      holderType: 1,
-
-      prompt: '',
-      promptType: 'success'
-    }
-  },
-  components: {
-    top,
-    loading,
-    prompt
   }
 }
 const API = api()
@@ -145,8 +187,8 @@ const API = api()
 @import '@/assets/sass/base.scss';
 
 .holder-page {
-  min-height: 100vh;
-  background-color: $bg;
+  // min-height: 100vh;
+  background-color: #fff;
   .main {
     @extend .radius;
     box-sizing: border-box;
@@ -161,15 +203,15 @@ const API = api()
 .menu-list {
   @include flex(left, center);
   position: relative;
-  &:before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    background-color: $red2;
-    bottom: 0;
-    z-index: 3;
-  }
+  // &:before {
+  //   content: '';
+  //   position: absolute;
+  //   width: 100%;
+  //   height: 2px;
+  //   background-color: $red2;
+  //   bottom: 0;
+  //   z-index: 3;
+  // }
   .menu-box {
     display: block;
     box-sizing: border-box;

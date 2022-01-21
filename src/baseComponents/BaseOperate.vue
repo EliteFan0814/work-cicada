@@ -26,7 +26,7 @@
         </div>
       </div>
       <div v-if="showSearch" class="right">
-        <BaseInput width="200px" placeHolder="客户名称/商标名称"></BaseInput>
+        <BaseInput width="200px" placeholder="客户名称/商标名称"></BaseInput>
       </div>
     </div>
   </div>

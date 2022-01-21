@@ -1,6 +1,6 @@
 <template>
   <div class="base-input" :style="`width:${width}`">
-    <input type="text" v-model="value" :placeholder="placeHolder">
+    <input type="text" v-model="value" :placeholder="placeholder">
     <i :class="['iconfont',`icon-${icon}`]" @click="handleEmit"></i>
   </div>
 </template>
@@ -12,7 +12,7 @@ export default {
       type: String,
       default: ''
     },
-    placeHolder: {
+    placeholder: {
       type: String,
       required: false,
       default: '请输入搜索关键字'

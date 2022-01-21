@@ -1,5 +1,5 @@
 export default {
-  data () {
+  data() {
     return {
       prompt: '',
       promptType: 'success'
@@ -7,12 +7,12 @@ export default {
   },
   methods: {
     promptFn(msg = '', type = 'success') {
-      let that = this;
-      this.prompt = msg;
-      this.promptType = type;
+      const that = this
+      this.prompt = msg
+      this.promptType = type
       setTimeout(() => {
         that.prompt = ''
-      }, 3000);
-    },
-  },
+      }, 3000)
+    }
+  }
 }
