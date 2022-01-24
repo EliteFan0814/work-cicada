@@ -5,7 +5,7 @@
         <div class="class-wrap">
           <BaseSearchClass></BaseSearchClass>
         </div>
-        <BaseInput width="90%" />
+        <BaseInput width="90%" icon="search" />
       </div>
       <div class="right-key-list">
         <BaseSearchList></BaseSearchList>

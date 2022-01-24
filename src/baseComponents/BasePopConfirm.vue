@@ -1,7 +1,6 @@
 <template>
   <div class="pop-confirm">
-    <el-dialog :close-on-click-modal="false" center :visible="true" :show-close="false" width="440px"
-      :before-close="handleClose">
+    <el-dialog :close-on-click-modal="false" center :visible="true" :show-close="false" width="440px">
       <div class="content flex-ccc">
         <div class="img flex-cc"><img src="@/assets/imgs/notice.png" alt=""></div>
         <div class="info flex-ccc">

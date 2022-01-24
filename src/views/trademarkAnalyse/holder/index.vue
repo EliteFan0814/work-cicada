@@ -28,20 +28,8 @@
         </span>
         <div btn class="down-btn" @click="allDownFn"><em class="icon icon-download"></em>下载报告</div>
       </div>
+      <!-- tabs 列表 -->
       <nav class="menu-list">
-        <!-- <router-link class="menu-box " :to=" {path: '/report/holder/index', query: {id: id}}"><i
-            class="icon icon-leidatu"></i>报告总览</router-link>
-        <router-link class="menu-box " :to="{path: '/report/holder/risk', query: {id: id}}"><i
-            class="icon icon-cuiban"></i>风险分析</router-link>
-        <router-link class="menu-box" :to="{path: '/report/holder/owner', query: {id: id}}"><i
-            class="icon icon-renyuanmingpian"></i>申请人档案</router-link>
-        <router-link class="menu-box" :to=" {path: '/report/holder/brand', query: {id: id}}"><i
-            class="icon icon-loudou"></i>品牌分析</router-link>
-        <router-link class="menu-box" :to="{path: '/report/holder/goods', query: {id: id}}"><i
-            class="icon icon-shangbiao"></i>商标档案</router-link>
-        <router-link class="menu-box" :to="{path: '/report/holder/agent', query: {id: id}}"><i
-            class="icon icon-xitongguanliyuan"></i>代理机构档案</router-link> -->
-
         <el-tabs v-model="activeNav" @tab-click="handleChangeTab" style="width:100%;">
           <el-tab-pane v-for="item in navList" :key="item.label" :label="item.label" :name="item.name"></el-tab-pane>
         </el-tabs>
@@ -73,32 +61,32 @@ export default {
         {
           label: '报告总览',
           name: '0',
-          routerInfo: { path: '/report/holder/index' }
+          routerInfo: { path: '/AnalyseDetail/index' }
         },
         {
           label: '风险分析',
           name: '1',
-          routerInfo: { path: '/report/holder/risk' }
+          routerInfo: { path: '/AnalyseDetail/risk' }
         },
         {
           label: '申请人档案',
           name: '2',
-          routerInfo: { path: '/report/holder/owner' }
+          routerInfo: { path: '/AnalyseDetail/owner' }
         },
         {
           label: '品牌分析',
           name: '3',
-          routerInfo: { path: '/report/holder/brand' }
+          routerInfo: { path: '/AnalyseDetail/brand' }
         },
         {
           label: '商标档案',
           name: '4',
-          routerInfo: { path: '/report/holder/goods' }
+          routerInfo: { path: '/AnalyseDetail/goods' }
         },
         {
           label: '代理机构档案',
           name: '5',
-          routerInfo: { path: '/report/holder/agent' }
+          routerInfo: { path: '/AnalyseDetail/agent' }
         }
       ],
       menuIndex: 0,
@@ -115,11 +103,19 @@ export default {
       promptType: 'success'
     }
   },
+  watch: {
+    $route(newValue) {
+      this.activeNav = newValue.meta.tabVal
+    }
+  },
   mounted() {
     // this.id = this.$route.query.id
     this.id = 'f8b2160a7a97723ca453935e382f3b2e'
     this.getMainFn()
   },
+  // updated() {
+  //   console.log(this.$router)
+  // },
   methods: {
     handleChangeTab(item) {
       this.$router.push({

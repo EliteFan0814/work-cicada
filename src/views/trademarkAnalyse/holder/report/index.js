@@ -131,7 +131,7 @@ export default {
     toBrandFn(data) {
       const that = this
       this.$router.push({
-        path: '/report/holder/brand',
+        path: '/AnalyseDetail/brand',
         query: {
           id: this.id,
           brand: data.key

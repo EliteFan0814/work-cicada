@@ -5,11 +5,13 @@
       <li v-for="item in routerList" :key="item.name"
         :class="{ normal: true, 'normal-active': item.router === activeRouter }"
         @click="handleNormalRouter(item.router)">{{ item.name }}</li>
-      <li class="member">
+      <li :class="{ normal: true, }" @click="handleNormalRouter('Login')">登录</li>
+      <!-- 开通会员 -->
+      <!-- <li class="member">
         <img src="@/assets/imgs/crown.png" alt />
         <span>开通会员</span>
       </li>
-      <li class="free">全模块免费试用</li>
+      <li class="free">全模块免费试用</li> -->
     </ul>
   </header>
 </template>
@@ -24,8 +26,8 @@ export default {
         { name: '商标查询', router: 'TrademarkSearch' },
         // { name: '图形查询', router: 'Graphics' },
         { name: '商标监控', router: 'TrademarkWatch' },
-        { name: '商标分析', router: 'TrademarkAnalyse' },
-        { name: '登录', router: 'Login' }
+        { name: '商标分析', router: 'TrademarkAnalyse' }
+        // { name: '登录', router: 'Login' }
       ],
       activeRouter: 'Home'
     }
@@ -35,8 +37,12 @@ export default {
   },
   methods: {
     handleNormalRouter(router) {
-      this.activeRouter = router
-      this.$router.push({ name: router })
+      if (router !== 'Login') {
+        this.activeRouter = router
+        this.$router.push({ name: router })
+      } else if (router === 'Login') {
+        this.$store.commit('SET_SHOW_LOGIN', true)
+      }
     }
   }
 }

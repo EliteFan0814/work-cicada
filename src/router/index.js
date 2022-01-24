@@ -13,46 +13,50 @@ const routes = [
     component: Layout,
     redirect: '/home',
     children: [
+      // 首页
       {
         path: 'home',
         component: () => import('@/views/Home'),
         name: 'Home',
-        meta: { title: 'Home', icon: 'dashboard' }
+        meta: { title: '中细软-知了' }
       },
+      // 商标查询
       {
         path: 'trademarkSearch',
         component: () => import('@/views/TrademarkSearch.vue'),
         name: 'TrademarkSearch',
-        meta: { title: '商标查询', icon: 'dashboard' }
+        meta: { title: '商标查询' }
       },
       {
         path: 'trademarkDetail',
         component: () => import('@/views/TrademarkDetail/index.vue'),
         name: 'TrademarkDetail',
-        meta: { title: '商标详情', icon: 'dashboard' }
+        meta: { title: '商标详情' }
       },
-      {
-        path: 'graphics',
-        component: () => import('@/views/Graphics.vue'),
-        name: 'Graphics',
-        meta: { title: '图形查询', icon: 'dashboard' }
-      },
+      // {
+      //   path: 'graphics',
+      //   component: () => import('@/views/Graphics.vue'),
+      //   name: 'Graphics',
+      //   meta: { title: '图形查询' }
+      // },
+      // 商标监控
       {
         path: 'trademarkWatch',
         component: () => import('@/views/trademarkWatch/index.vue'),
         name: 'TrademarkWatch',
-        meta: { title: '商标监控', icon: 'dashboard' }
+        meta: { title: '商标监控' }
       },
-      // 商标分析
+      // 商标分析 总页面列表
       {
         path: 'trademarkAnalyse',
         component: () => import('@/views/trademarkAnalyse/index.vue'),
         name: 'TrademarkAnalyse',
-        meta: { title: '商标分析', icon: 'dashboard' }
+        meta: { title: '商标分析' }
       },
-      // 商标分析 详情
+      // 商标分析  详情页
+      // 普通分析-报告总览
       {
-        path: 'report/holder/',
+        path: 'AnalyseDetail',
         name: 'AnalyseDetail',
         component: (resolve) =>
           require(['@/views/trademarkAnalyse/holder/index.vue'], resolve),
@@ -60,13 +64,15 @@ const routes = [
           auth: true
         },
         children: [
+          // 普通分析-报告总览
           {
             path: 'index',
             name: 'reportReport',
             component: () =>
               import('@/views/trademarkAnalyse/holder/report/index.vue'),
             meta: {
-              auth: true
+              auth: true,
+              tabVal: '0'
             }
           },
           {
@@ -77,29 +83,8 @@ const routes = [
                 '@/views/trademarkAnalyse/holder/risk/index.vue'
               ], resolve),
             meta: {
-              auth: true
-            }
-          },
-          {
-            path: 'brand',
-            name: 'reportBrand',
-            component: (resolve) =>
-              require([
-                '@/views/trademarkAnalyse/holder/brand/index.vue'
-              ], resolve),
-            meta: {
-              auth: true
-            }
-          },
-          {
-            path: 'agent',
-            name: 'reportAgent',
-            component: (resolve) =>
-              require([
-                '@/views/trademarkAnalyse/holder/agent/index.vue'
-              ], resolve),
-            meta: {
-              auth: true
+              auth: true,
+              tabVal: '1'
             }
           },
           {
@@ -110,7 +95,20 @@ const routes = [
                 '@/views/trademarkAnalyse/holder/owner/index.vue'
               ], resolve),
             meta: {
-              auth: true
+              auth: true,
+              tabVal: '2'
+            }
+          },
+          {
+            path: 'brand',
+            name: 'reportBrand',
+            component: (resolve) =>
+              require([
+                '@/views/trademarkAnalyse/holder/brand/index.vue'
+              ], resolve),
+            meta: {
+              auth: true,
+              tabVal: '3'
             }
           },
           {
@@ -121,23 +119,36 @@ const routes = [
                 '@/views/trademarkAnalyse/holder/goods/index.vue'
               ], resolve),
             meta: {
-              auth: true
+              auth: true,
+              tabVal: '4'
+            }
+          },
+          {
+            path: 'agent',
+            name: 'reportAgent',
+            component: (resolve) =>
+              require([
+                '@/views/trademarkAnalyse/holder/agent/index.vue'
+              ], resolve),
+            meta: {
+              auth: true,
+              tabVal: '5'
             }
           }
         ]
       },
-      // 注册风险报告
+      // 商标分析 注册风险分析
       {
-        path: 'trademarkAnalyse/AnalyseRisk',
+        path: 'analyseRisk',
         component: () => import('@/views/trademarkAnalyse/AnalyseRisk.vue'),
         name: 'AnalyseRisk',
-        meta: { title: '风险分析', icon: 'dashboard' }
+        meta: { title: '风险分析' }
       },
       {
         path: 'memberLogin',
         component: () => import('@/views/MemberLogin.vue'),
         name: 'MemberLogin',
-        meta: { title: '会员登录', icon: 'dashboard' }
+        meta: { title: '会员登录' }
       }
     ]
   },

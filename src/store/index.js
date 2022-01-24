@@ -7,15 +7,25 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    // 是否是登录状态
+    isLogin: false,
     token: getToken()
+  },
+  getters: {
+    isLogin: (state) => {
+      return state.isLogin
+    }
   },
   mutations: {
     SET_TOKEN: (state, token) => {
       state.token = token
+    },
+    SET_SHOW_LOGIN: (state, isShow) => {
+      state.isLogin = isShow
     }
   },
   actions: {
-    // user login
+    // 用户登录
     login({ commit }, userInfo) {
       const { username, password } = userInfo
       return new Promise((resolve, reject) => {
