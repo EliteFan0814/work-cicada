@@ -49,6 +49,12 @@ $activeColor: #3168d9;
     -o-text-overflow: ellipsis;
     overflow: hidden;
   }
+  .omit-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
   .flex {
     display: flex;
   }
@@ -68,9 +74,9 @@ $activeColor: #3168d9;
     justify-content: flex-end;
     align-items: center;
   }
-  .flex-c {
+  .flex-bc {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
   }
   .flex-ccc {
