@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <div class="search">
+    <div class="search bg">
       <div class="input-wrap flex-ccc">
-        <BaseSearchClass></BaseSearchClass>
+        <BaseSearchClass class="search-class" type="home"></BaseSearchClass>
         <BaseInput icon="search"></BaseInput>
       </div>
     </div>
@@ -278,12 +278,23 @@ export default {
 
 <style lang="scss" scoped>
 .home {
+  .bg {
+    background-image: url(../assets/imgs/aibg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    padding: 80px 0;
+  }
   .search {
+    background-image: url(../assets/imgs/search-bg.png);
     height: 780px;
     .input-wrap {
       padding-top: 200px;
       margin: 0 auto;
       width: 700px;
+      .search-class {
+        margin-bottom: 10px;
+      }
     }
   }
   .base-title {
@@ -305,13 +316,7 @@ export default {
       color: #1b2052;
     }
   }
-  .bg {
-    background-image: url(../assets/imgs/aibg.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    padding: 80px 0;
-  }
+
   .ai {
     background-image: url(../assets/imgs/aibg.png);
     .base-title {

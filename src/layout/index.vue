@@ -1,6 +1,7 @@
 <template>
   <div class="layout-wrap">
-    <Header></Header>
+    <Header :class="{absolute:headerInfo.absolute}" :opacity="headerInfo.opacity" :bgColor="headerInfo.bgColor">
+    </Header>
     <div class="content-wrap">
       <router-view />
     </div>
@@ -26,6 +27,21 @@ export default {
   computed: {
     isLogin() {
       return this.$store.state.isLogin
+    },
+    headerInfo() {
+      if (this.$route.path === '/home') {
+        return {
+          absolute: true,
+          opacity: 0.8,
+          bgColor: '#3168d9'
+        }
+      } else {
+        return {
+          absolute: false,
+          opacity: 1,
+          bgColor: '#3168d9'
+        }
+      }
     }
   }
 }
@@ -33,6 +49,11 @@ export default {
 
 <style lang="scss" scoped>
 .layout-wrap {
+  position: relative;
+  .absolute {
+    position: absolute;
+    width: 100%;
+  }
   .content-wrap {
     min-height: 700px;
   }
@@ -47,6 +68,7 @@ export default {
     background-color: #3168d9;
     border-radius: 50%;
     color: #fff;
+    z-index: 5;
     i {
       font-size: 26px;
       line-height: 50px;

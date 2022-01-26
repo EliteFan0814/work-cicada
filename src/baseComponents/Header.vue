@@ -1,5 +1,5 @@
 <template>
-  <header class="header-wrap">
+  <header class="header-wrap" :style="{backgroundColor:`rgba(49, 104, 217,${opacity})`}">
     <img src="@/assets/imgs/logo.png" class="logo" />
     <ul>
       <li v-for="item in routerList" :key="item.name"
@@ -19,6 +19,16 @@
 <script>
 export default {
   name: 'Header',
+  props: {
+    opacity: {
+      type: Number,
+      default: 1
+    },
+    bgColor: {
+      type: String,
+      default: '#3168d9'
+    }
+  },
   data() {
     return {
       routerList: [
@@ -50,8 +60,8 @@ export default {
 <style lang="scss" scoped>
 .header-wrap {
   height: 60px;
-  background-color: #3168d9;
-  // opacity: 0.6;
+  // background-color: #3168d9;
+  // opacity: 0.8;
   padding: 15px 50px;
   display: flex;
   align-items: center;

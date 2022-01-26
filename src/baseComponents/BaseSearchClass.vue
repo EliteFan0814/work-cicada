@@ -1,8 +1,13 @@
 <template>
   <div class="base-search-class">
-    <ul>
+    <ul v-if="type==='default'">
       <li v-for="item in searchList" :key="item.value" :class="{active:item.value === activeValue}"
         @click="handleSelect(item.value)">{{item.label}}</li>
+    </ul>
+    <ul v-if="type==='home'">
+      <li v-for="item in searchList" :key="item.value"
+        :class="{'homi-li':true,'active-home':item.value === activeValue}" @click="handleSelect(item.value)">
+        {{item.label}}</li>
     </ul>
   </div>
 </template>
@@ -20,6 +25,10 @@ export default {
           { label: '代理机构', value: 'agent' }
         ]
       }
+    },
+    type: {
+      type: String,
+      default: 'default'
     }
   },
   data() {
@@ -50,6 +59,38 @@ export default {
     }
     .active {
       color: #3168d9;
+    }
+    .homi-li {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #fff;
+    }
+    .active-home {
+      background-image: -webkit-linear-gradient(
+        left,
+        #4af175,
+        #4fe3c0,
+        #51dbee
+      );
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      &::after {
+        content: '';
+        margin-top: 5px;
+        display: block;
+        width: 40px;
+        height: 1px;
+        background-image: linear-gradient(
+            120deg,
+            #4af175 1%,
+            #4fe3c0 50%,
+            #51dbee 100%
+          ),
+          linear-gradient(#f7f7f7, #f7f7f7);
+        background-blend-mode: normal, normal;
+        opacity: 0.7;
+      }
     }
   }
 }
