@@ -12,7 +12,9 @@
       </div>
     </div>
     <div class="content">
-      <div class="left-wheel"></div>
+      <div class="left-wheel">
+        <BaseWheel></BaseWheel>
+      </div>
       <div class="right-content">
         <div class="search-detail">
           <div class="detail-top">

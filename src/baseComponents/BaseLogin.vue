@@ -18,13 +18,13 @@
               <el-tab-pane label="账号密码登录" name="second"></el-tab-pane>
             </el-tabs>
           </div>
-          <div v-if="activeName==='first'" class="qr-wrap">
-            <div class="info flex-cc">
-              <img src="@/assets/imgs/qr-login.png" alt="">
+          <div v-show="activeName==='first'" class="qr-wrap">
+            <div class="info flex-cc" id="wxqrcode">
+              <!-- <img src="@/assets/imgs/qr-login.png" alt=""> -->
             </div>
             <div class="tips">企业微信扫码登录</div>
           </div>
-          <div v-if="activeName==='second'" class="psd-login">
+          <div v-show="activeName==='second'" class="psd-login">
             <div class="account-input">
               <el-input placeholder="请输入账号" v-model="account">
                 <template slot="prepend">账号</template>
@@ -56,7 +56,7 @@ export default {
   name: 'BaseLogin',
   data() {
     return {
-      activeName: 'second',
+      activeName: 'first',
       account: '',
       password: ''
     }
@@ -67,6 +67,19 @@ export default {
     },
     handleForget() {
       alert(2)
+    },
+    handleClick(value) {
+      if (value.name === 'first') {
+        const wwLogin = new WwLogin({
+          id: 'wxqrcode',
+          appid: 'wxdf237e7c63de94bb',
+          agentid: '1000032',
+          redirect_uri: 'https%3A%2F%2Fiknow.d.gbicom.com%2F',
+          state: '',
+          href: '',
+          lang: 'zh'
+        })
+      }
     }
   }
 }
