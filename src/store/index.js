@@ -14,7 +14,8 @@ export default new Vuex.Store({
   getters: {
     isLogin: (state) => {
       return state.isLogin
-    }
+    },
+    token: (state) => state.token
   },
   mutations: {
     SET_TOKEN: (state, token) => {
@@ -27,19 +28,28 @@ export default new Vuex.Store({
   actions: {
     // 用户登录
     login({ commit }, userInfo) {
-      const { username, password } = userInfo
       return new Promise((resolve, reject) => {
-        login({ username: username.trim(), password: password })
-          .then((response) => {
-            const { data } = response
-            commit('SET_TOKEN', data.token)
-            setToken(data.token)
-            resolve()
-          })
-          .catch((error) => {
-            reject(error)
-          })
+        const token =
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmljayI6IuiMg-Wfuei2hSIsImF2YXRhciI6Imh0dHA6Ly93ZXdvcmsucXBpYy5jbi9iaXptYWlsL1RwNDM4YW40Y3oxY056ZU5zRkYxTmQ2bEJNREcxWmpoWUdLRFc4dWpXampTZVJuUnlma2J6QS8wIiwiZXhwIjoxNjQzNDYxMzY3fQ.8q5OFuRBwK5B78VwcFjSfVjKes9f6zr7nmonofLHF-Y'
+        commit('SET_TOKEN', token)
+        commit('SET_SHOW_LOGIN', true)
+        setToken(token)
+        resolve()
       })
+
+      // const { username, password } = userInfo
+      // return new Promise((resolve, reject) => {
+      //   login({ username: username.trim(), password: password })
+      //     .then((response) => {
+      //       const { data } = response
+      //       commit('SET_TOKEN', data.token)
+      //       setToken(data.token)
+      //       resolve()
+      //     })
+      //     .catch((error) => {
+      //       reject(error)
+      //     })
+      // })
     }
   },
   modules: {}

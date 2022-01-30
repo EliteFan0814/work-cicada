@@ -31,7 +31,8 @@ export default {
     // 总条数
     total: {
       type: Number,
-      require: true
+      require: true,
+      default: 0
     },
     // 设置单页多少条
     pageSize: {
@@ -65,11 +66,13 @@ export default {
     handleClick(value) {
       this.$emit('update:pageSize', value)
       this.$emit('update:nowPageNum', 1)
+      this.$emit('pageChange')
       this.popshowflag = new Date()
     },
     // 触发页数改变
     handleCurrentChange(value) {
       this.$emit('update:nowPageNum', value)
+      this.$emit('pageChange')
     }
   }
 }

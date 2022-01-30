@@ -19,9 +19,9 @@ export default {
       type: Array,
       default() {
         return [
-          { label: '智能查询', value: 'ai' },
-          { label: '申请号', value: 'applyId' },
-          { label: '申请人', value: 'applier' },
+          { label: '智能查询', value: 'name' },
+          { label: '申请号', value: 'code' },
+          { label: '申请人', value: 'owner' },
           { label: '代理机构', value: 'agent' }
         ]
       }
@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      activeValue: 'ai'
+      activeValue: 'name'
     }
   },
   methods: {

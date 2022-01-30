@@ -51,29 +51,16 @@
 <script>
 export default {
   name: 'BaseSearchList',
+  props: {
+    searchKey: {
+      type: String
+    }
+  },
   data() {
     return {
       active: false,
-      popData: [
-        { label: '22', value: '22', selected: false },
-        { label: '3', value: '3', selected: false },
-        { label: '6', value: '6', selected: false },
-        { label: '3', value: '7', selected: false },
-        { label: '3', value: '8', selected: false },
-        { label: '3', value: '9', selected: false },
-        { label: '3', value: '10', selected: false },
-        { label: '3', value: '11', selected: false },
-        { label: '4', value: '44', selected: false }
-      ],
-      filterKeyList: [
-        { label: '百岁鱼', value: 1 },
-        { label: '百岁鱼', value: 2 },
-        { label: '百百百岁百百岁鱼百岁鱼百岁鱼岁鱼鱼岁百岁鱼鱼岁鱼', value: 3 },
-        { label: '百岁鱼', value: 4 },
-        { label: '百百岁百百岁鱼百岁鱼百岁鱼岁鱼鱼岁百岁鱼鱼', value: 5 },
-        { label: '百岁鱼', value: 6 }
-      ],
-      searchKey: '百岁鱼',
+      popData: [],
+      filterKeyList: [],
       showMore: false,
       popshowflag: new Date()
     }

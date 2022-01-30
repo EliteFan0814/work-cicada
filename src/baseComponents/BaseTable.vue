@@ -2,7 +2,8 @@
   <div class="base-form">
     <!-- 顶部分页和下载 -->
     <div class="top-pagination">
-      <BasePagination :total="100" :nowPageNum.sync="nowPageNum" :pageSize.sync="pageSize"></BasePagination>
+      <BasePagination :total="totalNum" :nowPageNum.sync="nowPageNum" :pageSize.sync="pageSize"
+        @pageChange="handlePageChange"></BasePagination>
       <BaseDownload></BaseDownload>
     </div>
     <!-- 操作按钮 -->
@@ -13,9 +14,9 @@
         row-class-name="row-style">
         <el-table-column show-overflow-tooltip type="selection">
         </el-table-column>
-        <el-table-column show-overflow-tooltip prop="date" label="商标名称">
+        <el-table-column show-overflow-tooltip prop="name" label="商标名称">
         </el-table-column>
-        <el-table-column show-overflow-tooltip label="图样">
+        <!-- <el-table-column show-overflow-tooltip label="图样">
           <template slot-scope="scope">
             <div class="pre-img-wrap">
               <el-popover placement="right" trigger="hover">
@@ -26,8 +27,8 @@
               </el-popover>
             </div>
           </template>
-        </el-table-column>
-        <el-table-column show-overflow-tooltip prop="address" label="类别">
+        </el-table-column> -->
+        <el-table-column show-overflow-tooltip prop="category" label="类别">
           <template slot="header" slot-scope="scope">
             <div class="class-wrap">
               <span>类别</span>
@@ -37,11 +38,11 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column show-overflow-tooltip prop="address" label="申请号">
+        <el-table-column show-overflow-tooltip prop="reg_id" label="申请号">
         </el-table-column>
-        <el-table-column show-overflow-tooltip prop="address" label="申请人">
+        <el-table-column show-overflow-tooltip prop="owner" label="申请人">
         </el-table-column>
-        <el-table-column show-overflow-tooltip prop="address" label="申请日">
+        <el-table-column show-overflow-tooltip prop="date_app" label="申请日">
           <template slot="header" slot-scope="scope">
             <div class="class-wrap">
               <span>申请日</span>
@@ -52,7 +53,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column show-overflow-tooltip prop="address" label="注册日">
+        <el-table-column show-overflow-tooltip prop="date_reg" label="注册日">
           <template slot="header" slot-scope="scope">
             <div class="class-wrap">
               <span>注册日</span>
@@ -63,7 +64,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column show-overflow-tooltip prop="address" label="群组">
+        <!-- <el-table-column show-overflow-tooltip prop="address" label="群组">
         </el-table-column>
         <el-table-column show-overflow-tooltip prop="address" label="项目">
           <template slot="header" slot-scope="scope">
@@ -76,7 +77,7 @@
           </template>
         </el-table-column>
         <el-table-column show-overflow-tooltip prop="address" label="流程">
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
     </div>
     <!-- 图样列表 -->
@@ -99,101 +100,48 @@
         </div>
       </div>
     </div>
-    <BasePagination :total="100" :nowPageNum.sync="nowPageNum" :pageSize.sync="pageSize"></BasePagination>
+    <BasePagination :total="totalNum" :nowPageNum.sync="nowPageNum" :pageSize.sync="pageSize"
+      @pageChange="handlePageChange"></BasePagination>
   </div>
 </template>
 <script>
 export default {
   name: 'BaseTable',
+  props: {
+    tableData: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
+    total: {
+      type: [Number, String],
+      default: 0
+    },
+    pageInfo: {
+      type: Object
+    }
+  },
   data() {
     return {
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          selected: true,
-          id: '15284574',
-          grade: '42',
-          statusStr: '已注册',
-          address:
-            '上海市普陀上海市普陀区金沙江路 1518 弄上海市普陀区金沙江路 1518 弄区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          selected: true,
-          id: '15284574',
-          grade: '42',
-          statusStr: '已注册',
-          address:
-            '上海市普陀上海市普陀区金沙江路 1518 弄上海市普陀区金沙江路 1518 弄区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          selected: true,
-          id: '15284574',
-          grade: '42',
-          statusStr: '已注册',
-          address:
-            '上海市普陀上海市普陀区金沙江路 1518 弄上海市普陀区金沙江路 1518 弄区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          selected: true,
-          id: '15284574',
-          grade: '42',
-          statusStr: '已注册',
-          address:
-            '上海市普陀上海市普陀区金沙江路 1518 弄上海市普陀区金沙江路 1518 弄区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          selected: true,
-          id: '15284574',
-          grade: '42',
-          statusStr: '已注册',
-          address:
-            '上海市普陀上海市普陀区金沙江路 1518 弄上海市普陀区金沙江路 1518 弄区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          selected: true,
-          id: '15284574',
-          grade: '42',
-          statusStr: '已注册',
-          address:
-            '上海市普陀上海市普陀区金沙江路 1518 弄上海市普陀区金沙江路 1518 弄区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          selected: true,
-          id: '15284574',
-          grade: '42',
-          statusStr: '已注册',
-          address:
-            '上海市普陀上海市普陀区金沙江路 1518 弄上海市普陀区金沙江路 1518 弄区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          selected: true,
-          id: '15284574',
-          grade: '42',
-          statusStr: '已注册',
-          address:
-            '上海市普陀上海市普陀区金沙江路 1518 弄上海市普陀区金沙江路 1518 弄区金沙江路 1518 弄'
-        }
-      ],
-      nowPageNum: 2,
-      pageSize: 30,
+      totalNum: 0,
+      nowPageNum: 1,
+      pageSize: 10,
       selectedStyle: 'list',
       selected: 'all',
       checked: true
+    }
+  },
+  watch: {
+    total(newVal) {
+      this.totalNum = newVal
+    },
+    pageInfo: {
+      handler: function (val, oldVal) {
+        this.nowPageNum = val.page
+        this.pageSize = val.size
+      },
+      deep: true
     }
   },
   methods: {
@@ -202,6 +150,9 @@ export default {
     },
     handleSelectType(value) {
       this.selected = value
+    },
+    handlePageChange() {
+      this.$emit('pageChange', { page: this.nowPageNum, size: this.pageSize })
     }
   }
 }

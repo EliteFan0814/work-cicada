@@ -42,7 +42,7 @@
               <BaseSlideVerify></BaseSlideVerify>
             </div>
             <div class="btn">
-              <el-button type="primary" size="medium">立即登录</el-button>
+              <el-button type="primary" size="medium" @click="handleLogin">立即登录</el-button>
             </div>
           </div>
         </div>
@@ -65,21 +65,22 @@ export default {
     handleClose() {
       this.$store.commit('SET_SHOW_LOGIN', false)
     },
-    handleForget() {
-      alert(2)
+    handleForget() {},
+    handleLogin() {
+      this.$store.dispatch('login').then((res) => {})
     },
     handleClick(value) {
-      if (value.name === 'first') {
-        const wwLogin = new WwLogin({
-          id: 'wxqrcode',
-          appid: 'wxdf237e7c63de94bb',
-          agentid: '1000032',
-          redirect_uri: 'https%3A%2F%2Fiknow.d.gbicom.com%2F',
-          state: '',
-          href: '',
-          lang: 'zh'
-        })
-      }
+      // if (value.name === 'first') {
+      //   const wwLogin = new WwLogin({
+      //     id: 'wxqrcode',
+      //     appid: 'wxdf237e7c63de94bb',
+      //     agentid: '1000032',
+      //     redirect_uri: 'https%3A%2F%2Fiknow.d.gbicom.com%2F',
+      //     state: '',
+      //     href: '',
+      //     lang: 'zh'
+      //   })
+      // }
     }
   }
 }
