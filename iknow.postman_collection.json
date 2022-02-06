@@ -1,0 +1,226 @@
+{
+	"info": {
+		"_postman_id": "28b6cc73-3380-41d3-b9d0-e364924ff249",
+		"name": "iknow",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "微信登录",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/sns/callback/workwx?code=iSkZ5MuDgCQGfE60sqD-sURrg6-u51cClz9rlks2uGw",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"sns",
+						"callback",
+						"workwx"
+					],
+					"query": [
+						{
+							"key": "code",
+							"value": "iSkZ5MuDgCQGfE60sqD-sURrg6-u51cClz9rlks2uGw"
+						},
+						{
+							"key": "code",
+							"value": "111",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "商标检索",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/search/name?keyword=百岁鱼",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"search",
+						"name"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"disabled": true
+						},
+						{
+							"key": "keyword",
+							"value": "百岁鱼"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "监控列表",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/monitor/list?page=1&size=30&genre=",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"monitor",
+						"list"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "30"
+						},
+						{
+							"key": "genre",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "监控详情",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/monitor/show?id=41",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"monitor",
+						"show"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "41"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "添加监控",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"ccdfeefefefe@iprun.com\",\r\n    \"genre\": 2,\r\n    \"condition\": {\r\n        \"categories\":[1,2,3,4,5],\r\n        \"agents\": [\r\n            \"北京细软智谷知识产权代理有限公司\",\r\n            \"河南中细软知识产权代理有限工商\"\r\n        ],\r\n        \"owners\": [\r\n            \"北京纤墨文化传播有限公司\",\r\n            \"张三\"\r\n        ],\r\n        \"reg_ids\":[\"1\",\"2\"],\r\n        \"name\": \"测试测试测试测试测试测试测试测试13\",\r\n        \"status\":[1,2],\r\n        \"biz_genre\":1,\r\n        \"flows\":[1]\r\n    }\r\n}\r\n\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/monitor/add",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"monitor",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "修改监控",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 41,\r\n    \"email\": \"ccdfeefefefe@iprun.com\",\r\n    \"genre\": 2,\r\n    \"condition\": {\r\n        \"name\":\"hahaha\"\r\n    }\r\n}\r\n\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/monitor/update",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"monitor",
+						"update"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
