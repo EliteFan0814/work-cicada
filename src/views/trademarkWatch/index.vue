@@ -25,7 +25,8 @@
         <BaseDownload></BaseDownload>
       </div>
       <div class="table-list">
-        <firstTable :tableData="tableData" v-loading="loading"></firstTable>
+        <firstTable :tableData="tableData" :dialogTitle="changeDialogTitle" :genre="activeName" v-loading="loading">
+        </firstTable>
       </div>
       <BasePagination :total="total" :nowPageNum.sync="nowPageNum" :pageSize.sync="pageSize"
         @pageChange="handlePageChange"></BasePagination>
@@ -54,6 +55,17 @@ export default {
       tableData: [],
       dialogTitle: '',
       isAdd: false
+    }
+  },
+  computed: {
+    changeDialogTitle() {
+      if (this.activeName === '1') {
+        return '初审监控'
+      } else if (this.activeName === '2') {
+        return '业务监控'
+      } else {
+        return '流程监控'
+      }
     }
   },
   watch: {

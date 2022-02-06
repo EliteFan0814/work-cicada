@@ -148,7 +148,7 @@ export default {
       type: Boolean
     },
     genre: {
-      type: Number,
+      type: [String, Number],
       require: true
     }
   },
@@ -156,10 +156,10 @@ export default {
     return {
       radio: '1',
       email: '',
-      categories: [1, 2, 3],
-      agents: ['哈哈哈', '嘿嘿嘿', '呵呵呵'],
+      categories: [],
+      agents: [],
       owners: [],
-      reg_ids: ['1', '3'],
+      reg_ids: [],
       name: '',
       status: [],
       biz_genre: 1,
@@ -201,8 +201,11 @@ export default {
         flows
       }
       console.log({ genre: this.genre, email: this.email, condition })
-      // this.addNewWatch()
-      // this.$emit('submit', flag)
+      if (this.isAdd) {
+        this.addNewWatch(flag)
+      } else {
+        this.editWatch(flag)
+      }
     },
     // 处理名字改变
     handleName(value) {
@@ -244,7 +247,17 @@ export default {
       // })
     },
     // 添加新的监听
-    addNewWatch() {
+    addNewWatch(flag) {
+      this.$emit('submit', flag)
+      // watch
+      //   .watchListAdd({ genre: this.genre, email: this.email, condition })
+      //   .then((res) => {
+      //     console.log(res)
+      //   })
+    },
+    // 修改监听
+    editWatch(flag) {
+      this.$emit('submit', flag)
       // watch
       //   .watchListAdd({ genre: this.genre, email: this.email, condition })
       //   .then((res) => {

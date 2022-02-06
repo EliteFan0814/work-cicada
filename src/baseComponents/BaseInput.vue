@@ -41,6 +41,7 @@ export default {
   watch: {
     initValue(newVal) {
       this.value = newVal
+      this.handleChange()
     }
   },
   methods: {

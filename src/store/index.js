@@ -30,7 +30,7 @@ export default new Vuex.Store({
     login({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
         const token =
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmljayI6IuiMg-Wfuei2hSIsImF2YXRhciI6Imh0dHA6Ly93ZXdvcmsucXBpYy5jbi9iaXptYWlsL1RwNDM4YW40Y3oxY056ZU5zRkYxTmQ2bEJNREcxWmpoWUdLRFc4dWpXampTZVJuUnlma2J6QS8wIiwiZXhwIjoxNjQ0MTUxMzE1fQ.fKFq7SAZRAkDtZWqeqC_VFOASV-itqKgyFcdKy1km0s'
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmljayI6IuiMg-Wfuei2hSIsImF2YXRhciI6Imh0dHA6Ly93ZXdvcmsucXBpYy5jbi9iaXptYWlsL1RwNDM4YW40Y3oxY056ZU5zRkYxTmQ2bEJNREcxWmpoWUdLRFc4dWpXampTZVJuUnlma2J6QS8wIiwiZXhwIjoxNjQ0MjAwNzMwfQ._Lx3vcuBCd8f7Lk8yFdD2aEdrlCIkHoXhqMrhE16NkM'
         commit('SET_TOKEN', token)
         commit('SET_SHOW_LOGIN', true)
         setToken(token)

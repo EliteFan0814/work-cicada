@@ -19,28 +19,37 @@
       <el-table-column show-overflow-tooltip prop="address" label="操作">
         <template slot-scope="scope">
           <div class="operate-wrap">
-            <i class="el-icon-edit"></i>
+            <i class="el-icon-edit" @click="handleEdit(scope.row.id)"></i>
             <i class="el-icon-delete" @click="handleShowDel(scope.row.id,scope)"></i>
           </div>
         </template>
       </el-table-column>
     </el-table>
     <delConfirm v-if="showDel" @close="handleDel"></delConfirm>
+    <dialogCommit v-if="showDialog" :title="dialogTitle" :isAdd="false" :genre="genre" @submit="handleSubmit">
+    </dialogCommit>
   </div>
 </template>
 
 <script>
 import delConfirm from './delConfirm.vue'
+import dialogCommit from './dialogCommit'
 import watch from '@/api/watch'
 export default {
   name: 'firstTable',
-  components: { delConfirm },
+  components: { delConfirm, dialogCommit },
   props: {
     tableData: {
       type: Array,
       default() {
         return []
       }
+    },
+    dialogTitle: {
+      type: String
+    },
+    genre: {
+      type: [String, Number]
     }
   },
   data() {
@@ -60,7 +69,8 @@ export default {
         { label: '申请类别', prop: 'categories' },
         { label: '接收邮箱', prop: 'email' },
         { label: '发送频率', prop: 'frequency' }
-      ]
+      ],
+      showDialog: false
     }
   },
   methods: {
@@ -68,6 +78,17 @@ export default {
       this.showDel = true
       this.delId = id
       this.delIndex = scope.$index
+    },
+    handleEdit(id) {
+      watch
+        .watchListDetail(id)
+        .then((res) => {
+          console.log('res', res)
+          this.showDialog = true
+        })
+        .catch(() => {
+          this.showDialog = false
+        })
     },
     // 处理删除
     handleDel(flag) {
@@ -89,6 +110,10 @@ export default {
       } else {
         this.showDel = false
       }
+    },
+    // 修改
+    handleSubmit(flag) {
+      this.showDialog = false
     }
   }
 }

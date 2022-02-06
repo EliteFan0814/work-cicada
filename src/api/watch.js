@@ -21,6 +21,13 @@ export default {
       method: 'post',
       data: { id }
     })
+  },
+  watchListDetail(id) {
+    return request({
+      url: '/monitor/show',
+      method: 'get',
+      params: { id }
+    })
   }
 }
 // 按商标名检索
