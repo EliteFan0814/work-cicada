@@ -147,9 +147,18 @@ export default {
     isAdd: {
       type: Boolean
     },
+    id: {
+      type: [String, Number]
+    },
     genre: {
       type: [String, Number],
       require: true
+    },
+    editSourceInfo: {
+      type: Object,
+      default() {
+        return {}
+      }
     }
   },
   data() {
@@ -167,7 +176,26 @@ export default {
       validEmail: false
     }
   },
+  watch: {
+    editSourceInfo: {
+      handler(newValue) {
+        console.log('newValue', newValue)
+        this.email = newValue.email
+        this.categories = newValue.categories || []
+        this.agents = newValue.agents || []
+        this.owners = newValue.owners || []
+        this.reg_ids = newValue.reg_ids || []
+        this.name = newValue.name
+        this.status = newValue.status || []
+        this.biz_genre = newValue.biz_genre
+        this.flows = newValue.flows || []
+      },
+      immediate: true,
+      deep: true
+    }
+  },
   methods: {
+    // 重置
     handleReset() {
       this.email = ''
       this.categories = []

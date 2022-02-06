@@ -26,7 +26,8 @@
       </el-table-column>
     </el-table>
     <delConfirm v-if="showDel" @close="handleDel"></delConfirm>
-    <dialogCommit v-if="showDialog" :title="dialogTitle" :isAdd="false" :genre="genre" @submit="handleSubmit">
+    <dialogCommit v-if="showDialog" :title="dialogTitle" :isAdd="false" :id="editId" :genre="Number(genre)"
+      :editSourceInfo="editSourceInfo" @submit="handleSubmit">
     </dialogCommit>
   </div>
 </template>
@@ -57,6 +58,7 @@ export default {
       isLoading: false,
       showDel: false,
       delId: null,
+      editId: null,
       delIndex: null,
       tableHead: [
         { label: '任务编号', prop: 'id' },
@@ -70,7 +72,8 @@ export default {
         { label: '接收邮箱', prop: 'email' },
         { label: '发送频率', prop: 'frequency' }
       ],
-      showDialog: false
+      showDialog: false,
+      editSourceInfo: null
     }
   },
   methods: {
@@ -79,14 +82,20 @@ export default {
       this.delId = id
       this.delIndex = scope.$index
     },
+    // 处理编辑
     handleEdit(id) {
+      this.editId = id
+      this.isLoading = true
       watch
         .watchListDetail(id)
         .then((res) => {
-          console.log('res', res)
+          this.isLoading = false
           this.showDialog = true
+          this.editSourceInfo = { email: res.email, ...res.condition }
+          console.log('editSourceInfo', this.editSourceInfo)
         })
         .catch(() => {
+          this.isLoading = false
           this.showDialog = false
         })
     },
