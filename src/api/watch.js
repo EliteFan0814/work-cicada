@@ -1,11 +1,25 @@
 import request from '@/utils/request'
 
 export default {
-  getWacthList(query) {
+  getWatchList(query) {
     return request({
       url: '/monitor/list',
       method: 'get',
       params: query
+    })
+  },
+  watchListAdd(data) {
+    return request({
+      url: '/monitor/add',
+      method: 'post',
+      data: data
+    })
+  },
+  watchListDel(id) {
+    return request({
+      url: '/monitor/del',
+      method: 'post',
+      data: { id }
     })
   }
 }

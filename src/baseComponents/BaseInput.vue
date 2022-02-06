@@ -1,7 +1,8 @@
 <template>
   <div class="base-input" :style="`width:${width}`">
-    <input type="text" v-model="value" :placeholder="placeholder">
+    <input type="text" v-model="value" :placeholder="placeholder" @input="handleChange">
     <i :class="['iconfont',`icon-${icon}`]" @click="handleEmit"></i>
+    <span v-if="validType === 'email'&&!validEmail" class="err-tips">邮箱格式不正确</span>
   </div>
 </template>
 <script>
@@ -10,6 +11,13 @@ export default {
   props: {
     icon: {
       type: String,
+      default: ''
+    },
+    validType: {
+      type: String,
+      default: ''
+    },
+    initValue: {
       default: ''
     },
     placeholder: {
@@ -25,7 +33,14 @@ export default {
   },
   data() {
     return {
-      value: null
+      value: this.initValue,
+      validEmail: true,
+      inputTimer: null
+    }
+  },
+  watch: {
+    initValue(newVal) {
+      this.value = newVal
     }
   },
   methods: {
@@ -33,12 +48,45 @@ export default {
       if (this.value) {
         this.$emit('search', this.value)
       }
+    },
+    // 监听input更改
+    handleChange() {
+      if (this.value) {
+        this.$emit('changeValue', this.value)
+      }
+      if (this.validType === 'email') {
+        clearInterval(this.inputTimer)
+        this.inputTimer = setTimeout(() => {
+          if (this.value) {
+            const res = this.handleValidEmail(this.value)
+            if (!res) {
+              this.validEmail = false
+            } else {
+              this.validEmail = true
+            }
+            this.$emit('changeValue', this.value, this.validEmail)
+          } else {
+            this.validEmail = true
+          }
+        }, 500)
+      } else {
+        if (this.value) {
+          this.$emit('changeValue', this.value, this.validEmail)
+        }
+      }
+    },
+    // 验证邮箱
+    handleValidEmail(email) {
+      return /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/.test(
+        email
+      )
     }
   }
 }
 </script>
 <style lang="scss" scoped>
 .base-input {
+  position: relative;
   background-color: #fff;
   box-sizing: border-box;
   padding: 12px 20px;
@@ -70,6 +118,12 @@ export default {
   .iconfont {
     font-size: 20px;
     cursor: pointer;
+  }
+  .err-tips {
+    position: absolute;
+    left: 0;
+    bottom: -20px;
+    color: #fd576a;
   }
 }
 </style>

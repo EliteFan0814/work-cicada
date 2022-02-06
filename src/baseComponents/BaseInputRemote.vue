@@ -1,5 +1,6 @@
 <template>
   <div class="base-input" :style="`width:${width}`">
+    <!-- 已选择列表 -->
     <div class="selected-list flex">
       <div v-for="(item,index) in selectList" :key="item.value" class="select-item">
         <span>{{item.label}}</span>
@@ -8,6 +9,7 @@
     </div>
     <input type="text" v-model="value" :placeholder="placeholder" @input="handleShowSuggest">
     <i slot="reference" :class="['iconfont',`icon-${icon}`]" @click="handleEmit"></i>
+    <!-- 远程搜索结果列表 -->
     <div v-if="showSuggest" class="remote-res">
       <div v-for="(item) in suggestList" :key="item.value" class="res-item" @click="handleSelect(item)">
         {{item.label}}</div>
@@ -43,24 +45,34 @@ export default {
       type: [String, Number],
       required: false,
       default: '400px'
+    },
+    outSelectList: {
+      type: Array,
+      default() {
+        return []
+      }
     }
   },
   data() {
     return {
       value: null,
       showSuggest: false,
-      selectList: [
-        { label: '百岁鱼', value: 1 },
-        { label: '百鱼', value: 2 },
-        { label: '岁鱼', value: 3 }
-      ],
+      selectList: this.outSelectList,
       suggestList: [
-        { label: '百岁鱼', value: 1 },
-        { label: '百鱼', value: 2 },
-        { label: '岁鱼', value: 3 },
-        { label: '鱼', value: 4 },
-        { label: '岁', value: 5 }
+        { label: '北京纤墨文化传播有限公司', value: 1 },
+        { label: '重庆纤墨文化传播有限公司', value: 2 },
+        { label: '上海纤墨文化传播有限公司', value: 3 },
+        { label: '河北纤墨文化传播有限公司', value: 4 },
+        { label: '河南纤墨文化传播有限公司', value: 5 }
       ]
+    }
+  },
+  watch: {
+    outSelectList: {
+      handler(newVal) {
+        this.selectList = newVal
+      },
+      deep: true
     }
   },
   methods: {
@@ -71,6 +83,7 @@ export default {
     },
     handleDelete(index) {
       this.selectList.splice(index, 1)
+      this.$emit('selectListChange', this.selectList)
     },
     // 处理结果的展示
     handleShowSuggest() {
@@ -89,7 +102,9 @@ export default {
         // 单选
         this.selectList = [item]
       }
+      this.value = ''
       this.showSuggest = false
+      this.$emit('selectListChange', this.selectList)
     }
   }
 }

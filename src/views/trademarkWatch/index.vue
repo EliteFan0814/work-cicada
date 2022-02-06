@@ -4,9 +4,9 @@
       <el-popover placement="bottom" width="200" trigger="click">
         <img slot="reference" src="@/assets/img/update.png" alt="">
         <div class="pop-wrap">
-          <div @click="openDialog('1')">初审监控</div>
-          <div @click="openDialog('2')">业务监控</div>
-          <div @click="openDialog('3')">流程监控</div>
+          <div @click="openDialog(1,'初审监控',true)">初审监控</div>
+          <div @click="openDialog(2,'业务监控',true)">业务监控</div>
+          <div @click="openDialog(3,'流程监控',true)">流程监控</div>
         </div>
       </el-popover>
     </div>
@@ -20,15 +20,18 @@
     <div>
       <!-- 顶部分页和下载 -->
       <div class="top-pagination">
-        <BasePagination :total="100" :nowPageNum.sync="nowPageNum" :pageSize.sync="pageSize"></BasePagination>
+        <BasePagination :total="total" :nowPageNum.sync="nowPageNum" :pageSize.sync="pageSize"
+          @pageChange="handlePageChange"></BasePagination>
         <BaseDownload></BaseDownload>
       </div>
       <div class="table-list">
-        <firstTable></firstTable>
+        <firstTable :tableData="tableData" v-loading="loading"></firstTable>
       </div>
-      <BasePagination :total="100" :nowPageNum.sync="nowPageNum" :pageSize.sync="pageSize"></BasePagination>
+      <BasePagination :total="total" :nowPageNum.sync="nowPageNum" :pageSize.sync="pageSize"
+        @pageChange="handlePageChange"></BasePagination>
     </div>
-    <dialogCommit v-if="showDialog" title="初审公告监控" @submit="handleSubmit"></dialogCommit>
+    <dialogCommit v-if="showDialog" :title="dialogTitle" :isAdd="isAdd" :genre="addWatchClass" @submit="handleSubmit">
+    </dialogCommit>
     <BasePopConfirm v-if="showDel" @close="handleConfirm"></BasePopConfirm>
   </div>
 </template>
@@ -40,11 +43,17 @@ export default {
   components: { firstTable, dialogCommit },
   data() {
     return {
+      loading: false,
       activeName: '1',
       nowPageNum: 1,
-      pageSize: 30,
+      pageSize: 10,
+      total: 0,
       showDialog: false,
-      showDel: false
+      addWatchClass: null,
+      showDel: false,
+      tableData: [],
+      dialogTitle: '',
+      isAdd: false
     }
   },
   watch: {
@@ -58,20 +67,44 @@ export default {
   methods: {
     // 获取监控列表
     getWatchList() {
+      this.loading = true
       watch
-        .getWacthList({ page: this.nowPageNum, size: this.pageSize })
+        .getWatchList({
+          page: this.nowPageNum,
+          size: this.pageSize,
+          genre: this.activeName
+        })
         .then((res) => {
-          console.log(res)
+          this.tableData = res.data
+          this.total = res.total
+          this.loading = false
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+        .finally(() => {
+          this.loading = false
         })
     },
+    handlePageChange() {
+      this.getWatchList()
+    },
+    // 切换列表
     handleClick(value) {
       console.log(value)
+      this.nowPageNum = 1
+      this.genre = value
+      this.getWatchList()
     },
     handleSubmit(flag) {
       this.showDialog = false
     },
-    openDialog(flag) {
+    // 打开 dialog
+    openDialog(flag, title, isAdd) {
       this.showDialog = true
+      this.addWatchClass = flag
+      this.dialogTitle = title
+      this.isAdd = isAdd
     },
     handleConfirm(flag) {
       this.showDel = false

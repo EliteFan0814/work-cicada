@@ -47,9 +47,10 @@ service.interceptors.response.use(
     if (res.code !== 0) {
       if (res.msg !== 'OK') {
         const msg = res.msg
-        const subMsg = res.data[0] ? res.data[0] : ''
+        // const subMsg = res.data[0] ? res.data[0] : ''
         Message({
-          message: `${msg}，${subMsg}` || 'Error',
+          // message: `${msg}，${subMsg}` || 'Error',
+          message: `${msg}` || 'Error',
           type: 'error',
           duration: 5 * 1000
         })

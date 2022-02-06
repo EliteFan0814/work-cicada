@@ -1,80 +1,94 @@
 <template>
   <div class="first-wrap">
-    <el-table :data="tableData" border size="small" :header-cell-style="{background:'#fafafa',color: '#666666'}"
-      row-class-name="row-style">
-      <el-table-column v-for="(item,index) in tableHead" :key="index" show-overflow-tooltip :prop="item.prop"
-        :label="item.label">
+    <el-table v-loading="isLoading" :data="tableData" border size="small"
+      :header-cell-style="{background:'#fafafa',color: '#666666'}" row-class-name="row-style">
+      <el-table-column v-for="(item,index) in tableHead" :key="index" show-overflow-tooltip :label="item.label">
+        <template slot-scope="scope">
+          <div class="operate-wrap omit-1">
+            <span v-if="item.prop === 'name'">{{scope.row.condition.name}}</span>
+            <span
+              v-else-if="item.prop === 'owners'">{{scope.row.condition.owners?scope.row.condition.owners.toString():'全部'}}</span>
+            <span
+              v-else-if="item.prop === 'agents'">{{scope.row.condition.agents?scope.row.condition.agents.toString():'全部'}}</span>
+            <span
+              v-else-if="item.prop === 'categories'">{{scope.row.condition.categories?scope.row.condition.categories.toString():'全部类别'}}</span>
+            <span v-else>{{scope.row[item.prop]}}</span>
+          </div>
+        </template>
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="address" label="操作">
         <template slot-scope="scope">
           <div class="operate-wrap">
             <i class="el-icon-edit"></i>
-            <i class="el-icon-delete"></i>
+            <i class="el-icon-delete" @click="handleShowDel(scope.row.id,scope)"></i>
           </div>
         </template>
       </el-table-column>
     </el-table>
+    <delConfirm v-if="showDel" @close="handleDel"></delConfirm>
   </div>
 </template>
 
 <script>
+import delConfirm from './delConfirm.vue'
+import watch from '@/api/watch'
 export default {
   name: 'firstTable',
+  components: { delConfirm },
+  props: {
+    tableData: {
+      type: Array,
+      default() {
+        return []
+      }
+    }
+  },
   data() {
     return {
+      isLoading: false,
+      showDel: false,
+      delId: null,
+      delIndex: null,
       tableHead: [
         { label: '任务编号', prop: 'id' },
         { label: '商标名称', prop: 'name' },
         { label: '近似配置', prop: 'similar' },
         { label: '商标图形', prop: 'img' },
-        { label: '申请主体', prop: 'main' },
-        { label: '代理机构', prop: 'agent' },
+        { label: '申请主体', prop: 'owners' },
+        { label: '代理机构', prop: 'agents' },
         { label: '申请标号', prop: 'mark' },
-        { label: '申请类别', prop: 'class' },
+        { label: '申请类别', prop: 'categories' },
         { label: '接收邮箱', prop: 'email' },
         { label: '发送频率', prop: 'frequency' }
-      ],
-      tableData: [
-        {
-          id: '15284574',
-          name: '王小虎',
-          similar: '王小虎',
-          img: '2016-05-02',
-          main: true,
-          agent: '42',
-          mark: '已注册',
-          class: '已注册',
-          email:
-            '上海市普陀上海市普陀区金沙江路 1518 弄上海市普陀区金沙江路 1518 弄区金沙江路 1518 弄',
-          frequency: '已注册'
-        },
-        {
-          id: '15284574',
-          name: '王小虎',
-          similar: '王小虎',
-          img: '2016-05-02',
-          main: true,
-          agent: '42',
-          mark: '已注册',
-          class: '已注册',
-          email:
-            '上海市普陀上海市普陀区金沙江路 1518 弄上海市普陀区金沙江路 1518 弄区金沙江路 1518 弄',
-          frequency: '已注册'
-        },
-        {
-          id: '15284574',
-          name: '王小虎',
-          similar: '王小虎',
-          img: '2016-05-02',
-          main: true,
-          agent: '42',
-          mark: '已注册',
-          class: '已注册',
-          email:
-            '上海市普陀上海市普陀区金沙江路 1518 弄上海市普陀区金沙江路 1518 弄区金沙江路 1518 弄',
-          frequency: '已注册'
-        }
       ]
+    }
+  },
+  methods: {
+    handleShowDel(id, scope) {
+      this.showDel = true
+      this.delId = id
+      this.delIndex = scope.$index
+    },
+    // 处理删除
+    handleDel(flag) {
+      if (flag) {
+        this.isLoading = true
+        watch
+          .watchListDel(this.delId)
+          .then((res) => {
+            this.isLoading = false
+            this.tableData.splice(this.delIndex, 1)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+          .finally(() => {
+            this.isLoading = false
+            this.showDel = false
+          })
+      } else {
+        this.showDel = false
+      }
     }
   }
 }
