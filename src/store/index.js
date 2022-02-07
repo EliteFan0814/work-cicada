@@ -7,22 +7,27 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    // 是否是登录状态
-    isLogin: false,
+    // 登录状态
+    isLogin: !!getToken(),
+    // 登录弹框的展示
+    showLoginDialog: false,
+    // 获取token
     token: getToken()
   },
   getters: {
-    isLogin: (state) => {
-      return state.isLogin
-    },
+    isLogin: (state) => state.isLogin,
+    showLoginDialog: (state) => state.showLoginDialog,
     token: (state) => state.token
   },
   mutations: {
     SET_TOKEN: (state, token) => {
       state.token = token
     },
-    SET_SHOW_LOGIN: (state, isShow) => {
+    SET_IS_LOGIN: (state, isShow) => {
       state.isLogin = isShow
+    },
+    SET_IS_LOGIN_DIALOG: (state, isShow) => {
+      state.showLoginDialog = isShow
     }
   },
   actions: {
@@ -30,9 +35,11 @@ export default new Vuex.Store({
     login({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
         const token =
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmljayI6IuiMg-Wfuei2hSIsImF2YXRhciI6Imh0dHA6Ly93ZXdvcmsucXBpYy5jbi9iaXptYWlsL1RwNDM4YW40Y3oxY056ZU5zRkYxTmQ2bEJNREcxWmpoWUdLRFc4dWpXampTZVJuUnlma2J6QS8wIiwiZXhwIjoxNjQ0MjAwNzMwfQ._Lx3vcuBCd8f7Lk8yFdD2aEdrlCIkHoXhqMrhE16NkM'
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmljayI6IuiMg-Wfuei2hSIsImF2YXRhciI6Imh0dHA6Ly93ZXdvcmsucXBpYy5jbi9iaXptYWlsL1RwNDM4YW40Y3oxY056ZU5zRkYxTmQ2bEJNREcxWmpoWUdLRFc4dWpXampTZVJuUnlma2J6QS8wIiwiZXhwIjoxNjQ0MjU5ODg2fQ.SepMCvgAKjULm8Yk3HyE_4gZ-UQYSWLde1InU_dt5dc'
         commit('SET_TOKEN', token)
-        commit('SET_SHOW_LOGIN', true)
+        commit('SET_IS_LOGIN', true)
+        commit('SET_IS_LOGIN_DIALOG', false)
+        // 存token到cookie
         setToken(token)
         resolve()
       })

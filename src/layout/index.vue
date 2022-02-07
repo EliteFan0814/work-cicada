@@ -7,7 +7,7 @@
     </div>
     <Footer></Footer>
     <!-- 登录弹框 -->
-    <BaseLogin v-if="isLogin"></BaseLogin>
+    <BaseLogin v-if="showLoginDialog" @closeDialog="closeDialog"></BaseLogin>
     <!-- 在线客服 -->
     <div class="serve">
       <i class="iconfont icon-kefu"></i>
@@ -25,8 +25,8 @@ export default {
     Footer
   },
   computed: {
-    isLogin() {
-      return this.$store.state.isLogin
+    showLoginDialog() {
+      return this.$store.state.showLoginDialog
     },
     headerInfo() {
       if (this.$route.path === '/home') {
@@ -42,6 +42,11 @@ export default {
           bgColor: '#3168d9'
         }
       }
+    }
+  },
+  methods: {
+    closeDialog() {
+      this.$store.commit('SET_IS_LOGIN_DIALOG', false)
     }
   }
 }

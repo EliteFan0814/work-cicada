@@ -26,6 +26,7 @@
       </el-table-column>
     </el-table>
     <delConfirm v-if="showDel" @close="handleDel"></delConfirm>
+    <!-- 编辑当前监控 -->
     <dialogCommit v-if="showDialog" :title="dialogTitle" :isAdd="false" :id="editId" :genre="Number(genre)"
       :editSourceInfo="editSourceInfo" @submit="handleSubmit">
     </dialogCommit>
@@ -33,6 +34,7 @@
 </template>
 
 <script>
+import { Message } from 'element-ui'
 import delConfirm from './delConfirm.vue'
 import dialogCommit from './dialogCommit'
 import watch from '@/api/watch'
@@ -108,6 +110,11 @@ export default {
           .then((res) => {
             this.isLoading = false
             this.tableData.splice(this.delIndex, 1)
+            Message({
+              message: '删除成功',
+              type: 'success',
+              duration: 1 * 1000
+            })
           })
           .catch((err) => {
             console.log(err)

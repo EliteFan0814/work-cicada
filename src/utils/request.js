@@ -22,13 +22,13 @@ service.interceptors.request.use(
     return config
   },
   (error) => {
-    // do something with request error
-    console.log(error) // for debug
+    // 请求错误处理
+    console.log('请求拦截出错：', error) // for debug
     return Promise.reject(error)
   }
 )
 
-// response interceptor
+// 响应拦截
 service.interceptors.response.use(
   /**
    * If you want to get http information such as headers or status
@@ -42,7 +42,6 @@ service.interceptors.response.use(
    */
   (response) => {
     const res = response.data
-    console.log('response', response)
     // 如果code不为0则说明有报错
     if (res.code !== 0) {
       if (res.msg !== 'OK') {
@@ -79,9 +78,13 @@ service.interceptors.response.use(
     }
   },
   (error) => {
-    console.log('err' + error) // for debug
+    console.log('响应拦截出错：' + error) // for debug
+    let errMsg = error.message
+    if (errMsg.includes('timeout')) {
+      errMsg = '请求超时'
+    }
     Message({
-      message: error.message,
+      message: errMsg,
       type: 'error',
       duration: 5 * 1000
     })

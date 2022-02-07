@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "28b6cc73-3380-41d3-b9d0-e364924ff249",
+		"_postman_id": "d33f579e-bfe0-44be-bb4b-f9559ee54304",
 		"name": "iknow",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,7 +14,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/sns/callback/workwx?code=iSkZ5MuDgCQGfE60sqD-sURrg6-u51cClz9rlks2uGw",
+					"raw": "{{url}}/sns/callback/workwx?code=U5UFe1bxKz0SS7cpw0o2PoYoTJlxJHN15UlcgHOfxh0",
 					"host": [
 						"{{url}}"
 					],
@@ -26,7 +26,7 @@
 					"query": [
 						{
 							"key": "code",
-							"value": "iSkZ5MuDgCQGfE60sqD-sURrg6-u51cClz9rlks2uGw"
+							"value": "U5UFe1bxKz0SS7cpw0o2PoYoTJlxJHN15UlcgHOfxh0"
 						},
 						{
 							"key": "code",
@@ -63,11 +63,6 @@
 					],
 					"query": [
 						{
-							"key": "token",
-							"value": "{{token}}",
-							"disabled": true
-						},
-						{
 							"key": "keyword",
 							"value": "百岁鱼"
 						}
@@ -91,7 +86,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{url}}/monitor/list?page=1&size=30&genre=",
+					"raw": "{{url}}/monitor/list?page=1&size=30&genre=1",
 					"host": [
 						"{{url}}"
 					],
@@ -110,7 +105,7 @@
 						},
 						{
 							"key": "genre",
-							"value": ""
+							"value": "1"
 						}
 					]
 				}
@@ -166,7 +161,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"ccdfeefefefe@iprun.com\",\r\n    \"genre\": 2,\r\n    \"condition\": {\r\n        \"categories\":[1,2,3,4,5],\r\n        \"agents\": [\r\n            \"北京细软智谷知识产权代理有限公司\",\r\n            \"河南中细软知识产权代理有限工商\"\r\n        ],\r\n        \"owners\": [\r\n            \"北京纤墨文化传播有限公司\",\r\n            \"张三\"\r\n        ],\r\n        \"reg_ids\":[\"1\",\"2\"],\r\n        \"name\": \"测试测试测试测试测试测试测试测试13\",\r\n        \"status\":[1,2],\r\n        \"biz_genre\":1,\r\n        \"flows\":[1]\r\n    }\r\n}\r\n\r\n\r\n",
+					"raw": "{\r\n    \"email\": \"ccdfeefefefe@iprun.com\",\r\n    \"genre\": 2,\r\n    \"condition\": {\r\n        \"categories\":[1,2,3,4,5],\r\n        \"agents\": [\r\n            \"北京细软智谷知识产权代理有限公司\",\r\n            \"河南中细软知识产权代理有限工商\"\r\n        ],\r\n        \"owners\": [\r\n            \"北京纤墨文化传播有限公司\",\r\n            \"张三\"\r\n        ],\r\n        \"reg_ids\":[\"1\",\"2\"],\r\n        \"name\": \"测试flows\",\r\n        \"status\":[1,2],\r\n        \"biz_genre\":1,\r\n        \"flows\":[1,2,3,4]\r\n    }\r\n}\r\n\r\n\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -217,6 +212,39 @@
 					"path": [
 						"monitor",
 						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "持有人查询",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/monitor/show?id=41",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"monitor",
+						"show"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "41"
+						}
 					]
 				}
 			},

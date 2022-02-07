@@ -63,7 +63,8 @@ export default {
   },
   methods: {
     handleClose() {
-      this.$store.commit('SET_SHOW_LOGIN', false)
+      this.$emit('closeDialog', false)
+      // this.$store.commit('SET_IS_LOGIN', true)
     },
     handleForget() {},
     handleLogin() {

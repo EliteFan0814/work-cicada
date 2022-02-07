@@ -57,22 +57,25 @@
           <div class="form-item flex-sc">
             <div class="label">持有人：</div>
             <div class="value more-show">
-              <BaseInputRemote class="input-style" width="100%" :outSelectList="owners" multi
+              <BaseInputRemote class="input-style" width="100%" :outSelectList="owners" multi searchClass="owner"
                 placeholder="若不输入，表示监控全部持有人" @selectListChange="ownersChange"></BaseInputRemote>
             </div>
           </div>
           <div class="form-item flex-sc">
             <div class="label">代理机构：</div>
             <div class="value more-show">
-              <BaseInputRemote class="input-style" width="100%" :outSelectList="agents" multi
+              <BaseInputRemote class="input-style" width="100%" :outSelectList="agents" multi searchClass="agent"
                 placeholder="若不输入，默认为所有代理机构" @selectListChange="agentsChange"></BaseInputRemote>
             </div>
           </div>
           <div class="form-item flex-sc">
             <div class="label">注册号：</div>
             <div class="value more-show">
-              <BaseInputRemote class="input-style" width="100%" :outSelectList="reg_ids" multi
-                placeholder="若不输入，表示不具体到特定商标" @selectListChange="regIdsChange"></BaseInputRemote>
+              <BaseInput class="input-style" :initValue="reg_ids.join(';')" width="100%" placeholder="请输入注册号，多个请以英文分号隔开"
+                @changeValue="handleRegIds">
+              </BaseInput>
+              <!-- <BaseInputRemote class="input-style" width="100%" :outSelectList="reg_ids" multi
+                placeholder="若不输入，表示不具体到特定商标" @selectListChange="regIdsChange"></BaseInputRemote> -->
             </div>
           </div>
           <div class="form-item flex-sc">
@@ -107,7 +110,7 @@
           <div class="form-item flex-sc">
             <div class="label">发送邮箱：</div>
             <div class="value more-show">
-              <BaseInput class="input-style" :initValue="email" validType="email" width="100%" placeholder="请输入您的电子邮箱"
+              <BaseInput class="input-style" :initValue="email" width="100%" placeholder="请输入您的电子邮箱"
                 @changeValue="handleEmail">
               </BaseInput>
             </div>
@@ -180,14 +183,14 @@ export default {
     editSourceInfo: {
       handler(newValue) {
         console.log('newValue', newValue)
-        this.email = newValue.email
+        this.email = newValue.email || ''
         this.categories = newValue.categories || []
         this.agents = newValue.agents || []
         this.owners = newValue.owners || []
         this.reg_ids = newValue.reg_ids || []
-        this.name = newValue.name
+        this.name = newValue.name || ''
         this.status = newValue.status || []
-        this.biz_genre = newValue.biz_genre
+        this.biz_genre = newValue.biz_genre || 1
         this.flows = newValue.flows || []
       },
       immediate: true,
@@ -207,7 +210,47 @@ export default {
       this.biz_genre = 1
       this.flows = []
     },
+    // 处理提交
     handleSubmit(flag) {
+      if (this.isAdd) {
+        // 如果是新增
+        this.addNewWatch(flag)
+      } else {
+        this.editWatch(flag)
+      }
+    },
+    // 处理名字改变
+    handleName(value) {
+      this.name = value
+    },
+    // 处理邮箱改变
+    handleEmail(value, validEmail) {
+      this.email = value
+      this.validEmail = validEmail
+    },
+    // 持有人变更
+    ownersChange(ownersList) {
+      console.log('ownersList', ownersList)
+      this.owners = ownersList
+    },
+    // 代理机构变更
+    agentsChange(agentsList) {
+      this.agents = agentsList
+    },
+    // 国际分类数组变更
+    categoriesChange(categoriesList) {
+      this.categories = categoriesList
+    },
+    // 注册号数组变更
+    handleRegIds(value) {
+      const tempArr = value.split(';')
+      this.reg_ids = tempArr
+    },
+    regIdsChange(regIdsList) {
+      this.reg_ids = regIdsList
+    },
+    // 添加新的监听
+    addNewWatch(flag) {
       const {
         categories,
         agents,
@@ -228,60 +271,17 @@ export default {
         biz_genre,
         flows
       }
-      console.log({ genre: this.genre, email: this.email, condition })
-      if (this.isAdd) {
-        this.addNewWatch(flag)
+      // console.log({ genre: this.genre, email: this.email, condition })
+      if (flag) {
+        watch
+          .watchListAdd({ genre: this.genre, email: this.email, condition })
+          .then((res) => {
+            console.log(res)
+            this.$emit('submit', flag)
+          })
       } else {
-        this.editWatch(flag)
+        this.$emit('submit', flag)
       }
-    },
-    // 处理名字改变
-    handleName(value) {
-      this.name = value
-    },
-    // 处理邮箱改变
-    handleEmail(value, validEmail) {
-      this.email = value
-      this.validEmail = validEmail
-    },
-    // 持有人变更
-    ownersChange(ownersList) {
-      this.owners = ownersList
-      // const tempList = ownersList.map((item) => {
-      //   return item.label
-      // })
-      // this.owners = tempList
-    },
-    // 代理机构变更
-    agentsChange(agentsList) {
-      this.agents = agentsList
-      // const tempList = agentsList.map((item) => {
-      //   return item.label
-      // })
-      // this.agents = tempList
-    },
-    // 国际分类数组变更
-    categoriesChange(categoriesList) {
-      this.categories = categoriesList
-      // this.categories = categoriesList.map((item) => {
-      //   return item.value
-      // })
-    },
-    // 注册号数组变更
-    regIdsChange(regIdsList) {
-      this.reg_ids = regIdsList
-      // this.reg_ids = regIdsList.map((item) => {
-      //   return item.value
-      // })
-    },
-    // 添加新的监听
-    addNewWatch(flag) {
-      this.$emit('submit', flag)
-      // watch
-      //   .watchListAdd({ genre: this.genre, email: this.email, condition })
-      //   .then((res) => {
-      //     console.log(res)
-      //   })
     },
     // 修改监听
     editWatch(flag) {

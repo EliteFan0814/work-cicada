@@ -28,6 +28,13 @@ export default {
       method: 'get',
       params: { id }
     })
+  },
+  watchListSuggest(SuggestClass = 'owner', key) {
+    return request({
+      url: `/suggest/${SuggestClass}`,
+      method: 'get',
+      params: { keyword: key }
+    })
   }
 }
 // 按商标名检索

@@ -2,8 +2,8 @@
   <div class="base-input" :style="`width:${width}`">
     <!-- 已选择列表 -->
     <div class="selected-list flex">
-      <div v-for="(item,index) in selectList" :key="item.value" class="select-item">
-        <span>{{item.label}}</span>
+      <div v-for="(item,index) in selectList" :key="item" class="select-item">
+        <span>{{item}}</span>
         <i class="el-icon-close clear" @click="handleDelete(index)"></i>
       </div>
     </div>
@@ -11,8 +11,15 @@
     <i slot="reference" :class="['iconfont',`icon-${icon}`]" @click="handleEmit"></i>
     <!-- 远程搜索结果列表 -->
     <div v-if="showSuggest" class="remote-res">
-      <div v-for="(item) in suggestList" :key="item.value" class="res-item" @click="handleSelect(item)">
-        {{item.label}}</div>
+      <template v-if="suggestList.length">
+        <div v-for="(item) in suggestList" :key="item" class="res-item" @click="handleSelect(item)">
+          {{item}}</div>
+      </template>
+      <template v-else>
+        <div class="empty">
+          暂无数据
+        </div>
+      </template>
     </div>
     <!-- <el-popover placement="bottom-end" width="200" trigger="click">
       <div class="pop-wrap">
@@ -25,6 +32,7 @@
   </div>
 </template>
 <script>
+import watch from '@/api/watch'
 export default {
   name: 'BaseInputRemote',
   props: {
@@ -40,6 +48,11 @@ export default {
       type: String,
       required: false,
       default: '请输入搜索关键字'
+    },
+    searchClass: {
+      type: String,
+      required: true,
+      default: 'owner'
     },
     width: {
       type: [String, Number],
@@ -58,13 +71,8 @@ export default {
       value: null,
       showSuggest: false,
       selectList: this.outSelectList,
-      suggestList: [
-        { label: '北京纤墨文化传播有限公司', value: 1 },
-        { label: '重庆纤墨文化传播有限公司', value: 2 },
-        { label: '上海纤墨文化传播有限公司', value: 3 },
-        { label: '河北纤墨文化传播有限公司', value: 4 },
-        { label: '河南纤墨文化传播有限公司', value: 5 }
-      ]
+      suggestList: [],
+      searchTimer: null
     }
   },
   watch: {
@@ -73,6 +81,11 @@ export default {
         this.selectList = newVal
       },
       deep: true
+    },
+    value(newVal) {
+      if (!newVal) {
+        this.showSuggest = false
+      }
     }
   },
   methods: {
@@ -88,9 +101,29 @@ export default {
     // 处理结果的展示
     handleShowSuggest() {
       if (this.value) {
-        this.showSuggest = true
-      } else {
-        this.showSuggest = false
+        this.searchSuggest()
+      }
+    },
+    // 搜索建议查询防抖
+    searchSuggest() {
+      clearInterval(this.searchTimer)
+      if (this.value.length > 1) {
+        this.searchTimer = setTimeout(() => {
+          watch
+            .watchListSuggest(this.searchClass, this.value)
+            .then((res) => {
+              this.showSuggest = true
+              if (res) {
+                this.suggestList = res
+              } else {
+                this.suggestList = []
+              }
+            })
+            .catch((err) => {
+              this.showSuggest = false
+              console.log(err)
+            })
+        }, 500)
       }
     },
     // 处理选择
@@ -182,7 +215,7 @@ export default {
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #fff;
-    z-index: 1;
+    z-index: 2;
     box-shadow: 0px 0px 9px 0px rgba(50, 50, 50, 0.57);
     padding: 10px;
     font-size: 14px;
@@ -192,6 +225,10 @@ export default {
       &:hover {
         background: rgba(140, 197, 255, 0.1);
       }
+    }
+    .empty {
+      text-align: center;
+      padding-top: 10px;
     }
   }
 }

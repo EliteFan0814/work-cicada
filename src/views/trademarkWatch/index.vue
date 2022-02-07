@@ -108,8 +108,10 @@ export default {
       this.genre = value
       this.getWatchList()
     },
+    // 新增监控
     handleSubmit(flag) {
       this.showDialog = false
+      this.getWatchList()
     },
     // 打开 dialog
     openDialog(flag, title, isAdd) {

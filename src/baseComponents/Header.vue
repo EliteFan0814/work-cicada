@@ -5,7 +5,15 @@
       <li v-for="item in routerList" :key="item.name"
         :class="{ normal: true, 'normal-active': item.router === activeRouter }"
         @click="handleNormalRouter(item.router)">{{ item.name }}</li>
-      <li :class="{ normal: true, }" @click="handleNormalRouter('Login')">登录</li>
+      <li v-if="!isLogin" :class="{ normal: true, }" @click="handleNormalRouter('Login')">登录</li>
+      <li v-else :class="{ normal: true, }">
+        <el-popover placement="bottom" trigger="hover">
+          <div class="more-info">
+            <div>退出登录</div>
+          </div>
+          <span slot="reference">范</span>
+        </el-popover>
+      </li>
       <!-- 开通会员 -->
       <!-- <li class="member">
         <img src="@/assets/imgs/crown.png" alt />
@@ -42,6 +50,11 @@ export default {
       activeRouter: 'Home'
     }
   },
+  computed: {
+    isLogin() {
+      return this.$store.state.isLogin
+    }
+  },
   mounted() {
     this.activeRouter = this.$route.name
   },
@@ -51,7 +64,7 @@ export default {
         this.activeRouter = router
         this.$router.push({ name: router })
       } else if (router === 'Login') {
-        this.$store.commit('SET_SHOW_LOGIN', true)
+        this.$store.commit('SET_IS_LOGIN_DIALOG', true)
       }
     }
   }
