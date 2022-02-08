@@ -9,7 +9,7 @@
       <li v-else :class="{ normal: true, }">
         <el-popover placement="bottom" trigger="hover">
           <div class="more-info">
-            <div>退出登录</div>
+            <div class="logout" @click="logout">退出登录</div>
           </div>
           <span slot="reference">范</span>
         </el-popover>
@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import { MessageBox, Message } from 'element-ui'
+
 export default {
   name: 'Header',
   props: {
@@ -55,6 +57,11 @@ export default {
       return this.$store.state.isLogin
     }
   },
+  watch: {
+    $route(newVal) {
+      this.activeRouter = newVal.name
+    }
+  },
   mounted() {
     this.activeRouter = this.$route.name
   },
@@ -66,6 +73,21 @@ export default {
       } else if (router === 'Login') {
         this.$store.commit('SET_IS_LOGIN_DIALOG', true)
       }
+    },
+    logout() {
+      MessageBox.confirm('确认退出登录？', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$store.dispatch('logout').then((res) => {
+          Message({
+            message: '登出成功',
+            type: 'success',
+            duration: 1 * 1000
+          })
+        })
+      })
     }
   }
 }
@@ -122,6 +144,15 @@ export default {
       border-radius: 4px;
       border: solid 1px #44b7f6;
       padding: 6px 8px;
+    }
+  }
+}
+.more-info {
+  .logout {
+    cursor: pointer;
+    &:hover {
+      color: #3168d9;
+      font-weight: bold;
     }
   }
 }

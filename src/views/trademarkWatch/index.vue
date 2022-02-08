@@ -69,9 +69,9 @@ export default {
     }
   },
   watch: {
-    activeName(newVal) {
-      console.log(newVal)
-    }
+    // activeName(newVal) {
+    //   console.log(newVal)
+    // }
   },
   mounted() {
     this.getWatchList()
@@ -79,24 +79,28 @@ export default {
   methods: {
     // 获取监控列表
     getWatchList() {
-      this.loading = true
-      watch
-        .getWatchList({
-          page: this.nowPageNum,
-          size: this.pageSize,
-          genre: this.activeName
-        })
-        .then((res) => {
-          this.tableData = res.data
-          this.total = res.total
-          this.loading = false
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-        .finally(() => {
-          this.loading = false
-        })
+      if (this.$store.getters.isLogin) {
+        this.loading = true
+        watch
+          .getWatchList({
+            page: this.nowPageNum,
+            size: this.pageSize,
+            genre: this.activeName
+          })
+          .then((res) => {
+            this.tableData = res.data
+            this.total = res.total
+            this.loading = false
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+          .finally(() => {
+            this.loading = false
+          })
+      } else {
+        this.$store.commit('SET_IS_LOGIN_DIALOG', true)
+      }
     },
     handlePageChange() {
       this.getWatchList()
@@ -111,7 +115,9 @@ export default {
     // 新增监控
     handleSubmit(flag) {
       this.showDialog = false
-      this.getWatchList()
+      if (flag) {
+        this.getWatchList()
+      }
     },
     // 打开 dialog
     openDialog(flag, title, isAdd) {

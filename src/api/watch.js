@@ -15,6 +15,13 @@ export default {
       data: data
     })
   },
+  watchListEdit(data) {
+    return request({
+      url: '/monitor/update',
+      method: 'post',
+      data: data
+    })
+  },
   watchListDel(id) {
     return request({
       url: '/monitor/del',

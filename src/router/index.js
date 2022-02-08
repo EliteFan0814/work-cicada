@@ -23,7 +23,7 @@ const routes = [
       // 商标查询
       {
         path: 'trademarkSearch',
-        component: () => import('@/views/TrademarkSearch.vue'),
+        component: () => import('@/views/trademarkSearch/index.vue'),
         name: 'TrademarkSearch',
         meta: { title: '商标查询' }
       },
@@ -143,13 +143,13 @@ const routes = [
         component: () => import('@/views/trademarkAnalyse/AnalyseRisk.vue'),
         name: 'AnalyseRisk',
         meta: { title: '风险分析' }
-      },
-      {
-        path: 'memberLogin',
-        component: () => import('@/views/MemberLogin.vue'),
-        name: 'MemberLogin',
-        meta: { title: '会员登录' }
       }
+      // {
+      //   path: 'memberLogin',
+      //   component: () => import('@/views/MemberLogin.vue'),
+      //   name: 'MemberLogin',
+      //   meta: { title: '会员登录' }
+      // }
     ]
   },
   {

@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import router, { resetRouter } from '@/router'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -35,7 +34,7 @@ export default new Vuex.Store({
     login({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
         const token =
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmljayI6IuiMg-Wfuei2hSIsImF2YXRhciI6Imh0dHA6Ly93ZXdvcmsucXBpYy5jbi9iaXptYWlsL1RwNDM4YW40Y3oxY056ZU5zRkYxTmQ2bEJNREcxWmpoWUdLRFc4dWpXampTZVJuUnlma2J6QS8wIiwiZXhwIjoxNjQ0MjU5ODg2fQ.SepMCvgAKjULm8Yk3HyE_4gZ-UQYSWLde1InU_dt5dc'
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmljayI6IuiMg-Wfuei2hSIsImF2YXRhciI6Imh0dHA6Ly93ZXdvcmsucXBpYy5jbi9iaXptYWlsL1RwNDM4YW40Y3oxY056ZU5zRkYxTmQ2bEJNREcxWmpoWUdLRFc4dWpXampTZVJuUnlma2J6QS8wIiwiZXhwIjoxNjQ0MzIzNTAyfQ.eR72MorrYUfGJvzbQWYxDJQx6nQvs8BfRNF4VXLgsnA'
         commit('SET_TOKEN', token)
         commit('SET_IS_LOGIN', true)
         commit('SET_IS_LOGIN_DIALOG', false)
@@ -57,6 +56,25 @@ export default new Vuex.Store({
       //       reject(error)
       //     })
       // })
+    },
+    // 用户登出
+    logout({ commit, state, dispatch }) {
+      return new Promise((resolve, reject) => {
+        commit('SET_TOKEN', '')
+        commit('SET_IS_LOGIN', false)
+        removeToken()
+        resolve()
+
+        // logout(state.token)
+        //   .then(() => {
+        //     commit('SET_TOKEN', '')
+        //     removeToken()
+        //     resolve()
+        //   })
+        //   .catch((error) => {
+        //     reject(error)
+        //   })
+      })
     }
   },
   modules: {}

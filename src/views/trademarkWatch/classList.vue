@@ -87,6 +87,7 @@ export default {
           }
         })
       },
+      immediate: true,
       deep: true
     },
     classList: {
@@ -102,6 +103,7 @@ export default {
         }
         this.selectAll = flagAll
       },
+      immediate: true,
       deep: true
     }
   },
