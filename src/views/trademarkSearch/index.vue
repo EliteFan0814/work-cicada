@@ -149,7 +149,11 @@ export default {
             }
           })
           this.agentList = res.data.map((item) => {
-            return { label: item.agent, value: item.agent, selected: false }
+            if (this.searchKey.agent.split('|').includes(item.agent)) {
+              return { label: item.agent, value: item.agent, selected: true }
+            } else {
+              return { label: item.agent, value: item.agent, selected: false }
+            }
           })
           // this.category.map((item) => {
           //   if (res.categories.includes(item.value)) {
