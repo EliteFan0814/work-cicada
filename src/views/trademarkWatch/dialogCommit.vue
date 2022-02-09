@@ -235,60 +235,60 @@ export default {
     // 处理提交
     handleSubmit(flag) {
       if (flag) {
+        if (this.genre === 1) {
+          // 新增初审监控
+          if (
+            this.agents.length < 1 &&
+            this.owners.length < 1 &&
+            this.reg_ids.length < 1 &&
+            this.name.length < 1
+          ) {
+            Message({
+              message: '持有人、代理机构、注册号、商标名称至少一个不能为空！',
+              type: 'warn',
+              duration: 3 * 1000
+            })
+            return false
+          }
+        } else if (this.genre === 2) {
+          // 新增初审监控
+          if (
+            this.reg_ids.length < 1 &&
+            this.status.length < 1 &&
+            this.biz_genre
+          ) {
+            Message({
+              message: '业务类型、注册号、法律状态为必填项！',
+              type: 'warn',
+              duration: 3 * 1000
+            })
+            return false
+          }
+        } else if (this.genre === 3) {
+          if (
+            this.agents.length < 1 &&
+            this.owners.length < 1 &&
+            this.reg_ids.length < 1 &&
+            this.name.length < 1
+          ) {
+            Message({
+              message: '持有人、代理机构、注册号、商标名称至少一个不能为空！',
+              type: 'warn',
+              duration: 3 * 1000
+            })
+            return false
+          }
+          if (this.flows.length < 1) {
+            Message({
+              message: '流程类型为必填项！',
+              type: 'warn',
+              duration: 3 * 1000
+            })
+            return false
+          }
+        }
         if (this.isAdd) {
           // 如果是新增
-          if (this.genre === 1) {
-            // 新增初审监控
-            if (
-              this.agents.length < 1 &&
-              this.owners.length < 1 &&
-              this.reg_ids.length < 1 &&
-              this.name.length < 1
-            ) {
-              Message({
-                message: '持有人、代理机构、注册号、商标名称至少一个不能为空！',
-                type: 'warn',
-                duration: 3 * 1000
-              })
-              return false
-            }
-          } else if (this.genre === 2) {
-            // 新增初审监控
-            if (
-              this.reg_ids.length < 1 &&
-              this.status.length < 1 &&
-              this.biz_genre
-            ) {
-              Message({
-                message: '业务类型、注册号、法律状态为必填项！',
-                type: 'warn',
-                duration: 3 * 1000
-              })
-              return false
-            }
-          } else if (this.genre === 3) {
-            if (
-              this.agents.length < 1 &&
-              this.owners.length < 1 &&
-              this.reg_ids.length < 1 &&
-              this.name.length < 1
-            ) {
-              Message({
-                message: '持有人、代理机构、注册号、商标名称至少一个不能为空！',
-                type: 'warn',
-                duration: 3 * 1000
-              })
-              return false
-            }
-            if (this.flows.length < 1) {
-              Message({
-                message: '流程类型为必填项！',
-                type: 'warn',
-                duration: 3 * 1000
-              })
-              return false
-            }
-          }
           this.addNewWatch(flag)
         } else {
           // 如果是修改
@@ -406,7 +406,6 @@ export default {
             duration: 1 * 1000
           })
           this.$emit('submit', flag)
-          console.log(res)
         })
         .catch((err) => {
           console.log(err)

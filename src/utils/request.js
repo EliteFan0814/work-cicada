@@ -44,11 +44,19 @@ service.interceptors.response.use(
     const res = response.data
     // 如果code不为0则说明有报错
     if (res.code !== 0) {
-      if (res.msg !== 'OK') {
+      // token失效
+      if (res.code === 10003) {
+        store.dispatch('logout').then(() => {
+          console.log('ddd')
+          Message({
+            message: '请重新登录',
+            type: 'warn',
+            duration: 30 * 1000
+          })
+        })
+      } else if (res.msg !== 'OK') {
         const msg = res.msg
-        // const subMsg = res.data[0] ? res.data[0] : ''
         Message({
-          // message: `${msg}，${subMsg}` || 'Error',
           message: `${msg}` || 'Error',
           type: 'error',
           duration: 5 * 1000

@@ -4,8 +4,8 @@ export default {
   getInfoByName(query, urlClass = 'name') {
     return request({
       url: `/search/${urlClass}`,
-      method: 'get',
-      params: query
+      method: 'post',
+      data: query
     })
   }
 }

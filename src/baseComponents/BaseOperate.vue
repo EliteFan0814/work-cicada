@@ -7,10 +7,10 @@
             <div slot="popContent"></div>
           </BasePopover>
         </div>
-        <div class="text-wrap">
+        <!-- <div class="text-wrap">
           <el-checkbox v-model="checked"></el-checkbox>
           <span class="sellect-all">全选</span>
-        </div>
+        </div> -->
         <div class="text-wrap pointer" :class="{'selected-style':selectedStyle==='list'}"
           @click="handleSelectStyle('list')"><i class="el-icon-s-fold text"></i><span class="text">列表</span></div>
         <div class="text-wrap pointer" :class="{'selected-style':selectedStyle==='img'}"
@@ -18,8 +18,8 @@
         </div>
       </div>
       <div v-if="!showSearch" class="right">
-        <div class="common">已勾选0条</div>
-        <div class="common contrast"><span>档案对比</span></div>
+        <div class="common">已勾选{{selectedNum}}条</div>
+        <!-- <div class="common contrast"><span>档案对比</span></div> -->
         <div class="common select-wrap">
           <span class="pointer" :class="{selected:selected==='all'}" @click="handleSelectType('all')">全部</span>
           <span class="pointer" :class="{selected:selected==='focus'}" @click="handleSelectType('focus')">聚焦</span>
@@ -50,6 +50,9 @@ export default {
     },
     selected: {
       default: 'all'
+    },
+    selectedNum: {
+      default: 0
     }
   },
   data() {

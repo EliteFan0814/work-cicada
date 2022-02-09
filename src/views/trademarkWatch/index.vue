@@ -25,7 +25,8 @@
         <BaseDownload></BaseDownload>
       </div>
       <div class="table-list">
-        <firstTable :tableData="tableData" :dialogTitle="changeDialogTitle" :genre="activeName" v-loading="loading">
+        <firstTable :tableData="tableData" :dialogTitle="changeDialogTitle" :genre="activeName" v-loading="loading"
+          @refresh="handleSubmit">
         </firstTable>
       </div>
       <BasePagination :total="total" :nowPageNum.sync="nowPageNum" :pageSize.sync="pageSize"

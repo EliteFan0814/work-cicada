@@ -145,6 +145,8 @@ export default {
   color: rgba(0, 0, 0, 0.65);
   display: flex;
   flex-wrap: wrap;
+  max-height: 300px;
+  overflow-y: scroll;
   .key-item {
     min-width: 33px;
     padding-right: 15px;

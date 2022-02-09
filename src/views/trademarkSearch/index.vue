@@ -8,7 +8,7 @@
         <BaseInput width="90%" icon="search" @search="handleSearch" />
       </div>
       <div class="right-key-list">
-        <BaseSearchList :searchKey="searchKey.keyword"></BaseSearchList>
+        <SearchKeyList :searchKey="searchKey.keyword"></SearchKeyList>
       </div>
     </div>
     <div class="content">
@@ -37,7 +37,9 @@
           </div> -->
         </div>
         <div class="table">
-          <BaseTable :tableData="tableData" :total="total" :pageInfo="searchKey" @pageChange="pageChange"></BaseTable>
+          <TableList :tableData="tableData" :total="total" :pageInfo="searchKey" :setSelect="setSelect"
+            @pageChange="pageChange" @sort="sort" @handleFocus="handleFocus">
+          </TableList>
         </div>
       </div>
     </div>
@@ -46,11 +48,13 @@
 <script>
 // import searchFilter from './searchFilter.vue'
 import SearchFilterItem from './searchFilterItem.vue'
+import SearchKeyList from './searchKeyList.vue'
+import TableList from './tableList.vue'
 
 import apiSearch from '@/api/search'
 export default {
   name: 'TrademarkSearch',
-  components: { SearchFilterItem },
+  components: { SearchFilterItem, SearchKeyList, TableList },
   data() {
     return {
       loading: false,
@@ -60,14 +64,16 @@ export default {
         size: 10,
         category: '',
         status: '',
-        owner: '',
-        agent: ''
+        owners: [],
+        agents: [],
+        sort: ''
       },
+      setSelect: new Date(),
       total: 0,
       tableData: [],
       // 搜索类
       searchClass: 'name',
-      category: [
+      preCategory: [
         { label: '01', value: 1, selected: false },
         { label: '02', value: 2, selected: false },
         { label: '03', value: 3, selected: false },
@@ -114,11 +120,13 @@ export default {
         { label: '44', value: 44, selected: false },
         { label: '45', value: 45, selected: false }
       ],
-      status: [
+      preStatus: [
         { label: '有效注册', value: 1, selected: false },
         { label: '申请中', value: 2, selected: false },
         { label: '商标无效', value: 3, selected: false }
       ],
+      category: [],
+      status: [],
       ownerList: [],
       agentList: []
     }
@@ -136,53 +144,96 @@ export default {
     },
     // 搜索
     apiSearch() {
-      this.loading = true
-      apiSearch
-        .getInfoByName(this.searchKey, this.searchClass)
-        .then((res) => {
-          this.tableData = res.data
-          this.ownerList = res.data.map((item) => {
-            if (this.searchKey.owner.split('|').includes(item.owner)) {
-              return { label: item.owner, value: item.owner, selected: true }
+      if (this.$store.getters.isLogin) {
+        this.loading = true
+        apiSearch
+          .getInfoByName(this.searchKey, this.searchClass)
+          .then((res) => {
+            this.setSelect = new Date()
+            this.category = this.preCategory
+            this.status = this.preStatus
+            if (res.data) {
+              this.tableData = res.data.map((item) => {
+                item.imgUrl = this.$imgUrl + item.reg_id + '.jpg'
+                item.date_app = this.$dayjs(item.date_app).format('YYYY-MM-DD')
+                item.date_reg = this.$dayjs(item.date_reg).format('YYYY-MM-DD')
+                return item
+              })
             } else {
-              return { label: item.owner, value: item.owner, selected: false }
+              this.tableData = []
+            }
+            // 过滤持有人显示
+            // 去重
+            // const tempAllOwner = Array.from(
+            //   new Set(res.data.map((item) => item.owner))
+            // )
+            // this.ownerList = tempAllOwner.map((item) => {
+            //   if (this.searchKey.owner.split('|').includes(item)) {
+            //     return { label: item, value: item, selected: true }
+            //   } else {
+            //     return { label: item, value: item, selected: false }
+            //   }
+            // })
+            // 过滤代理机构显示
+            // const tempAllAgent = Array.from(
+            //   new Set(res.data.map((item) => item.agent))
+            // )
+            // this.agentList = tempAllAgent.map((item) => {
+            //   if (this.searchKey.agent.split('|').includes(item)) {
+            //     return { label: item, value: item, selected: true }
+            //   } else {
+            //     return { label: item, value: item, selected: false }
+            //   }
+            // })
+            this.total = res.pager.total
+            if (res.agents) {
+              this.agentList = res.agents.map((item) => {
+                if (this.searchKey.agents.includes(item)) {
+                  return { label: item, value: item, selected: true }
+                } else {
+                  return { label: item, value: item, selected: false }
+                }
+              })
+            } else {
+              this.agentList = []
+            }
+            if (res.owners) {
+              this.ownerList = res.owners.map((item) => {
+                if (this.searchKey.owners.includes(item)) {
+                  return { label: item, value: item, selected: true }
+                } else {
+                  return { label: item, value: item, selected: false }
+                }
+              })
+            } else {
+              this.ownerList = []
             }
           })
-          this.agentList = res.data.map((item) => {
-            if (this.searchKey.agent.split('|').includes(item.agent)) {
-              return { label: item.agent, value: item.agent, selected: true }
-            } else {
-              return { label: item.agent, value: item.agent, selected: false }
-            }
+          .catch((err) => {
+            console.log(err)
           })
-          // this.category.map((item) => {
-          //   if (res.categories.includes(item.value)) {
-          //     item.selected = true
-          //   } else {
-          //     item.selected = false
-          //   }
-          // })
-          this.total = res.total
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-        .finally(() => {
-          this.loading = false
-        })
+          .finally(() => {
+            this.loading = false
+          })
+      } else {
+        this.$store.commit('SET_IS_LOGIN_DIALOG', true)
+      }
     },
     // 处理搜索类
     handleClass(value) {
       this.searchClass = value
+      this.apiSearch()
     },
-    //
+    // 改变过滤条件
     changeFilter() {
+      // 国际分类
       const tempCategory = []
       this.category.map((item) => {
         if (item.selected) {
           tempCategory.push(item.value)
         }
       })
+      // 有效状态
       const tempStatus = []
       this.status.map((item) => {
         if (item.selected) {
@@ -203,11 +254,24 @@ export default {
       })
       this.searchKey.category = tempCategory.join('|')
       this.searchKey.status = tempStatus.join('|')
-      this.searchKey.owner = tempOwnerList.join('|')
-      this.searchKey.agent = tempAgentList.join('|')
-      console.log(this.searchKey)
+      this.searchKey.owners = tempOwnerList
+      this.searchKey.agents = tempAgentList
+      console.log(tempCategory, tempStatus, tempOwnerList, tempAgentList)
       if (this.searchKey.keyword) {
         this.apiSearch()
+      }
+    },
+    // 通过 category 排序
+    sort(sortKey) {
+      this.searchKey.sort = this.searchKey.sort ? '' : sortKey
+      this.apiSearch()
+    },
+    // 处理显示全部还是显示聚焦
+    handleFocus(flag, info) {
+      if (flag === 'all') {
+        this.apiSearch()
+      } else {
+        this.tableData = info
       }
     }
   }

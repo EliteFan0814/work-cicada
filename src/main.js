@@ -20,6 +20,9 @@ Vue.use(GlobalTools)
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.prototype.$echarts = echarts
+const dayjs = require('dayjs')
+Vue.prototype.$dayjs = dayjs
+Vue.prototype.$imgUrl = 'http://image.gbicdn.com/tmimage/'
 
 new Vue({
   router,

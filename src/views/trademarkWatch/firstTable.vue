@@ -132,6 +132,7 @@ export default {
     // 修改
     handleSubmit(flag) {
       this.showDialog = false
+      this.$emit('refresh', flag)
     }
   }
 }
