@@ -29,11 +29,20 @@ export default {
     type: {
       type: String,
       default: 'default'
+    },
+    outActiveValue: {
+      type: String,
+      default: ''
     }
   },
   data() {
     return {
       activeValue: 'name'
+    }
+  },
+  watch: {
+    outActiveValue(newVal) {
+      this.activeValue = newVal
     }
   },
   methods: {

@@ -25,12 +25,42 @@
       <el-button v-if="filterKeyList.length" size="mini" round @click="handleReset" class="reset">重置</el-button>
       <div class="filter-list" ref="filterList">
         <div class="item-wrap" ref="itemWrap">
-          <div class="item" v-for="(item,index) in filterKeyList" :key="item.value">
-            <div>
-              <span>{{item.label}}</span>
-              <i class="el-icon-close clear" @click="handleDelete(index)"></i>
+          <!-- 国际分类已选列表 -->
+          <template v-for="(item,index) in categoryList">
+            <div v-if="item.selected" class="item" :key="item.label">
+              <div>
+                <span>{{item.label}}</span>
+                <i class="el-icon-close clear" @click="handleDelete(index,'categoryList')"></i>
+              </div>
             </div>
-          </div>
+          </template>
+          <!-- 有效状态 -->
+          <template v-for="(item,index) in statusList">
+            <div v-if="item.selected" class="item" :key="item.label">
+              <div>
+                <span>{{item.label}}</span>
+                <i class="el-icon-close clear" @click="handleDelete(index,'statusList')"></i>
+              </div>
+            </div>
+          </template>
+          <!-- 持有人 -->
+          <template v-for="(item,index) in ownerList">
+            <div v-if="item.selected" class="item" :key="item.label">
+              <div>
+                <span>{{item.label}}</span>
+                <i class="el-icon-close clear" @click="handleDelete(index,'ownerList')"></i>
+              </div>
+            </div>
+          </template>
+          <!-- 代理机构 -->
+          <template v-for="(item,index) in agentList">
+            <div v-if="item.selected" class="item" :key="item.label">
+              <div>
+                <span>{{item.label}}</span>
+                <i class="el-icon-close clear" @click="handleDelete(index,'agentList')"></i>
+              </div>
+            </div>
+          </template>
         </div>
       </div>
     </div>
@@ -38,12 +68,38 @@
       <div slot="popContent" class="filter-pop-wrap">
         <ul>
           <li class="key-item">{{searchKey}}</li>
-          <li v-for="item in filterKeyList" :key="item.value">
-            <div>
-              <span>{{item.label}}</span>
-              <i class="el-icon-close clear" @click="handleDelete(index)"></i>
-            </div>
-          </li>
+          <template v-for="(item,index) in categoryList">
+            <li v-if="item.selected" :key="item.label">
+              <div>
+                <span>{{item.label}}</span>
+                <i class="el-icon-close clear" @click="handleDelete(index,'categoryList')"></i>
+              </div>
+            </li>
+          </template>
+          <template v-for="(item,index) in statusList">
+            <li v-if="item.selected" :key="item.label">
+              <div>
+                <span>{{item.label}}</span>
+                <i class="el-icon-close clear" @click="handleDelete(index,'statusList')"></i>
+              </div>
+            </li>
+          </template>
+          <template v-for="(item,index) in ownerList">
+            <li v-if="item.selected" :key="item.label">
+              <div>
+                <span>{{item.label}}</span>
+                <i class="el-icon-close clear" @click="handleDelete(index,'ownerList')"></i>
+              </div>
+            </li>
+          </template>
+          <template v-for="(item,index) in agentList">
+            <li v-if="item.selected" :key="item.label">
+              <div>
+                <span>{{item.label}}</span>
+                <i class="el-icon-close clear" @click="handleDelete(index,'agentList')"></i>
+              </div>
+            </li>
+          </template>
         </ul>
       </div>
     </BasePopover>
@@ -57,6 +113,24 @@ export default {
       type: String
     },
     categoryList: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
+    statusList: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
+    ownerList: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
+    agentList: {
       type: Array,
       default() {
         return []
@@ -97,8 +171,11 @@ export default {
       this.filterKeyList.splice(0)
     },
     // 删除搜索条件关键词
-    handleDelete(index) {
-      this.filterKeyList.splice(index, 1)
+    handleDelete(index, className) {
+      this[className][index].selected = false
+      console.log('this[className]', this[className])
+      this.$emit('refreshList')
+      // this.filterKeyList.splice(index, 1)
     }
   }
 }

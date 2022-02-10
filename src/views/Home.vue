@@ -2,8 +2,8 @@
   <div class="home">
     <div class="search bg">
       <div class="input-wrap flex-ccc">
-        <BaseSearchClass class="search-class" type="home"></BaseSearchClass>
-        <BaseInput icon="search"></BaseInput>
+        <BaseSearchClass class="search-class" type="home" @selectClass="handleClass"></BaseSearchClass>
+        <BaseInput icon="search" @search="handleSearch"></BaseInput>
       </div>
     </div>
     <div class="ai bg">
@@ -248,7 +248,9 @@ export default {
           num: '4500',
           label: '最标申请数据'
         }
-      ]
+      ],
+      searchClass: 'name',
+      searchKey: ''
     }
   },
   methods: {
@@ -271,6 +273,18 @@ export default {
     },
     ManualChange(index) {
       this.$refs.carousel.setActiveItem(index)
+    },
+    // 处理选择搜索类
+    handleClass(value) {
+      this.searchClass = value
+    },
+    // 处理点击搜索
+    handleSearch(value) {
+      this.searchKey = value
+      this.$router.push({
+        name: 'TrademarkSearch',
+        query: { searchKey: value, searchClass: this.searchClass }
+      })
     }
   }
 }

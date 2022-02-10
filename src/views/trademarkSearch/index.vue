@@ -3,17 +3,20 @@
     <div class="top-search">
       <div class="left-input">
         <div class="class-wrap">
-          <BaseSearchClass @selectClass="handleClass"></BaseSearchClass>
+          <BaseSearchClass @selectClass="handleClass" :outActiveValue="searchClass"></BaseSearchClass>
         </div>
-        <BaseInput width="90%" icon="search" @search="handleSearch" />
+        <BaseInput width="100%" :initValue="searchKey.keyword" icon="search" @search="handleSearch" />
       </div>
+      <!-- 搜索条件 -->
       <div class="right-key-list">
-        <SearchKeyList :searchKey="searchKey.keyword"></SearchKeyList>
+        <SearchKeyList :searchKey="searchKey.keyword" :categoryList="category" :statusList="status"
+          :ownerList="ownerList" :agentList="agentList" @refreshList="searchKeyRefresh"></SearchKeyList>
       </div>
     </div>
     <div class="content">
       <div class="left-wheel">
         <!-- <BaseWheel></BaseWheel> -->
+        <BaseWheel2></BaseWheel2>
       </div>
       <div class="right-content">
         <div class="search-detail">
@@ -125,10 +128,18 @@ export default {
         { label: '申请中', value: 2, selected: false },
         { label: '商标无效', value: 3, selected: false }
       ],
+      // 国际分类列表
       category: [],
       status: [],
       ownerList: [],
       agentList: []
+    }
+  },
+  mounted() {
+    if (this.$route.query.searchKey) {
+      this.searchClass = this.$route.query.searchClass
+      this.searchKey.keyword = this.$route.query.searchKey
+      this.apiSearch()
     }
   },
   methods: {
@@ -240,12 +251,14 @@ export default {
           tempStatus.push(item.value)
         }
       })
+      // 商标持有人
       const tempOwnerList = []
       this.ownerList.map((item) => {
         if (item.selected) {
           tempOwnerList.push(item.value)
         }
       })
+      // 代理机构
       const tempAgentList = []
       this.agentList.map((item) => {
         if (item.selected) {
@@ -256,10 +269,14 @@ export default {
       this.searchKey.status = tempStatus.join('|')
       this.searchKey.owners = tempOwnerList
       this.searchKey.agents = tempAgentList
-      console.log(tempCategory, tempStatus, tempOwnerList, tempAgentList)
+      // console.log(this.category, this.status, this.ownerList, this.agentList)
       if (this.searchKey.keyword) {
         this.apiSearch()
       }
+    },
+    //
+    searchKeyRefresh() {
+      this.changeFilter()
     },
     // 通过 category 排序
     sort(sortKey) {
@@ -294,7 +311,8 @@ export default {
     }
     .right-key-list {
       flex-grow: 1;
-      padding-bottom: 8px;
+      padding-bottom: 16px;
+      padding-left: 20px;
     }
   }
   .content {

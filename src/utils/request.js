@@ -47,11 +47,10 @@ service.interceptors.response.use(
       // token失效
       if (res.code === 10003) {
         store.dispatch('logout').then(() => {
-          console.log('ddd')
           Message({
             message: '请重新登录',
             type: 'warn',
-            duration: 30 * 1000
+            duration: 3 * 1000
           })
         })
       } else if (res.msg !== 'OK') {

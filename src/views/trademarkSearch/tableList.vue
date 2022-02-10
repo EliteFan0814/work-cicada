@@ -4,14 +4,15 @@
     <div class="top-pagination">
       <BasePagination :total="totalNum" :nowPageNum.sync="nowPageNum" :pageSize.sync="pageSize"
         @pageChange="handlePageChange"></BasePagination>
-      <BaseDownload></BaseDownload>
+      <!-- <BaseDownload></BaseDownload> -->
     </div>
     <!-- 操作按钮 -->
     <BaseOperate :selectedStyle.sync="selectedStyle" :selected.sync="selected" :selectedNum="selectedNum"></BaseOperate>
     <!-- table 列表 -->
     <div v-if="selectedStyle === 'list'" class="table-style">
-      <el-table :data="tableData" border size="small" :header-cell-style="{background:'#fafafa',color: '#666666'}"
-        row-class-name="row-style" @selection-change="handleSelectionChange">
+      <el-table :data="tableData" ref="searchList" border size="small"
+        :header-cell-style="{background:'#fafafa',color: '#666666'}" row-class-name="row-style"
+        @selection-change="handleSelectionChange">
         <el-table-column show-overflow-tooltip type="selection">
         </el-table-column>
         <el-table-column show-overflow-tooltip prop="name" label="商标名称">
@@ -156,6 +157,8 @@ export default {
         this.$emit('handleFocus', 'all', [])
       } else {
         this.$emit('handleFocus', 'focus', this.selectedRow)
+        this.$refs.searchList.clearSelection()
+        this.$refs.searchList.toggleAllSelection()
       }
     },
     setSelect() {
@@ -175,7 +178,9 @@ export default {
     sort(sortKey) {
       this.$emit('sort', sortKey)
     },
+    // 记录勾选的行信息
     handleSelectionChange(selectedRow) {
+      // 选择的个数
       this.selectedNum = selectedRow.length
       this.selectedRow = selectedRow
     }
