@@ -32,6 +32,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '化学原料',
@@ -42,7 +45,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -53,6 +57,9 @@ export default {
           isSelected: false,
           itemStyle: {
             color: '#cdedff'
+          },
+          label: {
+            color: '#fff'
           },
           children: [
             {
@@ -65,7 +72,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -77,6 +85,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '日化用品',
@@ -87,7 +98,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -99,6 +111,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '燃料油脂',
@@ -109,7 +124,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -121,6 +137,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '医药',
@@ -131,7 +150,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -143,6 +163,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '金属材料',
@@ -153,7 +176,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -165,6 +189,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '机械设备',
@@ -175,7 +202,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -187,6 +215,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '手工器械',
@@ -197,7 +228,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -209,6 +241,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '科学仪器',
@@ -219,7 +254,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -231,6 +267,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '医疗器械',
@@ -241,7 +280,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -253,6 +293,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '灯具空调',
@@ -263,7 +306,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -275,6 +319,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '运输工具',
@@ -285,7 +332,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -297,6 +345,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '军火烟火',
@@ -307,7 +358,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -319,6 +371,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '珠宝钟表',
@@ -329,7 +384,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -341,6 +397,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '乐器',
@@ -351,7 +410,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -363,6 +423,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '办公用品',
@@ -373,7 +436,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -385,6 +449,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '橡胶制品',
@@ -395,7 +462,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -407,6 +475,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '皮革皮具',
@@ -417,7 +488,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -429,6 +501,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '建筑材料',
@@ -439,7 +514,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -451,6 +527,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '家具',
@@ -461,7 +540,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -473,6 +553,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '厨房洁具',
@@ -483,7 +566,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -495,6 +579,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '绳网袋篷',
@@ -505,7 +592,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -517,6 +605,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '纱线丝',
@@ -527,7 +618,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -539,6 +631,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '布料床单',
@@ -549,7 +644,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -561,6 +657,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '服装鞋帽',
@@ -571,7 +670,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -583,6 +683,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '钮扣拉链',
@@ -593,7 +696,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -605,6 +709,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '地毯席垫',
@@ -615,7 +722,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -627,6 +735,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '健身器材',
@@ -637,7 +748,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -649,6 +761,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '食品',
@@ -659,7 +774,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -671,6 +787,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '方便食品',
@@ -681,7 +800,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -693,6 +813,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '饲料种籽',
@@ -703,7 +826,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -715,6 +839,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '啤酒饮料',
@@ -725,7 +852,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -737,6 +865,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '酒',
@@ -747,7 +878,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -759,6 +891,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '烟草烟具',
@@ -769,7 +904,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -781,6 +917,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '广告销售',
@@ -791,7 +930,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -803,6 +943,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '金融物管',
@@ -813,7 +956,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -825,6 +969,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '建筑修理',
@@ -835,7 +982,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -847,6 +995,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '通讯服务',
@@ -857,7 +1008,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -869,6 +1021,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '运输贮藏',
@@ -879,7 +1034,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -891,6 +1047,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '教育娱乐',
@@ -901,7 +1060,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -913,6 +1073,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '教育娱乐',
@@ -923,7 +1086,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -935,6 +1099,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '网站服务',
@@ -945,7 +1112,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -957,6 +1125,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '餐饮住宿',
@@ -967,7 +1138,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -979,6 +1151,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '医疗园艺',
@@ -989,7 +1164,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
@@ -1001,6 +1177,9 @@ export default {
           itemStyle: {
             color: '#cdedff'
           },
+          label: {
+            color: '#fff'
+          },
           children: [
             {
               name: '社会服务',
@@ -1011,7 +1190,8 @@ export default {
                 color: '#cdedff'
               },
               label: {
-                fontWeight: 'normal'
+                fontWeight: 'normal',
+                color: '#62c8ff'
               }
             }
           ]
