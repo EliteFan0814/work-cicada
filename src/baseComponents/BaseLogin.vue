@@ -22,7 +22,7 @@
             <div class="info flex-cc" id="wxqrcode">
               <!-- <img src="@/assets/imgs/qr-login.png" alt=""> -->
             </div>
-            <div class="tips">企业微信扫码登录</div>
+            <!-- <div class="tips">企业微信扫码登录</div> -->
           </div>
           <div v-show="activeName==='second'" class="psd-login">
             <div class="account-input">
@@ -61,6 +61,11 @@ export default {
       password: ''
     }
   },
+  mounted() {
+    console.log(123)
+    // this.handleClick({ name: 'first' })
+    this.getWxLoginImg()
+  },
   methods: {
     handleClose() {
       this.$emit('closeDialog', false)
@@ -71,17 +76,20 @@ export default {
       this.$store.dispatch('login').then((res) => {})
     },
     handleClick(value) {
-      // if (value.name === 'first') {
-      //   const wwLogin = new WwLogin({
-      //     id: 'wxqrcode',
-      //     appid: 'wxdf237e7c63de94bb',
-      //     agentid: '1000032',
-      //     redirect_uri: 'https%3A%2F%2Fiknow.d.gbicom.com%2F',
-      //     state: '',
-      //     href: '',
-      //     lang: 'zh'
-      //   })
-      // }
+      if (value.name === 'first') {
+        this.getWxLoginImg()
+      }
+    },
+    getWxLoginImg() {
+      const wwLogin = new WwLogin({
+        id: 'wxqrcode',
+        appid: 'wxdf237e7c63de94bb',
+        agentid: '1000032',
+        redirect_uri: 'https%3A%2F%2Fiknow.d.gbicom.com%2F',
+        state: '',
+        href: '',
+        lang: 'zh'
+      })
     }
   }
 }

@@ -16,7 +16,7 @@
     <div class="content">
       <div class="left-wheel">
         <!-- <BaseWheel></BaseWheel> -->
-        <BaseWheel2></BaseWheel2>
+        <BaseWheel2 :keyword="this.searchKey.keyword" :selectedId="selectedId" @changeWheel="changeWheel"></BaseWheel2>
       </div>
       <div class="right-content">
         <div class="search-detail">
@@ -132,7 +132,8 @@ export default {
       category: [],
       status: [],
       ownerList: [],
-      agentList: []
+      agentList: [],
+      selectedId: []
     }
   },
   mounted() {
@@ -149,9 +150,29 @@ export default {
     },
     // 处理搜索
     handleSearch(value) {
-      this.searchKey.keyword = value
-      this.searchKey.page = 1
-      this.apiSearch()
+      // this.searchKey.keyword = value
+      // this.searchKey.page = 1
+      const tempSearch = {
+        keyword: value,
+        page: 1,
+        category: '',
+        status: '',
+        owners: [],
+        agents: [],
+        sort: ''
+      }
+      this.searchKey = { ...this.searchKey, ...tempSearch }
+      this.category = []
+      this.preCategory.map((item) => {
+        item.selected = false
+      })
+      this.preStatus.map((item) => {
+        item.selected = false
+      })
+      this.status = []
+      this.ownerList = []
+      this.agentList = []
+      this.changeFilter()
     },
     // 搜索
     apiSearch() {
@@ -163,6 +184,7 @@ export default {
             this.setSelect = new Date()
             this.category = this.preCategory
             this.status = this.preStatus
+            this.selectedId = res.categories || []
             if (res.data) {
               this.tableData = res.data.map((item) => {
                 item.imgUrl = this.$imgUrl + item.reg_id + '.jpg'
@@ -269,7 +291,7 @@ export default {
       this.searchKey.status = tempStatus.join('|')
       this.searchKey.owners = tempOwnerList
       this.searchKey.agents = tempAgentList
-      // console.log(this.category, this.status, this.ownerList, this.agentList)
+      console.log(this.category, this.status, this.ownerList, this.agentList)
       if (this.searchKey.keyword) {
         this.apiSearch()
       }
@@ -290,6 +312,20 @@ export default {
       } else {
         this.tableData = info
       }
+    },
+    // 点击轮子
+    changeWheel(value) {
+      // 国际分类
+      this.category.map((item) => {
+        if (item.value === value) {
+          if (item.selected === true) {
+            item.selected = false
+          } else {
+            item.selected = true
+          }
+        }
+      })
+      this.changeFilter()
     }
   }
 }

@@ -15,6 +15,7 @@ module.exports = {
     eqeqeq: 'off',
     'space-in-parens': 'off',
     'no-unused-vars': 'warn',
+    'no-undef': 'warn',
     camelcase: 'warn',
     'no-unreachable': 'warn',
     'vue/no-parsing-error': 'warn'
