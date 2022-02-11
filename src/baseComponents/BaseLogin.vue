@@ -2,14 +2,18 @@
   <div class="pop-confirm">
     <el-dialog :close-on-click-modal="false" center :visible="true" :show-close="true" width="440px"
       @close="handleClose">
-      <!-- <div class="content">
+      <div class="content">
         <div class="img"><img src="@/assets/imgs/logo-login.png" alt=""></div>
         <div class="info flex-cc">
-          <img src="@/assets/imgs/qr-login.png" alt="">
+          <!-- <img src="@/assets/imgs/qr-login.png" alt=""> -->
+          <iframe id="square" :src="iframeSrc" frameborder="0"
+            sandbox="allow-scripts allow-top-navigation allow-same-origin" scrolling="no" width="300px"
+            height="330px"></iframe>
+
         </div>
-        <div class="tips">企业微信扫码登录</div>
-      </div> -->
-      <div class="content2">
+        <div class="tips" @click="handleLogin">点击临时登录</div>
+      </div>
+      <!-- <div class="content2">
         <div class="img"><img src="@/assets/imgs/logo-login.png" alt=""></div>
         <div class="input-wrap">
           <div class="tabs-wrap">
@@ -20,9 +24,8 @@
           </div>
           <div v-show="activeName==='first'" class="qr-wrap">
             <div class="info flex-cc" id="wxqrcode">
-              <!-- <img src="@/assets/imgs/qr-login.png" alt=""> -->
             </div>
-            <!-- <div class="tips">企业微信扫码登录</div> -->
+            <div class="tips">企业微信扫码登录</div>
           </div>
           <div v-show="activeName==='second'" class="psd-login">
             <div class="account-input">
@@ -46,7 +49,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </el-dialog>
   </div>
 </template>
@@ -58,7 +61,18 @@ export default {
     return {
       activeName: 'first',
       account: '',
-      password: ''
+      password: '',
+      appid: 'wxdf237e7c63de94bb',
+      agentid: '1000032',
+      redirect_uri: 'https%3A%2F%2Fiknow.d.gbicom.com%2F',
+      state: '',
+      href: '',
+      lang: 'zh'
+    }
+  },
+  computed: {
+    iframeSrc() {
+      return `https://open.work.weixin.qq.com/wwopen/sso/qrConnect?appid=${this.appid}&agentid=${this.agentid}&redirect_uri=${this.redirect_uri}&state=${this.state}&self_redirect=true`
     }
   },
   mounted() {
