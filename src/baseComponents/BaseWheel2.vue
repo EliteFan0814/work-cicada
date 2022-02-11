@@ -1245,7 +1245,7 @@ export default {
               color: '#58c4ff'
             },
             label: {
-              color: '#000',
+              // color: '#fff',
               fontWeight: 'bold'
             }
           },
