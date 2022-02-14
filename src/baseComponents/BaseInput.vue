@@ -46,9 +46,9 @@ export default {
   },
   methods: {
     handleEmit() {
-      if (this.value) {
-        this.$emit('search', this.value)
-      }
+      this.$emit('search', this.value)
+      // if (this.value) {
+      // }
     },
     // 监听input更改
     handleChange() {

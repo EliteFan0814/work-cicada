@@ -6,12 +6,11 @@
         <div class="img"><img src="@/assets/imgs/logo-login.png" alt=""></div>
         <div class="info flex-cc">
           <!-- <img src="@/assets/imgs/qr-login.png" alt=""> -->
-          <iframe id="square" :src="iframeSrc" frameborder="0"
-            sandbox="allow-scripts allow-top-navigation allow-same-origin" scrolling="no" width="300px"
-            height="330px"></iframe>
+          <!-- <div id="wxqrcode"></div> -->
+          <iframe id="square" :src="iframeSrc" frameborder="0" scrolling="no" width="300px" height="330px"></iframe>
 
         </div>
-        <div class="tips" @click="handleLogin">点击临时登录</div>
+        <!-- <div class="tips" @click="handleLoginTemp">点击临时登录</div> -->
       </div>
       <!-- <div class="content2">
         <div class="img"><img src="@/assets/imgs/logo-login.png" alt=""></div>
@@ -64,21 +63,22 @@ export default {
       password: '',
       appid: 'wxdf237e7c63de94bb',
       agentid: '1000032',
-      redirect_uri: 'https%3A%2F%2Fiknow.d.gbicom.com%2F',
+      // redirect_uri: 'http%3A%2F%2Fiknow.d.gbicom.com%2F',
+      redirect_uri: 'http%3A%2F%2Fiknow.d.gbicom.com%2F%23%2Fhome',
       state: '',
       href: '',
-      lang: 'zh'
+      lang: 'zh',
+      self_redirect: false
     }
   },
   computed: {
     iframeSrc() {
-      return `https://open.work.weixin.qq.com/wwopen/sso/qrConnect?appid=${this.appid}&agentid=${this.agentid}&redirect_uri=${this.redirect_uri}&state=${this.state}&self_redirect=true`
+      return `https://open.work.weixin.qq.com/wwopen/sso/qrConnect?appid=${this.appid}&agentid=${this.agentid}&redirect_uri=${this.redirect_uri}&state=${this.state}&self_redirect=${this.self_redirect}`
     }
   },
   mounted() {
-    console.log(123)
     // this.handleClick({ name: 'first' })
-    this.getWxLoginImg()
+    // this.getWxLoginImg()
   },
   methods: {
     handleClose() {
@@ -86,8 +86,9 @@ export default {
       // this.$store.commit('SET_IS_LOGIN', true)
     },
     handleForget() {},
-    handleLogin() {
-      this.$store.dispatch('login').then((res) => {})
+    // 临时登录
+    handleLoginTemp() {
+      this.$store.dispatch('loginTemp').then((res) => {})
     },
     handleClick(value) {
       if (value.name === 'first') {

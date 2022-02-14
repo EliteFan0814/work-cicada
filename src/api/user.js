@@ -7,6 +7,14 @@ export function login(data) {
     data
   })
 }
+// 微信扫码登录
+export function wxQRLogin(params) {
+  return request({
+    url: '/sns/callback/workwx',
+    method: 'get',
+    params
+  })
+}
 
 export function getInfo(token) {
   return request({

@@ -58,6 +58,7 @@ export default {
   .absolute {
     position: absolute;
     width: 100%;
+    z-index: 2;
   }
   .content-wrap {
     min-height: 700px;

@@ -49,7 +49,7 @@
   </div>
 </template>
 <script>
-// import searchFilter from './searchFilter.vue'
+import { Message } from 'element-ui'
 import SearchFilterItem from './searchFilterItem.vue'
 import SearchKeyList from './searchKeyList.vue'
 import TableList from './tableList.vue'
@@ -152,6 +152,15 @@ export default {
     handleSearch(value) {
       // this.searchKey.keyword = value
       // this.searchKey.page = 1
+      console.log(222)
+      if (value.length < 2) {
+        Message({
+          message: '搜索关键字长度至少为2个字符',
+          type: 'error',
+          duration: 3 * 1000
+        })
+        return false
+      }
       const tempSearch = {
         keyword: value,
         page: 1,
@@ -195,29 +204,6 @@ export default {
             } else {
               this.tableData = []
             }
-            // 过滤持有人显示
-            // 去重
-            // const tempAllOwner = Array.from(
-            //   new Set(res.data.map((item) => item.owner))
-            // )
-            // this.ownerList = tempAllOwner.map((item) => {
-            //   if (this.searchKey.owner.split('|').includes(item)) {
-            //     return { label: item, value: item, selected: true }
-            //   } else {
-            //     return { label: item, value: item, selected: false }
-            //   }
-            // })
-            // 过滤代理机构显示
-            // const tempAllAgent = Array.from(
-            //   new Set(res.data.map((item) => item.agent))
-            // )
-            // this.agentList = tempAllAgent.map((item) => {
-            //   if (this.searchKey.agent.split('|').includes(item)) {
-            //     return { label: item, value: item, selected: true }
-            //   } else {
-            //     return { label: item, value: item, selected: false }
-            //   }
-            // })
             this.total = res.pager.total
             if (res.agents) {
               this.agentList = res.agents.map((item) => {
@@ -291,7 +277,6 @@ export default {
       this.searchKey.status = tempStatus.join('|')
       this.searchKey.owners = tempOwnerList
       this.searchKey.agents = tempAgentList
-      console.log(this.category, this.status, this.ownerList, this.agentList)
       if (this.searchKey.keyword) {
         this.apiSearch()
       }

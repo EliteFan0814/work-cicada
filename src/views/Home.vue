@@ -1,9 +1,22 @@
 <template>
-  <div class="home">
-    <div class="search bg">
+  <div v-loading="loading" class="home">
+    <div class="search">
+      <canvas id="waves"></canvas>
       <div class="input-wrap flex-ccc">
         <BaseSearchClass class="search-class" type="home" @selectClass="handleClass"></BaseSearchClass>
         <BaseInput icon="search" @search="handleSearch"></BaseInput>
+      </div>
+      <div class="sample-text">
+        <span class="sample s0">29类-食品</span>
+        <span class="sample s1">01类-化学原料</span>
+        <span class="sample s2">35类-广告销售</span>
+        <span class="sample s3">27类-地毯席垫</span>
+        <span class="sample s4">08类-手工器械</span>
+        <span class="sample s5">22类-绳网袋篷</span>
+        <span class="sample s6">18类-皮革皮具</span>
+        <span class="sample s7">09类-科学仪器</span>
+        <span class="sample s8">42类-网站服务</span>
+        <span class="sample s9">33类-酒</span>
       </div>
     </div>
     <div class="ai bg">
@@ -145,7 +158,7 @@
 </template>
 
 <script>
-// @ is an alias to /src
+import { Message } from 'element-ui'
 
 export default {
   name: 'Home',
@@ -250,8 +263,32 @@ export default {
         }
       ],
       searchClass: 'name',
-      searchKey: ''
+      searchKey: '',
+      redirect: undefined,
+      loading: false
     }
+  },
+  computed: {
+    isLogin() {
+      return this.$store.getters.isLogin
+    }
+  },
+  watch: {
+    $route: {
+      handler: function(route) {
+        const query = route.query
+        if (query) {
+          this.redirect = query.redirect
+        }
+      },
+      immediate: true
+    }
+  },
+  created() {
+    this.handleQRLogin()
+  },
+  mounted() {
+    this.initWaves()
   },
   methods: {
     handleLogin() {
@@ -280,11 +317,199 @@ export default {
     },
     // 处理点击搜索
     handleSearch(value) {
-      this.searchKey = value
-      this.$router.push({
-        name: 'TrademarkSearch',
-        query: { searchKey: value, searchClass: this.searchClass }
-      })
+      if (this.isLogin) {
+        if (value.length > 1) {
+          this.searchKey = value
+          this.$router.push({
+            name: 'TrademarkSearch',
+            query: { searchKey: value, searchClass: this.searchClass }
+          })
+        } else {
+          Message({
+            message: '搜索关键字长度至少为2个字符',
+            type: 'error',
+            duration: 3 * 1000
+          })
+        }
+      } else {
+        this.$store.commit('SET_IS_LOGIN_DIALOG', true)
+      }
+    },
+    // 处理扫码登录
+    handleQRLogin() {
+      // const isLogin = this.$store.getters.isLogin
+      const code = this.$route.query.code
+      console.log('this.$route.query.code', this.$route.query.code)
+      if (!this.isLogin && code) {
+        this.loading = true
+        this.$store
+          .dispatch('login', { code })
+          .then(() => {
+            this.$router.push({
+              path: this.redirect || '/'
+            })
+            this.loading = false
+          })
+          .catch(() => {
+            this.loading = false
+          })
+      }
+    },
+    // 初始化 波浪动画
+    initWaves() {
+      /**
+       *3D海洋效应与 Canvas2D
+       * 您可以更改注释 "效果属性" 下的属性
+       */
+
+      let size = 10
+      let up = true
+      setInterval(function() {
+        if (up) {
+          size += 10
+          if (size >= 240) {
+            up = false
+          }
+        } else {
+          size -= 10
+          if (size == 10) {
+            up = true
+          }
+        }
+      }, 500)
+
+      // Init Context
+      const c = document.createElement('canvas').getContext('2d')
+      const postctx = document
+        // .body.appendChild(document.createElement('canvas'))
+        .getElementById('waves')
+        .getContext('2d')
+      const canvas = c.canvas
+      const vertices = []
+
+      // Effect Properties
+      const vertexCount = 7000
+      const vertexSize = 3
+      const oceanWidth = 204
+      const oceanHeight = -100
+      const gridSize = 32
+      const waveSize = 16
+      const perspective = 100
+
+      // Common variables
+      const depth = (vertexCount / oceanWidth) * gridSize
+      let frame = 0
+      const { sin, cos, tan, PI } = Math
+
+      // Render loop
+      const loop = () => {
+        const rad = (sin(frame / 100) * PI) / 20
+        const rad2 = (sin(frame / 50) * PI) / 10
+        frame++
+        if (
+          postctx.canvas.width !== postctx.canvas.offsetWidth ||
+          postctx.canvas.height !== postctx.canvas.offsetHeight
+        ) {
+          postctx.canvas.width = canvas.width = postctx.canvas.offsetWidth
+          postctx.canvas.height = canvas.height = postctx.canvas.offsetHeight
+        }
+
+        // 背景色
+        c.fillStyle = 'hsla(200deg, 100%, 2%, 60%)'
+        c.fillRect(0, 0, canvas.width, canvas.height)
+        c.save()
+        c.translate(canvas.width / 2, canvas.height / 2)
+
+        c.beginPath()
+        vertices.forEach((vertex, i) => {
+          const ni = i + oceanWidth
+          let x = vertex[0] - (frame % (gridSize * 2))
+          let z =
+            vertex[2] -
+            ((frame * 2) % gridSize) +
+            (i % 2 === 0 ? gridSize / 2 : 0)
+          const wave =
+            cos(frame / 45 + x / 50) -
+            sin(frame / 20 + z / 50) +
+            sin(frame / 30 + (z * x) / 10000)
+          let y = vertex[1] + wave * waveSize
+          const a = Math.max(0, 1 - Math.sqrt(x ** 2 + z ** 2) / depth)
+          let tx, ty, tz
+
+          y -= oceanHeight
+
+          // 动画坐标系
+          // Transformation variables
+          tx = x
+          ty = y
+          tz = z
+
+          // Rotation Y
+          tx = x * cos(rad) + z * sin(rad)
+          tz = -x * sin(rad) + z * cos(rad)
+
+          x = tx
+          y = ty
+          z = tz
+
+          // Rotation Z
+          tx = x * cos(rad) - y * sin(rad)
+          ty = x * sin(rad) + y * cos(rad)
+
+          x = tx
+          y = ty
+          z = tz
+
+          // Rotation X
+
+          ty = y * cos(rad2) - z * sin(rad2)
+          tz = y * sin(rad2) + z * cos(rad2)
+
+          x = tx
+          y = ty
+          z = tz
+
+          x /= z / perspective
+          y /= z / perspective
+
+          if (a < 0.01) return
+          if (z < 0) return
+
+          c.globalAlpha = a
+          // 粒子颜色
+          c.fillStyle = `hsla(${size + wave * 20}deg, 100%, 50%, 100%)`
+          c.fillRect(
+            x - (a * vertexSize) / 2,
+            y - (a * vertexSize) / 2,
+            a * vertexSize,
+            a * vertexSize
+          )
+          c.globalAlpha = 1
+        })
+        c.restore()
+
+        // Post-processing
+        postctx.drawImage(canvas, 0, 0)
+
+        postctx.globalCompositeOperation = 'screen'
+        postctx.filter = 'blur(16px)'
+        postctx.drawImage(canvas, 0, 0)
+        postctx.filter = 'blur(0)'
+        postctx.globalCompositeOperation = 'source-over'
+
+        requestAnimationFrame(loop)
+      }
+
+      // Generating dots
+      for (let i = 0; i < vertexCount; i++) {
+        const x = i % oceanWidth
+        const y = 0
+        const z = (i / oceanWidth) >> 0
+        const offset = oceanWidth / 2
+        vertices.push([(-offset + x) * gridSize, y * gridSize, z * gridSize])
+      }
+
+      loop()
     }
   }
 }
@@ -300,15 +525,97 @@ export default {
     padding: 80px 0;
   }
   .search {
-    background-image: url(../assets/imgs/search-bg.png);
+    // background-image: url(../assets/imgs/search-bg.png);
+    background-color: #3168d9;
     height: 780px;
+    position: relative;
     .input-wrap {
+      // border: 1px solid red;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      // width: 100%;
       padding-top: 200px;
       margin: 0 auto;
       width: 700px;
       .search-class {
         margin-bottom: 10px;
       }
+    }
+    .sample-text {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 300px;
+      width: 800px;
+      .sample {
+        position: absolute;
+        color: #fff;
+        opacity: 0.3;
+        font-size: 16px;
+        transition: all 0.8s;
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+      .s0 {
+        top: 0px;
+        left: 350px;
+        font-size: 12px;
+      }
+      .s1 {
+        top: 10px;
+        left: 157px;
+        font-size: 12px;
+      }
+      .s2 {
+        top: 10px;
+        left: 600px;
+        font-size: 14px;
+      }
+      .s3 {
+        top: 43px;
+        left: 456px;
+        font-size: 16px;
+      }
+      .s4 {
+        top: 147px;
+        left: 549px;
+        font-size: 16px;
+      }
+      .s5 {
+        top: 88px;
+        left: 257px;
+        font-size: 16px;
+      }
+      .s6 {
+        top: 207px;
+        font-size: 16px;
+        left: 200px;
+      }
+      .s7 {
+        right: 80px;
+        bottom: 24px;
+        font-size: 16px;
+      }
+      .s8 {
+        right: 30px;
+        bottom: 14px;
+        font-size: 16px;
+        left: 400px;
+      }
+      .s9 {
+        bottom: 30px;
+        left: 100px;
+      }
+    }
+    #waves {
+      background-color: #3168d9;
+      width: 100%;
+      height: 100%;
+      opacity: 0.5;
     }
   }
   .base-title {

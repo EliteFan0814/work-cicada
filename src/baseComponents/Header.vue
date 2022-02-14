@@ -11,7 +11,7 @@
           <div class="more-info">
             <div class="logout" @click="logout">退出登录</div>
           </div>
-          <span slot="reference">范</span>
+          <span slot="reference">个人信息</span>
         </el-popover>
       </li>
       <!-- 开通会员 -->
@@ -67,12 +67,18 @@ export default {
   },
   methods: {
     handleNormalRouter(router) {
-      if (router !== 'Login') {
+      if (this.isLogin) {
         this.activeRouter = router
         this.$router.push({ name: router })
-      } else if (router === 'Login') {
+      } else {
         this.$store.commit('SET_IS_LOGIN_DIALOG', true)
       }
+      // if (router !== 'Login') {
+      //   this.activeRouter = router
+      //   this.$router.push({ name: router })
+      // } else if (router === 'Login') {
+      //   this.$store.commit('SET_IS_LOGIN_DIALOG', true)
+      // }
     },
     logout() {
       MessageBox.confirm('确认退出登录？', {
@@ -86,6 +92,7 @@ export default {
             type: 'success',
             duration: 1 * 1000
           })
+          this.$router.push({ name: 'Home' })
         })
       })
     }

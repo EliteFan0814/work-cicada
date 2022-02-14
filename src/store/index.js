@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { login, logout, getInfo } from '@/api/user'
+import { wxQRLogin, login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 Vue.use(Vuex)
 
@@ -30,12 +30,11 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    // 用户登录
-    login({ commit }, userInfo) {
+    // 用户登录 测试用
+    loginTemp({ commit }) {
       return new Promise((resolve, reject) => {
         const token =
-          // 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmljayI6IuiMg-Wfuei2hSIsImF2YXRhciI6Imh0dHA6Ly93ZXdvcmsucXBpYy5jbi9iaXptYWlsL1RwNDM4YW40Y3oxY056ZU5zRkYxTmQ2bEJNREcxWmpoWUdLRFc4dWpXampTZVJuUnlma2J6QS8wIiwiZXhwIjoxNjQ0NDA5OTI1fQ.pjUrYqbd_X7ILLX03csrpqcNqLKVgfFIhVPsuVVUjhY'
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmljayI6IuiMg-Wfuei2hSIsImF2YXRhciI6Imh0dHA6Ly93ZXdvcmsucXBpYy5jbi9iaXptYWlsL1RwNDM4YW40Y3oxY056ZU5zRkYxTmQ2bEJNREcxWmpoWUdLRFc4dWpXampTZVJuUnlma2J6QS8wIiwiZXhwIjoxNjQ0NTg0Mzg0fQ.vRI2LhDShxo1Wlmm1AqrRVDS7WCTWGJBG8aoM1wBo6E'
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmljayI6IuiMg-Wfuei2hSIsImF2YXRhciI6Imh0dHA6Ly93ZXdvcmsucXBpYy5jbi9iaXptYWlsL1RwNDM4YW40Y3oxY056ZU5zRkYxTmQ2bEJNREcxWmpoWUdLRFc4dWpXampTZVJuUnlma2J6QS8wIiwiZXhwIjoxNjQ0ODQ2MzY5fQ.aonJb_jdEUTr3625ihBbPYrF_twEl-A8T6oxa7iyMV8'
         commit('SET_TOKEN', token)
         commit('SET_IS_LOGIN', true)
         commit('SET_IS_LOGIN_DIALOG', false)
@@ -43,7 +42,24 @@ export default new Vuex.Store({
         setToken(token)
         resolve()
       })
-
+    },
+    login({ commit }, userInfo) {
+      // 企业微信扫码登录
+      return new Promise((resolve, reject) => {
+        wxQRLogin(userInfo)
+          .then((res) => {
+            const { token } = res
+            commit('SET_TOKEN', token)
+            commit('SET_IS_LOGIN', true)
+            commit('SET_IS_LOGIN_DIALOG', false)
+            // 存token到cookie
+            setToken(token)
+            resolve()
+          })
+          .catch((err) => {
+            reject(err)
+          })
+      })
       // const { username, password } = userInfo
       // return new Promise((resolve, reject) => {
       //   login({ username: username.trim(), password: password })
@@ -63,7 +79,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit('SET_TOKEN', '')
         commit('SET_IS_LOGIN', false)
-        commit('SET_IS_LOGIN_DIALOG', true)
+        // commit('SET_IS_LOGIN_DIALOG', true)
         removeToken()
         resolve()
 
