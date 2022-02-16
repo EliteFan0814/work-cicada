@@ -2,11 +2,13 @@
   <div v-loading="loading" class="home">
     <div class="search">
       <canvas id="waves"></canvas>
+      <img src="@/assets/imgs/search-bg.jpg" alt="" class="wave-bg">
       <div class="input-wrap flex-ccc">
+        <div class="flex-cc iknow"><span>知了</span></div>
         <BaseSearchClass class="search-class" type="home" @selectClass="handleClass"></BaseSearchClass>
         <BaseInput icon="search" @search="handleSearch"></BaseInput>
       </div>
-      <div class="sample-text">
+      <!-- <div class="sample-text">
         <span class="sample s0">29类-食品</span>
         <span class="sample s1">01类-化学原料</span>
         <span class="sample s2">35类-广告销售</span>
@@ -17,7 +19,7 @@
         <span class="sample s7">09类-科学仪器</span>
         <span class="sample s8">42类-网站服务</span>
         <span class="sample s9">33类-酒</span>
-      </div>
+      </div> -->
     </div>
     <div class="ai bg">
       <div class="base-title">
@@ -38,7 +40,8 @@
       <!-- <img src="@assets/imgs/swipperbg.png" class="bg"> -->
       <div class="tabs flex-cc">
         <div v-for="(item,index) in tabsList" :key="item.label"
-          :class="{tab:true,'tab-active':activeTab===index?true:false}" @click="ManualChange(index)">商标查询</div>
+          :class="{tab:true,'tab-active':activeTab===index?true:false}" @click="ManualChange(index)">{{item.label}}
+        </div>
       </div>
       <div class="tips-wrap flex-ccc">
         <span>{{tabsList[activeTab].tips}}</span>
@@ -46,7 +49,7 @@
       <div class="carousel">
         <el-carousel ref="carousel" indicator-position="outside" height="540px" @change="handleChange">
           <el-carousel-item v-for="item in 3" :key="item">
-            <img src="https://dummyimage.com/960x540/000/fff" alt="">
+            <img src="@/assets/imgs/swiper0.png" alt="">
           </el-carousel-item>
         </el-carousel>
       </div>
@@ -279,6 +282,7 @@ export default {
         const query = route.query
         if (query) {
           this.redirect = query.redirect
+          this.handleQRLogin()
         }
       },
       immediate: true
@@ -391,9 +395,9 @@ export default {
       const vertexCount = 7000
       const vertexSize = 3
       const oceanWidth = 204
-      const oceanHeight = -100
+      const oceanHeight = -200
       const gridSize = 32
-      const waveSize = 16
+      const waveSize = 25
       const perspective = 100
 
       // Common variables
@@ -415,7 +419,11 @@ export default {
         }
 
         // 背景色
-        c.fillStyle = 'hsla(200deg, 100%, 2%, 60%)'
+        // c.fillStyle = 'hsla(200deg, 100%, 2%, 60%)'
+        // c.fillStyle = 'hsla(200deg, 100%, 25%, 60%)'
+        // c.fillStyle = 'hsla(205deg, 100%, 16%, 40%)'
+        // c.fillStyle = 'rgba(255,255,255)'
+        c.fillStyle = '#0e227c'
         c.fillRect(0, 0, canvas.width, canvas.height)
         c.save()
         c.translate(canvas.width / 2, canvas.height / 2)
@@ -477,7 +485,8 @@ export default {
 
           c.globalAlpha = a
           // 粒子颜色
-          c.fillStyle = `hsla(${size + wave * 20}deg, 100%, 50%, 100%)`
+          c.fillStyle = `hsla(${size + wave * 2}deg, 100%, 100%, 100%)`
+          // c.fillStyle = '#fff'
           c.fillRect(
             x - (a * vertexSize) / 2,
             y - (a * vertexSize) / 2,
@@ -525,8 +534,9 @@ export default {
     padding: 80px 0;
   }
   .search {
-    // background-image: url(../assets/imgs/search-bg.png);
-    background-color: #3168d9;
+    // background-image: url(../assets/imgs/search-bg.jpg);
+    padding: 0 0;
+    // background-color: #3168d9;
     height: 780px;
     position: relative;
     .input-wrap {
@@ -536,9 +546,17 @@ export default {
       left: 50%;
       transform: translateX(-50%);
       // width: 100%;
-      padding-top: 200px;
+      padding-top: 230px;
       margin: 0 auto;
       width: 700px;
+      .iknow {
+        font-size: 40px;
+        line-height: 44px;
+        letter-spacing: 15px;
+        font-weight: bold;
+        color: #ffffff;
+        padding-bottom: 60px;
+      }
       .search-class {
         margin-bottom: 10px;
       }
@@ -612,10 +630,20 @@ export default {
       }
     }
     #waves {
-      background-color: #3168d9;
+      box-sizing: border-box;
+      padding-top: 60px;
+      background-color: transparent;
       width: 100%;
       height: 100%;
-      opacity: 0.5;
+      opacity: 1;
+    }
+    .wave-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.6;
     }
   }
   .base-title {

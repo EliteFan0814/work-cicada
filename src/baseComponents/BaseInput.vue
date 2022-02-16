@@ -1,6 +1,6 @@
 <template>
   <div class="base-input" :style="`width:${width}`">
-    <input type="text" v-model="value" :placeholder="placeholder" @input="handleChange">
+    <input type="text" v-model="value" :placeholder="placeholder" @input="handleChange" @keyup.enter="handleEmit">
     <i :class="['iconfont',`icon-${icon}`]" @click="handleEmit"></i>
     <span v-if="validType === 'email'&&!validEmail" class="err-tips">邮箱格式不正确</span>
   </div>

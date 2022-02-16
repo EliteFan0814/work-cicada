@@ -7,7 +7,7 @@
         <div class="info flex-cc">
           <!-- <img src="@/assets/imgs/qr-login.png" alt=""> -->
           <!-- <div id="wxqrcode"></div> -->
-          <iframe id="square" :src="iframeSrc" frameborder="0" scrolling="no" width="300px" height="330px"></iframe>
+          <iframe id="square" :src="iframeSrc" frameborder="0" scrolling="no" width="300px" height="400px"></iframe>
 
         </div>
         <!-- <div class="tips" @click="handleLoginTemp">点击临时登录</div> -->

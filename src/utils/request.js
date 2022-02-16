@@ -3,17 +3,22 @@ import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
+const apikey = '592255fd1ca345118376d7bef6e19202'
 // 创建 axios 实例
 const service = axios.create({
-  // baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
-  baseURL: process.env.NODE_ENV === 'development' ? '/v1' : '/', // url = base url + request url
+  // baseURL: process.env.NODE_ENV === 'development' ? '/v1' : 'http://kong.d.gbicom.com/iknow/v1', // url = base url + request url
+  baseURL:
+    process.env.NODE_ENV === 'development'
+      ? '/v1'
+      : 'http://10.10.102.23:8010/v1', // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
 // 请求拦截
 service.interceptors.request.use(
   (config) => {
-    // do something before request is sent
+    // 发送请求前配置请求
+    // config.headers.apikey = apikey
     if (store.getters.token) {
       // 让每个请求都附带token
       // config.headers['token'] = getToken()

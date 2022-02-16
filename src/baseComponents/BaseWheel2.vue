@@ -3,6 +3,16 @@
     <div class="base-wheel" id="echart-wheel">
     </div>
     <div class="title omit-1">{{keyword}}</div>
+    <div class="legend flex-cc">
+      <div class="item item-1 flex-cc">
+        <div class="color unuse"></div>
+        <div class="name">未申请</div>
+      </div>
+      <div class="item flex-cc">
+        <div class="color use"></div>
+        <div class="name">已申请</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -1329,6 +1339,26 @@ export default {
     font-weight: bold;
     width: 200px;
     text-align: center;
+  }
+  .legend {
+    padding-top: 20px;
+    .item {
+      font-size: 14px;
+      .color {
+        width: 14px;
+        height: 14px;
+        margin-right: 5px;
+      }
+      .unuse {
+        background-color: #bcf2fb;
+      }
+      .use {
+        background-color: #58c4ff;
+      }
+    }
+    .item-1 {
+      margin-right: 50px;
+    }
   }
 }
 </style>
