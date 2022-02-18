@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { wxQRLogin, login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
+import router from '@/router'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -81,6 +82,7 @@ export default new Vuex.Store({
         commit('SET_IS_LOGIN', false)
         // commit('SET_IS_LOGIN_DIALOG', true)
         removeToken()
+        router.push({ name: 'Home' })
         resolve()
 
         // logout(state.token)

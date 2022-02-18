@@ -6,7 +6,7 @@
       <div class="input-wrap flex-ccc">
         <div class="flex-cc iknow"><span>知了</span></div>
         <BaseSearchClass class="search-class" type="home" @selectClass="handleClass"></BaseSearchClass>
-        <BaseInput icon="search" @search="handleSearch"></BaseInput>
+        <BaseInput icon="search" :isHome="true" @search="handleSearch"></BaseInput>
       </div>
       <!-- <div class="sample-text">
         <span class="sample s0">29类-食品</span>

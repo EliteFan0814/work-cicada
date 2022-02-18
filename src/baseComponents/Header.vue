@@ -1,5 +1,6 @@
 <template>
-  <header class="header-wrap" :style="{backgroundColor:`rgba(49, 104, 217,${opacity})`}">
+  <!-- <header class="header-wrap" :style="{backgroundColor:`rgba(49, 104, 217,${opacity})`}"> -->
+  <header class="header-wrap" :style="{backgroundColor:`${bgColor}`}">
     <img src="@/assets/imgs/logo.png" class="logo" />
     <ul>
       <li v-for="item in routerList" :key="item.name"
@@ -36,7 +37,7 @@ export default {
     },
     bgColor: {
       type: String,
-      default: '#3168d9'
+      default: 'rgba(49, 104, 217,1)'
     }
   },
   data() {

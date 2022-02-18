@@ -1,7 +1,7 @@
 <template>
   <div class="base-input" :style="`width:${width}`">
     <input type="text" v-model="value" :placeholder="placeholder" @input="handleChange" @keyup.enter="handleEmit">
-    <i :class="['iconfont',`icon-${icon}`]" @click="handleEmit"></i>
+    <i :class="['iconfont',`icon-${icon}`,isHome?'ishome':'']" @click="handleEmit"></i>
     <span v-if="validType === 'email'&&!validEmail" class="err-tips">邮箱格式不正确</span>
   </div>
 </template>
@@ -29,6 +29,10 @@ export default {
       type: [String, Number],
       required: false,
       default: '400px'
+    },
+    isHome: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -119,6 +123,16 @@ export default {
   .iconfont {
     font-size: 20px;
     cursor: pointer;
+  }
+  .ishome {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(
+      120deg,
+      #4af175 1%,
+      #4fe3c0 50%,
+      #51dbee 100%
+    );
   }
   .err-tips {
     position: absolute;
