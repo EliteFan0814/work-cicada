@@ -1,12 +1,12 @@
 <template>
   <div v-loading="loading" class="home">
     <div class="search">
-      <canvas id="waves"></canvas>
       <img src="@/assets/imgs/search-bg.jpg" alt="" class="wave-bg">
+      <canvas id="waves"></canvas>
       <div class="input-wrap flex-ccc">
         <div class="flex-cc iknow"><span>知了</span></div>
         <BaseSearchClass class="search-class" type="home" @selectClass="handleClass"></BaseSearchClass>
-        <BaseInput icon="search" :isHome="true" @search="handleSearch"></BaseInput>
+        <BaseInput icon="search" :isHome="true" @search="handleSearch" bgColor="#f7f7f7" placeholder=""></BaseInput>
       </div>
       <!-- <div class="sample-text">
         <span class="sample s0">29类-食品</span>
@@ -558,7 +558,7 @@ export default {
         padding-bottom: 60px;
       }
       .search-class {
-        margin-bottom: 10px;
+        margin-bottom: 20px;
       }
     }
     .sample-text {
@@ -630,12 +630,15 @@ export default {
       }
     }
     #waves {
+      position: absolute;
+      top: 0px;
+      left: 0;
       box-sizing: border-box;
       padding-top: 60px;
       background-color: transparent;
       width: 100%;
       height: 100%;
-      opacity: 1;
+      opacity: 0.3;
     }
     .wave-bg {
       position: absolute;
@@ -643,7 +646,7 @@ export default {
       left: 0;
       width: 100%;
       height: 100%;
-      opacity: 0.6;
+      opacity: 1;
     }
   }
   .base-title {

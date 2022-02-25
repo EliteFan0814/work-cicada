@@ -73,9 +73,12 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: center;
+      font-weight: normal;
       color: #fff;
+      opacity: 0.75;
     }
     .active-home {
+      font-weight: bold;
       background-image: -webkit-linear-gradient(
         left,
         #4af175,

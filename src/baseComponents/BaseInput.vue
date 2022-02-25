@@ -1,6 +1,7 @@
 <template>
-  <div class="base-input" :style="`width:${width}`">
-    <input type="text" v-model="value" :placeholder="placeholder" @input="handleChange" @keyup.enter="handleEmit">
+  <div class="base-input" :style="`width:${width};backgroundColor:${bgColor}`">
+    <input type="text" v-model="value" :placeholder="placeholder" @input="handleChange" @keyup.enter="handleEmit"
+      :style="`backgroundColor:${bgColor}`">
     <i :class="['iconfont',`icon-${icon}`,isHome?'ishome':'']" @click="handleEmit"></i>
     <span v-if="validType === 'email'&&!validEmail" class="err-tips">邮箱格式不正确</span>
   </div>
@@ -9,6 +10,10 @@
 export default {
   name: 'BaseInput',
   props: {
+    bgColor: {
+      type: String,
+      default: '#fff'
+    },
     icon: {
       type: String,
       default: ''

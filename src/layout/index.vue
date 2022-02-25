@@ -32,7 +32,7 @@ export default {
       if (this.$route.path === '/home') {
         return {
           absolute: true,
-          bgColor: 'rgba(9, 33, 135,0.5)'
+          bgColor: 'rgba(9, 33, 135,0.35)'
         }
       } else {
         return {
