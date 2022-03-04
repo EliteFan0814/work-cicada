@@ -64,7 +64,7 @@
         </div>
       </div>
     </div>
-    <BasePopover v-if="!showMore" :width="800">
+    <BasePopover v-if="showMore" :width="800">
       <div slot="popContent" class="filter-pop-wrap">
         <ul>
           <li class="key-item">{{searchKey}}</li>
@@ -146,7 +146,24 @@ export default {
       popshowflag: new Date()
     }
   },
+  mounted() {
+    this.loopJudgeShowMore()
+  },
   methods: {
+    // 循环判断是否显示更多按钮
+    loopJudgeShowMore() {
+      setInterval(() => {
+        if (this.$refs.filterList) {
+          const filterListLength = this.$refs.filterList.scrollWidth
+          const itemWrapLength = this.$refs.itemWrap.scrollWidth
+          if (filterListLength < itemWrapLength) {
+            this.showMore = true
+          } else {
+            this.showMore = false
+          }
+        }
+      }, 500)
+    },
     handleClick() {
       this.active = !this.active
     },
@@ -217,10 +234,10 @@ export default {
     }
   }
   .filter-key-wrap {
-    overflow: hidden;
-    flex-grow: 1;
     display: flex;
     align-items: center;
+    flex-grow: 1;
+    overflow: hidden;
     .reset {
       margin-right: 10px;
     }

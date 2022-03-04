@@ -1,11 +1,24 @@
 import request from '@/utils/request'
 
 export default {
-  getInfoByName(query, urlClass = 'name') {
+  // 商标检索
+  getInfoByName(query, genre = 1) {
     return request({
-      url: `/search/${urlClass}`,
+      url: '/search',
       method: 'post',
-      data: query
+      data: { genre, ...query }
+    })
+  },
+  // 商标检索结果的二次过滤
+  getInfoFilter(query, suggestKeyword, suggestGenre = 1) {
+    return request({
+      url: '/search',
+      method: 'post',
+      data: {
+        suggest_genre: suggestGenre,
+        suggest_keyword: suggestKeyword,
+        ...query
+      }
     })
   }
 }

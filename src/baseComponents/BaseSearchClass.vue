@@ -19,10 +19,10 @@ export default {
       type: Array,
       default() {
         return [
-          { label: '智能查询', value: 'name' },
-          { label: '申请号', value: 'code' },
-          { label: '申请人', value: 'owner' },
-          { label: '代理机构', value: 'agent' }
+          { label: '智能查询', value: 1 },
+          { label: '申请号', value: 2 },
+          { label: '申请人', value: 3 },
+          { label: '代理机构', value: 4 }
         ]
       }
     },
@@ -31,13 +31,13 @@ export default {
       default: 'default'
     },
     outActiveValue: {
-      type: String,
+      type: [String, Number],
       default: ''
     }
   },
   data() {
     return {
-      activeValue: 'name'
+      activeValue: 1
     }
   },
   watch: {

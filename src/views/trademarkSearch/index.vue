@@ -25,8 +25,11 @@
               <SearchFilterItem title="国际分类" :show="true" :dataList="category" @changeFilter="changeFilter">
               </SearchFilterItem>
               <SearchFilterItem title="有效状态" :dataList="status" @changeFilter="changeFilter"></SearchFilterItem>
-              <SearchFilterItem title="商标持有人" :dataList="ownerList" @changeFilter="changeFilter"></SearchFilterItem>
-              <SearchFilterItem title="代理机构" :dataList="agentList" @changeFilter="changeFilter"></SearchFilterItem>
+              <SearchFilterItem title="商标持有人" :show="false" filterClass="owners" :dataList="ownerList"
+                @changeFilter="changeFilter" @moreFilter="moreFilter"></SearchFilterItem>
+              <SearchFilterItem title="代理机构" :show="false" filterClass="agents" :dataList="agentList"
+                @changeFilter="changeFilter" @moreFilter="moreFilter">
+              </SearchFilterItem>
             </div>
             <!-- <searchFilter></searchFilter> -->
           </div>
@@ -75,7 +78,7 @@ export default {
       total: 0,
       tableData: [],
       // 搜索类
-      searchClass: 'name',
+      searchClass: 1,
       preCategory: [
         { label: '01', value: 1, selected: false },
         { label: '02', value: 2, selected: false },
@@ -138,7 +141,7 @@ export default {
   },
   mounted() {
     if (this.$route.query.searchKey) {
-      this.searchClass = this.$route.query.searchClass
+      this.searchClass = Number(this.$route.query.searchClass)
       this.searchKey.keyword = this.$route.query.searchKey
       this.apiSearch()
     }
@@ -150,9 +153,6 @@ export default {
     },
     // 处理搜索
     handleSearch(value) {
-      // this.searchKey.keyword = value
-      // this.searchKey.page = 1
-      console.log(222)
       if (value.length < 2) {
         Message({
           message: '搜索关键字长度至少为2个字符',
@@ -277,6 +277,14 @@ export default {
       this.searchKey.status = tempStatus.join('|')
       this.searchKey.owners = tempOwnerList
       this.searchKey.agents = tempAgentList
+      this.searchKey.page = 1
+      if (this.searchKey.keyword) {
+        this.apiSearch()
+      }
+    },
+    // 弹框中的过滤
+    moreFilter(filterClass, value) {
+      this.searchKey[filterClass] = value
       if (this.searchKey.keyword) {
         this.apiSearch()
       }
@@ -331,6 +339,8 @@ export default {
       }
     }
     .right-key-list {
+      box-sizing: border-box;
+      width: 70%;
       flex-grow: 1;
       padding-bottom: 16px;
       padding-left: 20px;

@@ -18,7 +18,7 @@
       <!-- 带有搜索的复杂操作 -->
       <div v-else slot="popContent">
         <div class="more-operate-wrap">
-          <BaseInput width="100%" class="search"></BaseInput>
+          <BaseInput width="100%" class="search" @search="handleSearch"></BaseInput>
           <div class="checkbox-wrap">
             <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange"
               class="checkall">全选
@@ -41,6 +41,10 @@
 export default {
   name: 'searchFilterItem',
   props: {
+    filterClass: {
+      type: String,
+      require: false
+    },
     title: {
       type: String,
       require: true
@@ -67,26 +71,33 @@ export default {
     }
   },
   watch: {
-    dataList: {
-      handler: function(newVal) {
-        this.judgeShowMore()
-      },
-      deep: true
-    }
+    // dataList(newVal) {
+    //   const tempSelect = []
+    //   newVal.map((item) => {
+    //     if (item.selected) {
+    //       tempSelect.push(item.value)
+    //     }
+    //   })
+    //   this.checkList = tempSelect
+    // }
   },
   mounted() {
-    this.judgeShowMore()
+    this.loopJudgeShowMore()
   },
   methods: {
-    // 判断是否显示更多按钮
-    judgeShowMore() {
-      const filterListLength = this.$refs.filterList.scrollWidth
-      const itemWrapLength = this.$refs.itemWrap.scrollWidth
-      if (filterListLength <= itemWrapLength) {
-        this.showMore = true
-      } else {
-        this.showMore = false
-      }
+    // 循环判断是否显示更多按钮
+    loopJudgeShowMore() {
+      setInterval(() => {
+        if (this.$refs.filterList) {
+          const filterListLength = this.$refs.filterList.scrollWidth
+          const itemWrapLength = this.$refs.itemWrap.scrollWidth
+          if (filterListLength < itemWrapLength) {
+            this.showMore = true
+          } else {
+            this.showMore = false
+          }
+        }
+      }, 500)
     },
     handleClick(item) {
       item.selected = !item.selected
@@ -107,8 +118,15 @@ export default {
         checkedCount > 0 && checkedCount < this.dataList.length
     },
     handleConfirm(flag) {
+      console.log(this.checkList)
+      this.$emit('moreFilter', this.filterClass, this.checkList)
+      this.checkList = []
+      this.checkAll = false
+      this.isIndeterminate = false
       this.popshowflag = new Date()
-    }
+    },
+    // 内部过滤搜索
+    handleSearch(value) {}
   }
 }
 </script>
@@ -125,15 +143,14 @@ export default {
     color: rgba(0, 0, 0, 0.85);
   }
   .key-list-wrap {
-    flex-grow: 1;
     width: 100px; //解决纯英文字符过长bug fpcbug
+    flex-grow: 1;
     .key-list {
       overflow: hidden;
       color: rgba(0, 0, 0, 0.65);
       display: flex;
       .key-item {
         min-width: 33px;
-        // font-weight: bold;
         flex-shrink: 0;
         padding-right: 10px;
         cursor: pointer;

@@ -24,6 +24,8 @@ router.beforeEach(async(to, from, next) => {
     // next()
     if (to.path === '/home') {
       next()
+    } else {
+      next({ path: '/' })
     }
     // if (whiteList.indexOf(to.path) !== -1) {
     //   // in the free login whitelist, go directly

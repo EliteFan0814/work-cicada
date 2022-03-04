@@ -265,7 +265,7 @@ export default {
           label: '最标申请数据'
         }
       ],
-      searchClass: 'name',
+      searchClass: 1,
       searchKey: '',
       redirect: undefined,
       loading: false
