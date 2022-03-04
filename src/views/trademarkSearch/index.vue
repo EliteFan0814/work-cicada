@@ -241,7 +241,9 @@ export default {
     // 处理搜索类
     handleClass(value) {
       this.searchClass = value
-      this.apiSearch()
+      if (this.searchKey.keyword) {
+        this.apiSearch()
+      }
     },
     // 改变过滤条件
     changeFilter() {
