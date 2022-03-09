@@ -62,7 +62,7 @@ export default {
       font-size: 14px;
       letter-spacing: 0px;
       color: #999999;
-      margin-right: 20px;
+      margin: 0 15px;
       font-weight: bold;
       cursor: pointer;
     }
@@ -70,6 +70,7 @@ export default {
       color: #3168d9;
     }
     .homi-li {
+      font-size: 16px;
       display: flex;
       flex-direction: column;
       align-items: center;

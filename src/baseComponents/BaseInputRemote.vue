@@ -7,10 +7,12 @@
         <i class="el-icon-close clear" @click="handleDelete(index)"></i>
       </div>
     </div>
-    <input type="text" v-model="value" :placeholder="placeholder" @input="handleShowSuggest">
+    <input type="text" v-model="value" :placeholder="placeholder" @input="handleShowSuggest" @focus="handleFocus"
+      :class="{'show-z-index':showSuggest}">
     <i slot="reference" :class="['iconfont',`icon-${icon}`]" @click="handleEmit"></i>
     <!-- 远程搜索结果列表 -->
-    <div v-if="showSuggest" class="remote-res">
+    <div v-show="showSuggest" class="remote-mask" @click="handleMask"></div>
+    <div v-show="showSuggest" class="remote-res">
       <template v-if="suggestList.length">
         <div v-for="(item) in suggestList" :key="item" class="res-item" @click="handleSelect(item)">
           {{item}}</div>
@@ -138,6 +140,29 @@ export default {
       this.value = ''
       this.showSuggest = false
       this.$emit('selectListChange', this.selectList)
+    },
+    // 处理失去焦点
+    handleMask() {
+      this.showSuggest = false
+    },
+    // 处理是否聚焦，然后判断是否进行搜索
+    handleFocus() {
+      if (this.value) {
+        watch
+          .watchListSuggest(this.searchClass, this.value)
+          .then((res) => {
+            this.showSuggest = true
+            if (res) {
+              this.suggestList = res
+            } else {
+              this.suggestList = []
+            }
+          })
+          .catch((err) => {
+            this.showSuggest = false
+            console.log(err)
+          })
+      }
     }
   }
 }
@@ -198,13 +223,25 @@ export default {
       color: #bfbfbf;
     }
   }
+  .show-z-index {
+    z-index: 3;
+  }
   .iconfont {
     font-size: 20px;
     cursor: pointer;
   }
+  .remote-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100vw;
+    height: 100vh;
+  }
   .remote-res {
     box-sizing: border-box;
     position: absolute;
+    z-index: 3;
     bottom: -5px;
     transform: translateY(100%);
     left: 0;

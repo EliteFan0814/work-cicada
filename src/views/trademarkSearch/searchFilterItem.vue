@@ -17,16 +17,19 @@
       </div>
       <!-- 带有搜索的复杂操作 -->
       <div v-else slot="popContent">
-        <div class="more-operate-wrap">
-          <BaseInput width="100%" class="search" @search="handleSearch"></BaseInput>
-          <div class="checkbox-wrap">
+        <div v-loading="filterLoading" class="more-operate-wrap">
+          <BaseInput width="100%" class="search" icon="search" @search="handleSearch"></BaseInput>
+          <div v-if="innerDataList.length" class="checkbox-wrap">
             <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange"
               class="checkall">全选
             </el-checkbox>
             <el-checkbox-group v-model="checkList" @change="handleCheckedCitiesChange">
-              <el-checkbox v-for="item in dataList" :key="item.value" :label="item.value">{{item.label}}
+              <el-checkbox v-for="item in innerDataList" :key="item.value" :label="item.value">{{item.label}}
               </el-checkbox>
             </el-checkbox-group>
+          </div>
+          <div v-else style="text-align:center;">
+            <span>暂无数据</span>
           </div>
           <div class="confirm-wrap">
             <el-button size="mini" round @click="handleConfirm(false)">取消</el-button>
@@ -38,6 +41,8 @@
   </div>
 </template>
 <script>
+import apiSearch from '@/api/search'
+
 export default {
   name: 'searchFilterItem',
   props: {
@@ -55,6 +60,12 @@ export default {
         return []
       }
     },
+    outFilter: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
     // 是否是简单的展示所有数据
     show: {
       type: Boolean,
@@ -67,19 +78,15 @@ export default {
       checkList: [],
       checkAll: false,
       isIndeterminate: false,
-      popshowflag: new Date()
+      innerDataList: [],
+      popshowflag: new Date(),
+      filterLoading: false
     }
   },
   watch: {
-    // dataList(newVal) {
-    //   const tempSelect = []
-    //   newVal.map((item) => {
-    //     if (item.selected) {
-    //       tempSelect.push(item.value)
-    //     }
-    //   })
-    //   this.checkList = tempSelect
-    // }
+    dataList(newVal) {
+      this.innerDataList = newVal
+    }
   },
   mounted() {
     this.loopJudgeShowMore()
@@ -118,15 +125,51 @@ export default {
         checkedCount > 0 && checkedCount < this.dataList.length
     },
     handleConfirm(flag) {
-      console.log(this.checkList)
-      this.$emit('moreFilter', this.filterClass, this.checkList)
+      if (flag) {
+        this.$emit('moreFilter', this.filterClass, this.checkList)
+      }
       this.checkList = []
       this.checkAll = false
       this.isIndeterminate = false
       this.popshowflag = new Date()
     },
     // 内部过滤搜索
-    handleSearch(value) {}
+    handleSearch(value) {
+      if (value.length < 2) {
+        return this.$message({
+          message: '请输入至少两个关键字',
+          type: 'warn'
+        })
+      }
+      this.filterLoading = true
+      if (this.filterClass === 'owners') {
+        apiSearch
+          .getSecondFilter(this.outFilter, value, 1)
+          .then((res) => {
+            this.filterLoading = false
+            res = res || []
+            this.innerDataList = res.map((item) => {
+              return { label: item, selected: false, value: item }
+            })
+          })
+          .catch(() => {
+            this.filterLoading = false
+          })
+      } else if (this.filterClass === 'agents') {
+        apiSearch
+          .agentsSuggest(value)
+          .then((res) => {
+            this.filterLoading = false
+            res = res || []
+            this.innerDataList = res.map((item) => {
+              return { label: item, selected: false, value: item }
+            })
+          })
+          .catch(() => {
+            this.filterLoading = false
+          })
+      }
+    }
   }
 }
 </script>

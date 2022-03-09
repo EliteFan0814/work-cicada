@@ -4,7 +4,7 @@
     <div class="top-pagination">
       <BasePagination :total="totalNum" :nowPageNum.sync="nowPageNum" :pageSize.sync="pageSize"
         @pageChange="handlePageChange"></BasePagination>
-      <!-- <BaseDownload></BaseDownload> -->
+      <BaseDownload v-if="tableData.length" :doc="false" :pdf="false" @download="handleDownload"></BaseDownload>
     </div>
     <!-- 操作按钮 -->
     <BaseOperate :selectedStyle.sync="selectedStyle" :selected.sync="selected" :selectedNum="selectedNum"></BaseOperate>
@@ -109,6 +109,8 @@
   </div>
 </template>
 <script>
+import apiSearch from '@/api/search'
+
 export default {
   name: 'BaseTable',
   props: {
@@ -127,6 +129,9 @@ export default {
     },
     pageInfo: {
       type: Object
+    },
+    searchClass: {
+      type: [String, Number]
     }
   },
   data() {
@@ -183,6 +188,19 @@ export default {
       // 选择的个数
       this.selectedNum = selectedRow.length
       this.selectedRow = selectedRow
+    },
+    // 下载
+    handleDownload(type) {
+      if (type === 'exl') {
+        apiSearch
+          .downloadExcel({
+            keyword: this.pageInfo.keyword,
+            genre: this.searchClass
+          })
+          .then((res) => {
+            this.$downloadByUrl(this.$downloadBaseUrl, res)
+          })
+      }
     }
   }
 }

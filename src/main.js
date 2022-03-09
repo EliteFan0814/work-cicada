@@ -15,12 +15,13 @@ import '@/utils/globalRegistComp'
 import GlobalTools from '@/utils/globaltools'
 import * as echarts from 'echarts'
 import './permission' // permission control
-
+import _ from 'lodash'
 Vue.use(GlobalTools)
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.prototype.$echarts = echarts
 const dayjs = require('dayjs')
+Vue.prototype._ = _
 Vue.prototype.$dayjs = dayjs
 Vue.prototype.$imgUrl = 'http://image.gbicdn.com/tmimage/'
 

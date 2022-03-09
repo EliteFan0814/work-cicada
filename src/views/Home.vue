@@ -6,7 +6,8 @@
       <div class="input-wrap flex-ccc">
         <div class="flex-cc iknow"><span>知了</span></div>
         <BaseSearchClass class="search-class" type="home" @selectClass="handleClass"></BaseSearchClass>
-        <BaseInput icon="search" :isHome="true" @search="handleSearch" bgColor="#f7f7f7" placeholder=""></BaseInput>
+        <BaseInput icon="search" width="450px" :isHome="true" :border="false" @search="handleSearch" bgColor="#f7f7f7" placeholder="">
+        </BaseInput>
       </div>
       <!-- <div class="sample-text">
         <span class="sample s0">29类-食品</span>
@@ -551,11 +552,10 @@ export default {
       width: 700px;
       .iknow {
         font-size: 40px;
-        line-height: 44px;
         letter-spacing: 15px;
         font-weight: bold;
         color: #ffffff;
-        padding-bottom: 60px;
+        padding-bottom: 55px;
       }
       .search-class {
         margin-bottom: 20px;

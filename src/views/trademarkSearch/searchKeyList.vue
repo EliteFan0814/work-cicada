@@ -190,7 +190,6 @@ export default {
     // 删除搜索条件关键词
     handleDelete(index, className) {
       this[className][index].selected = false
-      console.log('this[className]', this[className])
       this.$emit('refreshList')
       // this.filterKeyList.splice(index, 1)
     }

@@ -25,8 +25,9 @@
               <SearchFilterItem title="国际分类" :show="true" :dataList="category" @changeFilter="changeFilter">
               </SearchFilterItem>
               <SearchFilterItem title="有效状态" :dataList="status" @changeFilter="changeFilter"></SearchFilterItem>
-              <SearchFilterItem title="商标持有人" :show="false" filterClass="owners" :dataList="ownerList"
-                @changeFilter="changeFilter" @moreFilter="moreFilter"></SearchFilterItem>
+              <SearchFilterItem title="商标持有人" :show="false" :outFilter="{...searchKey,genre:searchClass}"
+                filterClass="owners" :dataList="ownerList" @changeFilter="changeFilter" @moreFilter="moreFilter">
+              </SearchFilterItem>
               <SearchFilterItem title="代理机构" :show="false" filterClass="agents" :dataList="agentList"
                 @changeFilter="changeFilter" @moreFilter="moreFilter">
               </SearchFilterItem>
@@ -44,7 +45,7 @@
         </div>
         <div class="table">
           <TableList :tableData="tableData" :total="total" :pageInfo="searchKey" :setSelect="setSelect"
-            @pageChange="pageChange" @sort="sort" @handleFocus="handleFocus">
+            :searchClass="searchClass" @pageChange="pageChange" @sort="sort" @handleFocus="handleFocus">
           </TableList>
         </div>
       </div>
@@ -204,7 +205,8 @@ export default {
             } else {
               this.tableData = []
             }
-            this.total = res.pager.total
+            // this.total = res.pager.total
+            this.total = res.total
             if (res.agents) {
               this.agentList = res.agents.map((item) => {
                 if (this.searchKey.agents.includes(item)) {

@@ -1,7 +1,7 @@
 <template>
   <div class="base-download">
     <div class="item">
-      <img v-if="exl" src="@/assets/imgs/exl-fill.png" class="use">
+      <img v-if="exl" src="@/assets/imgs/exl-fill.png" class="use" @click="handleDownload">
       <img v-else src="@/assets/imgs/exl.png" class="unuse">
     </div>
     <div class="item">
@@ -29,6 +29,11 @@ export default {
     pdf: {
       type: Boolean,
       default: true
+    }
+  },
+  methods: {
+    handleDownload() {
+      this.$emit('download', 'exl')
     }
   }
 }

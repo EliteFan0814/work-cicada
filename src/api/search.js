@@ -10,15 +10,42 @@ export default {
     })
   },
   // 商标检索结果的二次过滤
-  getInfoFilter(query, suggestKeyword, suggestGenre = 1) {
+  getSecondFilter(query, suggestKeyword, suggestGenre = 1) {
     return request({
-      url: '/search',
+      url: '/filter_suggest',
       method: 'post',
       data: {
         suggest_genre: suggestGenre,
         suggest_keyword: suggestKeyword,
         ...query
       }
+    })
+  },
+  // 下载excel
+  downloadExcel({ genre, keyword }) {
+    return request({
+      url: '/search/excel',
+      method: 'post',
+      data: {
+        genre,
+        keyword
+      }
+    })
+  },
+  // 代理机构搜索建议
+  ownersSuggest(keyword) {
+    return request({
+      url: '/suggest/owner',
+      method: 'get',
+      params: { keyword }
+    })
+  },
+  // 持有人搜索建议
+  agentsSuggest(keyword) {
+    return request({
+      url: '/suggest/agent',
+      method: 'get',
+      params: { keyword }
     })
   }
 }

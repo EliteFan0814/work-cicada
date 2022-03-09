@@ -1,5 +1,5 @@
 <template>
-  <div class="base-input" :style="`width:${width};backgroundColor:${bgColor}`">
+  <div :class="{'base-input':true,'has-border':border}" :style="`width:${width};backgroundColor:${bgColor}`">
     <input type="text" v-model="value" :placeholder="placeholder" @input="handleChange" @keyup.enter="handleEmit"
       :style="`backgroundColor:${bgColor}`">
     <i :class="['iconfont',`icon-${icon}`,isHome?'ishome':'']" @click="handleEmit"></i>
@@ -10,6 +10,10 @@
 export default {
   name: 'BaseInput',
   props: {
+    border: {
+      type: Boolean,
+      default: true
+    },
     bgColor: {
       type: String,
       default: '#fff'
@@ -100,15 +104,13 @@ export default {
   background-color: #fff;
   box-sizing: border-box;
   padding: 12px 20px;
-  border-radius: 22px;
-  border: solid 1px #cccccc;
+  border-radius: 26px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  &:hover {
-    border: solid 1px #3168d9;
-  }
+
   input {
+     font-size: 16px;
     box-shadow: none; /*去除阴影*/
     outline: none; /*聚焦input的蓝色边框*/
     resize: none; /*textarea 禁止拖拽*/
@@ -133,17 +135,25 @@ export default {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-image: linear-gradient(
-      120deg,
-      #4af175 1%,
-      #4fe3c0 50%,
-      #51dbee 100%
-    );
+        120deg,
+        #4af175 1%,
+        #4fe3c0 50%,
+        #51dbee 100%
+      ),
+      linear-gradient(#f7f7f7, #f7f7f7);
+    background-blend-mode: normal, normal;
   }
   .err-tips {
     position: absolute;
     left: 0;
     bottom: -20px;
     color: #fd576a;
+  }
+}
+.has-border {
+  border: solid 1px #cccccc;
+  &:hover {
+    border: solid 1px #3168d9;
   }
 }
 </style>

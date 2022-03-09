@@ -43,5 +43,21 @@ export default {
         })
       }
     })
+    // 通过url地址下载
+    Object.defineProperty(Vue.prototype, '$downloadByUrl', {
+      value: function(baseUrl, url) {
+        const aLink = document.createElement('a') // 创建a链接
+        aLink.style.display = 'none'
+        aLink.href = '' + baseUrl + url
+        // aLink.download = name
+        document.body.appendChild(aLink)
+        aLink.click()
+        document.body.removeChild(aLink) // 点击完成后记得删除创建的链接
+      }
+    })
+    // 下载地址baseUrl
+    Object.defineProperty(Vue.prototype, '$downloadBaseUrl', {
+      value: 'http://10.10.102.23:8010/'
+    })
   }
 }
