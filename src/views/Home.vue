@@ -6,21 +6,10 @@
       <div class="input-wrap flex-ccc">
         <div class="flex-cc iknow"><span>知了</span></div>
         <BaseSearchClass class="search-class" type="home" @selectClass="handleClass"></BaseSearchClass>
-        <BaseInput icon="search" width="450px" :isHome="true" :border="false" @search="handleSearch" bgColor="#f7f7f7" placeholder="">
+        <BaseInput icon="search" width="450px" :isHome="true" :border="false" :searchClass="searchClass"
+          @search="handleSearch" bgColor="#f7f7f7" placeholder="">
         </BaseInput>
       </div>
-      <!-- <div class="sample-text">
-        <span class="sample s0">29类-食品</span>
-        <span class="sample s1">01类-化学原料</span>
-        <span class="sample s2">35类-广告销售</span>
-        <span class="sample s3">27类-地毯席垫</span>
-        <span class="sample s4">08类-手工器械</span>
-        <span class="sample s5">22类-绳网袋篷</span>
-        <span class="sample s6">18类-皮革皮具</span>
-        <span class="sample s7">09类-科学仪器</span>
-        <span class="sample s8">42类-网站服务</span>
-        <span class="sample s9">33类-酒</span>
-      </div> -->
     </div>
     <div class="ai bg">
       <div class="base-title">
@@ -422,9 +411,9 @@ export default {
         // 背景色
         // c.fillStyle = 'hsla(200deg, 100%, 2%, 60%)'
         // c.fillStyle = 'hsla(200deg, 100%, 25%, 60%)'
-        // c.fillStyle = 'hsla(205deg, 100%, 16%, 40%)'
-        // c.fillStyle = 'rgba(255,255,255)'
-        c.fillStyle = '#0e227c'
+        c.fillStyle = 'rgba(255,255,255,0)'
+        // c.fillStyle = '#0e227c'
+        c.fillStyle = '#0e215c'
         c.fillRect(0, 0, canvas.width, canvas.height)
         c.save()
         c.translate(canvas.width / 2, canvas.height / 2)
@@ -486,6 +475,7 @@ export default {
 
           c.globalAlpha = a
           // 粒子颜色
+          // c.fillStyle = `hsla(${size + wave * 2}deg, 100%, 100%, 100%)`
           c.fillStyle = `hsla(${size + wave * 2}deg, 100%, 100%, 100%)`
           // c.fillStyle = '#fff'
           c.fillRect(
@@ -500,7 +490,6 @@ export default {
 
         // Post-processing
         postctx.drawImage(canvas, 0, 0)
-
         postctx.globalCompositeOperation = 'screen'
         postctx.filter = 'blur(16px)'
         postctx.drawImage(canvas, 0, 0)
@@ -541,7 +530,6 @@ export default {
     height: 780px;
     position: relative;
     .input-wrap {
-      // border: 1px solid red;
       position: absolute;
       top: 0;
       left: 50%;
@@ -560,85 +548,7 @@ export default {
       .search-class {
         margin-bottom: 20px;
       }
-    }
-    .sample-text {
-      position: absolute;
-      bottom: 50px;
-      left: 50%;
-      transform: translateX(-50%);
-      height: 300px;
-      width: 800px;
-      .sample {
-        position: absolute;
-        color: #fff;
-        opacity: 0.3;
-        font-size: 16px;
-        transition: all 0.8s;
-        &:hover {
-          opacity: 0.8;
-        }
-      }
-      .s0 {
-        top: 0px;
-        left: 350px;
-        font-size: 12px;
-      }
-      .s1 {
-        top: 10px;
-        left: 157px;
-        font-size: 12px;
-      }
-      .s2 {
-        top: 10px;
-        left: 600px;
-        font-size: 14px;
-      }
-      .s3 {
-        top: 43px;
-        left: 456px;
-        font-size: 16px;
-      }
-      .s4 {
-        top: 147px;
-        left: 549px;
-        font-size: 16px;
-      }
-      .s5 {
-        top: 88px;
-        left: 257px;
-        font-size: 16px;
-      }
-      .s6 {
-        top: 207px;
-        font-size: 16px;
-        left: 200px;
-      }
-      .s7 {
-        right: 80px;
-        bottom: 24px;
-        font-size: 16px;
-      }
-      .s8 {
-        right: 30px;
-        bottom: 14px;
-        font-size: 16px;
-        left: 400px;
-      }
-      .s9 {
-        bottom: 30px;
-        left: 100px;
-      }
-    }
-    #waves {
-      position: absolute;
-      top: 0px;
-      left: 0;
-      box-sizing: border-box;
-      padding-top: 60px;
-      background-color: transparent;
-      width: 100%;
-      height: 100%;
-      opacity: 0.3;
+      z-index: 3;
     }
     .wave-bg {
       position: absolute;
@@ -646,7 +556,20 @@ export default {
       left: 0;
       width: 100%;
       height: 100%;
-      opacity: 1;
+      z-index: 1;
+    }
+    #waves {
+      position: absolute;
+      top: 0px;
+      left: 0;
+      box-sizing: border-box;
+      padding-top: 60px;
+      // background-color: rgba(255, 255, 255, 0.3);
+      background-color: transparent;
+      width: 100%;
+      height: 100%;
+      opacity: 0.3;
+      z-index: 2;
     }
   }
   .base-title {

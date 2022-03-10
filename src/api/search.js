@@ -32,7 +32,7 @@ export default {
       }
     })
   },
-  // 代理机构搜索建议
+  // 持有人搜索建议
   ownersSuggest(keyword) {
     return request({
       url: '/suggest/owner',
@@ -40,7 +40,7 @@ export default {
       params: { keyword }
     })
   },
-  // 持有人搜索建议
+  // 代理机构搜索建议
   agentsSuggest(keyword) {
     return request({
       url: '/suggest/agent',

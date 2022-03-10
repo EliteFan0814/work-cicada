@@ -5,7 +5,7 @@
         <div class="class-wrap">
           <BaseSearchClass @selectClass="handleClass" :outActiveValue="searchClass"></BaseSearchClass>
         </div>
-        <BaseInput width="100%" :initValue="searchKey.keyword" icon="search" @search="handleSearch" />
+        <BaseInput width="100%" :initValue="searchKey.keyword" :searchClass="Number(searchClass)" icon="search" @search="handleSearch" />
       </div>
       <!-- 搜索条件 -->
       <div class="right-key-list">

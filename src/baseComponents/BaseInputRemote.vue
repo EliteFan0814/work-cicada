@@ -108,7 +108,7 @@ export default {
     },
     // 搜索建议查询防抖
     searchSuggest() {
-      clearInterval(this.searchTimer)
+      clearTimeout(this.searchTimer)
       if (this.value.length > 1) {
         this.searchTimer = setTimeout(() => {
           watch
