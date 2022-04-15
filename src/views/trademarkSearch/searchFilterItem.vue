@@ -1,39 +1,81 @@
 <template>
   <div class="base-filter-item">
-    <span class="title">{{title}}：</span>
+    <span class="title">{{ title }}：</span>
     <div class="key-list-wrap" ref="filterList">
       <div class="key-list" ref="itemWrap">
-        <span v-for="item in dataList" :key="item.value" @click="handleClick(item)"
-          :class="{'key-item':true,'base-hover':true,'base-active':item.selected}">{{item.label}}</span>
+        <span
+          v-for="item in dataList"
+          :key="item.value"
+          @click="handleClick(item)"
+          :class="{
+            'key-item': true,
+            'base-hover': true,
+            'base-active': item.selected
+          }"
+          >{{ item.label }}</span
+        >
       </div>
     </div>
     <BasePopover v-if="showMore" width="400" :popshowflag="popshowflag">
       <!-- 简单的展示所有数据 -->
       <div v-if="show" slot="popContent">
         <div class="more-wrap">
-          <span v-for="item in dataList" :key="item.value" @click="handleClick(item)"
-            :class="{'key-item':true,'base-hover':true,'base-active':item.selected}">{{item.label}}</span>
+          <span
+            v-for="item in dataList"
+            :key="item.value"
+            @click="handleClick(item)"
+            :class="{
+              'key-item': true,
+              'base-hover': true,
+              'base-active': item.selected
+            }"
+            >{{ item.label }}</span
+          >
         </div>
       </div>
       <!-- 带有搜索的复杂操作 -->
       <div v-else slot="popContent">
         <div v-loading="filterLoading" class="more-operate-wrap">
-          <BaseInput width="100%" class="search" icon="search" @search="handleSearch"></BaseInput>
+          <BaseInput
+            width="100%"
+            class="search"
+            icon="search"
+            @search="handleSearch"
+          ></BaseInput>
           <div v-if="innerDataList.length" class="checkbox-wrap">
-            <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange"
-              class="checkall">全选
+            <el-checkbox
+              :indeterminate="isIndeterminate"
+              v-model="checkAll"
+              @change="handleCheckAllChange"
+              class="checkall"
+              >全选
             </el-checkbox>
-            <el-checkbox-group v-model="checkList" @change="handleCheckedCitiesChange">
-              <el-checkbox v-for="item in innerDataList" :key="item.value" :label="item.value">{{item.label}}
+            <el-checkbox-group
+              v-model="checkList"
+              @change="handleCheckedCitiesChange"
+            >
+              <el-checkbox
+                v-for="item in innerDataList"
+                :key="item.value"
+                :label="item.value"
+                >{{ item.label }}
               </el-checkbox>
             </el-checkbox-group>
           </div>
-          <div v-else style="text-align:center;">
+          <div v-else style="text-align: center">
             <span>暂无数据</span>
           </div>
           <div class="confirm-wrap">
-            <el-button size="mini" round @click="handleConfirm(false)">取消</el-button>
-            <el-button size="mini" round @click="handleConfirm(true)" type="primary">确定</el-button>
+            <el-button size="mini" round @click="handleConfirm(false)"
+              >取消</el-button
+            >
+            <el-button
+              size="mini"
+              round
+              @click="handleConfirm(true)"
+              type="primary"
+              >确定</el-button
+            >
           </div>
         </div>
       </div>
@@ -112,7 +154,7 @@ export default {
     },
     // 全选或全不选
     handleCheckAllChange(val) {
-      const tempList = this.dataList.map((item) => {
+      const tempList = this.innerDataList.map((item) => {
         return item.value
       })
       this.checkList = val ? tempList : []
@@ -120,9 +162,9 @@ export default {
     },
     handleCheckedCitiesChange(value) {
       const checkedCount = value.length
-      this.checkAll = checkedCount === this.dataList.length
+      this.checkAll = checkedCount === this.innerDataList.length
       this.isIndeterminate =
-        checkedCount > 0 && checkedCount < this.dataList.length
+        checkedCount > 0 && checkedCount < this.innerDataList.length
     },
     handleConfirm(flag) {
       if (flag) {

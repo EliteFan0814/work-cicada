@@ -2,17 +2,36 @@
   <div class="base-form">
     <!-- 顶部分页和下载 -->
     <div class="top-pagination">
-      <BasePagination :total="totalNum" :nowPageNum.sync="nowPageNum" :pageSize.sync="pageSize"
-        @pageChange="handlePageChange"></BasePagination>
-      <BaseDownload v-if="tableData.length" :doc="false" :pdf="false" @download="handleDownload"></BaseDownload>
+      <BasePagination
+        :total="totalNum"
+        :nowPageNum.sync="nowPageNum"
+        :pageSize.sync="pageSize"
+        @pageChange="handlePageChange"
+      ></BasePagination>
+      <BaseDownload
+        v-if="tableData.length"
+        :doc="false"
+        :pdf="false"
+        @download="handleDownload"
+      ></BaseDownload>
     </div>
     <!-- 操作按钮 -->
-    <BaseOperate :selectedStyle.sync="selectedStyle" :selected.sync="selected" :selectedNum="selectedNum"></BaseOperate>
+    <BaseOperate
+      :selectedStyle.sync="selectedStyle"
+      :selected.sync="selected"
+      :selectedNum="selectedNum"
+    ></BaseOperate>
     <!-- table 列表 -->
     <div v-if="selectedStyle === 'list'" class="table-style">
-      <el-table :data="tableData" ref="searchList" border size="small"
-        :header-cell-style="{background:'#fafafa',color: '#666666'}" row-class-name="row-style"
-        @selection-change="handleSelectionChange">
+      <el-table
+        :data="tableData"
+        ref="searchList"
+        border
+        size="small"
+        :header-cell-style="{ background: '#fafafa', color: '#666666' }"
+        row-class-name="row-style"
+        @selection-change="handleSelectionChange"
+      >
         <el-table-column show-overflow-tooltip type="selection">
         </el-table-column>
         <el-table-column show-overflow-tooltip prop="name" label="商标名称">
@@ -22,14 +41,19 @@
             <div class="pre-img-wrap">
               <el-popover placement="right" trigger="hover">
                 <div class="pre-max-img">
-                  <img :src="scope.row.imgUrl">
+                  <img :src="scope.row.imgUrl" />
                 </div>
-                <img slot="reference" :src="scope.row.imgUrl" alt="">
+                <img slot="reference" :src="scope.row.imgUrl" alt="" />
               </el-popover>
             </div>
           </template>
         </el-table-column>
-        <el-table-column show-overflow-tooltip prop="category" label="类别">
+        <el-table-column
+          show-overflow-tooltip
+          prop="category"
+          width="80"
+          label="类别"
+        >
           <template slot="header" slot-scope="scope">
             <div class="class-wrap">
               <span>类别</span>
@@ -44,6 +68,8 @@
         <el-table-column show-overflow-tooltip prop="owner" label="持有人">
         </el-table-column>
         <el-table-column show-overflow-tooltip prop="agent" label="代理机构">
+        </el-table-column>
+        <el-table-column show-overflow-tooltip prop="addr" label="地址">
         </el-table-column>
         <el-table-column show-overflow-tooltip prop="date_app" label="申请日">
           <template slot="header" slot-scope="scope">
@@ -63,7 +89,6 @@
               <span class="operate">
                 <i class="el-icon-sort" @click="sort('date_reg')"></i>
                 <!-- <BaseDatePick></BaseDatePick> -->
-
               </span>
             </div>
           </template>
@@ -86,26 +111,37 @@
     </div>
     <!-- 图样列表 -->
     <div v-if="selectedStyle === 'img'" class="img-style">
-      <div v-for="(item,index) in tableData" :key="index" class="img-item base-hb">
+      <div
+        v-for="(item, index) in tableData"
+        :key="index"
+        class="img-item base-hb"
+      >
         <div class="img-wrap">
-          <img :src="item.imgUrl" alt="">
+          <img :src="item.imgUrl" alt="" />
         </div>
         <div class="content">
           <div class="l">
             <el-checkbox v-model="item.selected"></el-checkbox>
           </div>
-          <div class="r omit-1">{{item.name}}</div>
+          <div class="r omit-1">{{ item.name }}</div>
         </div>
         <div class="content">
           <div class="l">
-            {{item.category}}
+            {{ item.category }}
           </div>
-          <div class="r"><span class="r-id">{{item.reg_id}}</span><span class="r-status">{{item.statusStr}}</span></div>
+          <div class="r">
+            <span class="r-id">{{ item.reg_id }}</span
+            ><span class="r-status">{{ item.statusStr }}</span>
+          </div>
         </div>
       </div>
     </div>
-    <BasePagination :total="totalNum" :nowPageNum.sync="nowPageNum" :pageSize.sync="pageSize"
-      @pageChange="handlePageChange"></BasePagination>
+    <BasePagination
+      :total="totalNum"
+      :nowPageNum.sync="nowPageNum"
+      :pageSize.sync="pageSize"
+      @pageChange="handlePageChange"
+    ></BasePagination>
   </div>
 </template>
 <script>
@@ -353,6 +389,9 @@ export default {
 }
 ::v-deep .el-table__body tr:hover > td {
   background-color: #eef7fe !important;
+}
+::v-deep .row-style {
+  cursor: pointer;
 }
 </style>
 

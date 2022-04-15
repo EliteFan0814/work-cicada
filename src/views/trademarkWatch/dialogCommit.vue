@@ -23,7 +23,8 @@
                 </el-radio-group>
               </div>
             </div>
-            <div class="form-item flex-sc">
+            <!-- 业务类型 -->
+            <!-- <div class="form-item flex-sc">
               <div class="label">业务类型：</div>
               <div class="value">
                 <el-radio-group v-model="biz_genre">
@@ -34,7 +35,7 @@
                   <el-radio :label="5">注册五年</el-radio>
                 </el-radio-group>
               </div>
-            </div>
+            </div> -->
             <!-- <div class="form-item flex-sc">
             <div class="label">申请号：</div>
             <div class="value">
@@ -85,8 +86,8 @@
                 <classList showAll :outSelectList="categories" @classChange="categoriesChange"></classList>
               </div>
             </div>
-
-            <div class="form-item flex-sc">
+            <!-- 法律状态 -->
+            <!-- <div class="form-item flex-sc">
               <div class="label">法律状态：</div>
               <div class="value">
                 <el-checkbox-group v-model="status">
@@ -95,8 +96,9 @@
                   <el-checkbox :label="3">已无效</el-checkbox>
                 </el-checkbox-group>
               </div>
-            </div>
-            <div class="form-item flex-sc">
+            </div> -->
+            <!-- 流程类型 -->
+            <!-- <div class="form-item flex-sc">
               <div class="label">流程类型：</div>
               <div class="value">
                 <el-checkbox-group v-model="flows">
@@ -104,10 +106,9 @@
                   <el-checkbox :label="2">驳回复审</el-checkbox>
                 </el-checkbox-group>
               </div>
-            </div>
-
+            </div> -->
           </div>
-          <div class="email-wrap">
+          <!-- <div class="email-wrap">
             <div class="form-item flex-sc">
               <div class="label">发送邮箱：</div>
               <div class="value more-show">
@@ -116,20 +117,20 @@
                 </BaseInput>
               </div>
             </div>
-            <!-- <div class="form-item flex-sc">
-            <div class="label">发送频率：</div>
-            <div class="value">
-              <el-radio v-model="radio" label="1">每周</el-radio>
-              <el-radio v-model="radio" label="2">每月</el-radio>
+            <div class="form-item flex-sc">
+              <div class="label">发送频率：</div>
+              <div class="value">
+                <el-radio v-model="radio" label="1">每周</el-radio>
+                <el-radio v-model="radio" label="2">每月</el-radio>
+              </div>
+            </div>
+            <div class="form-item flex-sc">
+              <div class="label">发送格式：</div>
+              <div class="value">
+                <span>Excel</span>
+              </div>
             </div>
           </div> -->
-            <!-- <div class="form-item flex-sc">
-            <div class="label">发送格式：</div>
-            <div class="value">
-              <span>Excel</span>
-            </div>
-          </div> -->
-          </div>
         </div>
         <div slot="footer" class="dialog-footer">
           <el-button @click="handleReset" size="mini" round>重 置</el-button>
