@@ -21,6 +21,13 @@ export default {
       }
     })
   },
+  // 获取商标详细信息
+  getDetailInfo(id) {
+    return request({
+      url: `/detail/${id}`,
+      method: 'get'
+    })
+  },
   // 下载excel
   downloadExcel({ genre, keyword }) {
     return request({
@@ -44,6 +51,14 @@ export default {
   agentsSuggest(keyword) {
     return request({
       url: '/suggest/agent',
+      method: 'get',
+      params: { keyword }
+    })
+  },
+  // 代理机构搜索建议
+  addrSuggest(keyword) {
+    return request({
+      url: '/suggest/addrs',
       method: 'get',
       params: { keyword }
     })

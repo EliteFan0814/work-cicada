@@ -1,29 +1,50 @@
 <template>
   <div class="col" :style="`width:${width}%`">
-    <div class="key" :class="{key:true,link:link}">{{ name }}<span class="sub">{{ sub }}</span></div>
+    <div class="key" :class="{ key: true, link: link }">
+      {{ name }}<span class="sub">{{ sub }}</span>
+    </div>
     <div class="value">
-      <div :class="{val:true,'is-list':isList}">
+      <div :class="{ val: true, 'is-list': isList }">
         <slot>
           <!-- 非列表模式 -->
           <div v-if="!isList" class="s-rol-wrap">
-            <span v-for="(item,index) in value" :key="index" class="s-rol">
-              <span :class="{'value-link':valueLink}">{{ item.value }}</span>
-              <span v-if="item.subText" class="sub-text">{{item.subText}}</span>
+            <span v-for="(item, index) in value" :key="index" class="s-rol">
+              <span :class="{ 'value-link': valueLink }">{{ item.value }}</span>
+              <span v-if="item.subText" class="sub-text">{{
+                item.subText
+              }}</span>
             </span>
           </div>
           <!-- 列表模式 -->
           <div v-else class="m-rol-wrap">
-            <span v-for="(item,index) in value" :key="index" class="s-rol">
-              <span :class="{'value-link':valueLink}">{{ item.value }}</span>
-              <span v-if="item.subText" class="sub-text">{{item.subText}}</span>
+            <span v-for="(item, index) in value" :key="index" class="s-rol">
+              <span :class="{ 'value-link': valueLink }">{{ item.value }}</span>
+              <span v-if="item.subText" class="sub-text">{{
+                item.subText
+              }}</span>
             </span>
           </div>
         </slot>
         <div class="operate">
           <div class="flex">
-            <span v-if="copy" class="iconfont icon-copy" title="复制"></span>
-            <span v-if="qiye" class="iconfont icon-qiye" title="企业信用"></span>
-            <span v-if="baidu" class="iconfont icon-baidu" title="百度一下"></span>
+            <span
+              v-if="copy"
+              class="iconfont icon-copy"
+              title="复制"
+              @click="handleCopy"
+            ></span>
+            <span
+              v-if="qiye"
+              class="iconfont icon-qiye"
+              title="企业信用"
+              @click="handleCredit"
+            ></span>
+            <span
+              v-if="baidu"
+              class="iconfont icon-baidu"
+              title="百度一下"
+              @click="handleBaidu"
+            ></span>
           </div>
         </div>
       </div>
@@ -39,8 +60,8 @@ export default {
       default: false
     },
     link: {
-      type: Boolean,
-      default: false
+      type: String,
+      default: undefined
     },
     copy: {
       type: Boolean,
@@ -73,6 +94,28 @@ export default {
     width: {
       type: [String, Number],
       default: 100
+    }
+  },
+  methods: {
+    // 复制
+    handleCopy() {
+      this.$copyText(this.value[0].value)
+        .then((e) => {
+          this.$message({ type: 'success', message: '复制成功！' })
+        })
+        .catch((e) => {
+          this.$message({ type: 'error', message: '复制失败！' })
+        })
+    },
+    // 企业信用
+    handleCredit() {
+      const href = `https://www.qcc.com/web/search?key=${this.value[0].value}`
+      window.open(href, '_blank')
+    },
+    // 百度一下
+    handleBaidu() {
+      const href = `https://www.baidu.com/s?wd=${this.value[0].value}`
+      window.open(href, '_blank')
     }
   }
 }

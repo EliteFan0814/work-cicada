@@ -198,8 +198,34 @@ export default {
             this.filterLoading = false
           })
       } else if (this.filterClass === 'agents') {
+        // apiSearch
+        //   .agentsSuggest(value)
+        //   .then((res) => {
+        //     this.filterLoading = false
+        //     res = res || []
+        //     this.innerDataList = res.map((item) => {
+        //       return { label: item, selected: false, value: item }
+        //     })
+        //   })
+        //   .catch(() => {
+        //     this.filterLoading = false
+        //   })
+
         apiSearch
-          .agentsSuggest(value)
+          .getSecondFilter(this.outFilter, value, 2)
+          .then((res) => {
+            this.filterLoading = false
+            res = res || []
+            this.innerDataList = res.map((item) => {
+              return { label: item, selected: false, value: item }
+            })
+          })
+          .catch(() => {
+            this.filterLoading = false
+          })
+      } else if (this.filterClass === 'addrs') {
+        apiSearch
+          .getSecondFilter(this.outFilter, value, 4)
           .then((res) => {
             this.filterLoading = false
             res = res || []

@@ -29,7 +29,7 @@ const routes = [
       },
       {
         path: 'trademarkDetail',
-        component: () => import('@/views/TrademarkDetail/index.vue'),
+        component: () => import('@/views/trademarkDetail/index.vue'),
         name: 'TrademarkDetail',
         meta: { title: '商标详情' }
       },

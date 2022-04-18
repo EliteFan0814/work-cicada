@@ -3,34 +3,86 @@
     <div class="top-search">
       <div class="left-input">
         <div class="class-wrap">
-          <BaseSearchClass @selectClass="handleClass" :outActiveValue="searchClass"></BaseSearchClass>
+          <BaseSearchClass
+            @selectClass="handleClass"
+            :outActiveValue="searchClass"
+          ></BaseSearchClass>
         </div>
-        <BaseInput width="100%" :initValue="searchKey.keyword" :searchClass="Number(searchClass)" icon="search"
-          @search="handleSearch" />
+        <BaseInput
+          width="100%"
+          :initValue="searchKey.keyword"
+          :searchClass="Number(searchClass)"
+          icon="search"
+          @search="handleSearch"
+        />
       </div>
       <!-- 搜索条件 -->
       <div class="right-key-list">
-        <SearchKeyList :searchKey="searchKey.keyword" :categoryList="category" :statusList="status"
-          :ownerList="ownerList" :agentList="agentList" @refreshList="searchKeyRefresh"></SearchKeyList>
+        <SearchKeyList
+          :searchKey="searchKey.keyword"
+          :categoryList="category"
+          :statusList="status"
+          :ownerList="ownerList"
+          :agentList="agentList"
+          :addrList="addrList"
+          @refreshList="searchKeyRefresh"
+        ></SearchKeyList>
       </div>
     </div>
     <div class="content">
       <div class="left-wheel">
         <!-- <BaseWheel></BaseWheel> -->
-        <BaseWheel2 :keyword="this.searchKey.keyword" :selectedId="selectedId" @changeWheel="changeWheel"></BaseWheel2>
+        <BaseWheel2
+          :keyword="this.searchKey.keyword"
+          :selectedId="selectedId"
+          @changeWheel="changeWheel"
+        ></BaseWheel2>
       </div>
       <div class="right-content">
         <div class="search-detail">
           <div class="detail-top">
             <div class="common">
-              <SearchFilterItem title="国际分类" :show="true" :dataList="category" @changeFilter="changeFilter">
+              <SearchFilterItem
+                title="国际分类"
+                :show="true"
+                :dataList="category"
+                @changeFilter="changeFilter"
+              >
               </SearchFilterItem>
-              <SearchFilterItem title="有效状态" :dataList="status" @changeFilter="changeFilter"></SearchFilterItem>
-              <SearchFilterItem title="商标持有人" :show="false" :outFilter="{...searchKey,genre:searchClass}"
-                filterClass="owners" :dataList="ownerList" @changeFilter="changeFilter" @moreFilter="moreFilter">
+              <SearchFilterItem
+                title="有效状态"
+                :dataList="status"
+                @changeFilter="changeFilter"
+              ></SearchFilterItem>
+              <SearchFilterItem
+                title="商标持有人"
+                :show="false"
+                :outFilter="{ ...searchKey, genre: searchClass }"
+                filterClass="owners"
+                :dataList="ownerList"
+                @changeFilter="changeFilter"
+                @moreFilter="moreFilter"
+              >
               </SearchFilterItem>
-              <SearchFilterItem title="代理机构" :show="false" filterClass="agents" :dataList="agentList"
-                @changeFilter="changeFilter" @moreFilter="moreFilter">
+              <SearchFilterItem
+                title="代理机构"
+                :show="false"
+                :outFilter="{ ...searchKey, genre: searchClass }"
+                filterClass="agents"
+                :dataList="agentList"
+                @changeFilter="changeFilter"
+                @moreFilter="moreFilter"
+              >
+              </SearchFilterItem>
+              <SearchFilterItem
+                title="持有人地址"
+                :show="false"
+                :outFilter="{ ...searchKey, genre: searchClass }"
+                filterClass="addrs"
+                :dataList="addrList"
+                @changeFilter="changeFilter"
+                @moreFilter="moreFilter"
+              >
               </SearchFilterItem>
             </div>
             <!-- <searchFilter></searchFilter> -->
@@ -45,8 +97,16 @@
           </div> -->
         </div>
         <div class="table">
-          <TableList :tableData="tableData" :total="total" :pageInfo="searchKey" :setSelect="setSelect"
-            :searchClass="searchClass" @pageChange="pageChange" @sort="sort" @handleFocus="handleFocus">
+          <TableList
+            :tableData="tableData"
+            :total="total"
+            :pageInfo="searchKey"
+            :setSelect="setSelect"
+            :searchClass="searchClass"
+            @pageChange="pageChange"
+            @sort="sort"
+            @handleFocus="handleFocus"
+          >
           </TableList>
         </div>
       </div>
@@ -74,6 +134,7 @@ export default {
         status: '',
         owners: [],
         agents: [],
+        addrs: [],
         sort: ''
       },
       setSelect: new Date(),
@@ -138,6 +199,7 @@ export default {
       status: [],
       ownerList: [],
       agentList: [],
+      addrList: [],
       selectedId: []
     }
   },
@@ -183,6 +245,7 @@ export default {
       this.status = []
       this.ownerList = []
       this.agentList = []
+      this.addrList = []
       this.changeFilter()
     },
     // 搜索
@@ -223,6 +286,7 @@ export default {
             } else {
               this.agentList = []
             }
+
             if (res.owners) {
               this.ownerList = res.owners.map((item) => {
                 if (this.searchKey.owners.includes(item)) {
@@ -233,6 +297,17 @@ export default {
               })
             } else {
               this.ownerList = []
+            }
+            if (res.addrs) {
+              this.addrList = res.addrs.map((item) => {
+                if (this.searchKey.addrs.includes(item)) {
+                  return { label: item, value: item, selected: true }
+                } else {
+                  return { label: item, value: item, selected: false }
+                }
+              })
+            } else {
+              this.addrList = []
             }
           })
           .catch((err) => {
@@ -282,10 +357,18 @@ export default {
           tempAgentList.push(item.value)
         }
       })
+      // 持有人地址
+      const tempAddrList = []
+      this.addrList.map((item) => {
+        if (item.selected) {
+          tempAddrList.push(item.value)
+        }
+      })
       this.searchKey.category = tempCategory.join('|')
       this.searchKey.status = tempStatus.join('|')
       this.searchKey.owners = tempOwnerList
       this.searchKey.agents = tempAgentList
+      this.searchKey.addrs = tempAddrList
       this.searchKey.page = 1
       if (this.searchKey.keyword) {
         this.apiSearch()

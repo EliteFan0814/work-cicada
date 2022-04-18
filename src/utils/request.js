@@ -12,7 +12,7 @@ const service = axios.create({
       ? '/v1'
       : 'http://10.10.102.23:8010/v1', // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 100000 // request timeout
+  timeout: 10000 // request timeout
 })
 // 请求拦截
 service.interceptors.request.use(

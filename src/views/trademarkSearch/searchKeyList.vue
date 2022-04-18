@@ -19,45 +19,76 @@
       </BasePopover> -->
     </div>
     <div class="key-list common">
-      <span class="key-item">{{searchKey}}</span>
+      <span class="key-item">{{ searchKey }}</span>
     </div>
     <div class="filter-key-wrap">
-      <el-button v-if="filterKeyList.length" size="mini" round @click="handleReset" class="reset">重置</el-button>
+      <el-button
+        v-if="filterKeyList.length"
+        size="mini"
+        round
+        @click="handleReset"
+        class="reset"
+        >重置</el-button
+      >
       <div class="filter-list" ref="filterList">
         <div class="item-wrap" ref="itemWrap">
           <!-- 国际分类已选列表 -->
-          <template v-for="(item,index) in categoryList">
+          <template v-for="(item, index) in categoryList">
             <div v-if="item.selected" class="item" :key="item.label">
               <div>
-                <span>{{item.label}}</span>
-                <i class="el-icon-close clear" @click="handleDelete(index,'categoryList')"></i>
+                <span>{{ item.label }}</span>
+                <i
+                  class="el-icon-close clear"
+                  @click="handleDelete(index, 'categoryList')"
+                ></i>
               </div>
             </div>
           </template>
           <!-- 有效状态 -->
-          <template v-for="(item,index) in statusList">
+          <template v-for="(item, index) in statusList">
             <div v-if="item.selected" class="item" :key="item.label">
               <div>
-                <span>{{item.label}}</span>
-                <i class="el-icon-close clear" @click="handleDelete(index,'statusList')"></i>
+                <span>{{ item.label }}</span>
+                <i
+                  class="el-icon-close clear"
+                  @click="handleDelete(index, 'statusList')"
+                ></i>
               </div>
             </div>
           </template>
           <!-- 持有人 -->
-          <template v-for="(item,index) in ownerList">
+          <template v-for="(item, index) in ownerList">
             <div v-if="item.selected" class="item" :key="item.label">
               <div>
-                <span>{{item.label}}</span>
-                <i class="el-icon-close clear" @click="handleDelete(index,'ownerList')"></i>
+                <span>{{ item.label }}</span>
+                <i
+                  class="el-icon-close clear"
+                  @click="handleDelete(index, 'ownerList')"
+                ></i>
               </div>
             </div>
           </template>
           <!-- 代理机构 -->
-          <template v-for="(item,index) in agentList">
+          <template v-for="(item, index) in agentList">
             <div v-if="item.selected" class="item" :key="item.label">
               <div>
-                <span>{{item.label}}</span>
-                <i class="el-icon-close clear" @click="handleDelete(index,'agentList')"></i>
+                <span>{{ item.label }}</span>
+                <i
+                  class="el-icon-close clear"
+                  @click="handleDelete(index, 'agentList')"
+                ></i>
+              </div>
+            </div>
+          </template>
+          <!-- 持有人地址 -->
+          <template v-for="(item, index) in addrList">
+            <div v-if="item.selected" class="item" :key="item.label">
+              <div>
+                <span>{{ item.label }}</span>
+                <i
+                  class="el-icon-close clear"
+                  @click="handleDelete(index, 'addrList')"
+                ></i>
               </div>
             </div>
           </template>
@@ -67,36 +98,59 @@
     <BasePopover v-if="showMore" :width="800">
       <div slot="popContent" class="filter-pop-wrap">
         <ul>
-          <li class="key-item">{{searchKey}}</li>
-          <template v-for="(item,index) in categoryList">
+          <li class="key-item">{{ searchKey }}</li>
+          <template v-for="(item, index) in categoryList">
             <li v-if="item.selected" :key="item.label">
               <div>
-                <span>{{item.label}}</span>
-                <i class="el-icon-close clear" @click="handleDelete(index,'categoryList')"></i>
+                <span>{{ item.label }}</span>
+                <i
+                  class="el-icon-close clear"
+                  @click="handleDelete(index, 'categoryList')"
+                ></i>
               </div>
             </li>
           </template>
-          <template v-for="(item,index) in statusList">
+          <template v-for="(item, index) in statusList">
             <li v-if="item.selected" :key="item.label">
               <div>
-                <span>{{item.label}}</span>
-                <i class="el-icon-close clear" @click="handleDelete(index,'statusList')"></i>
+                <span>{{ item.label }}</span>
+                <i
+                  class="el-icon-close clear"
+                  @click="handleDelete(index, 'statusList')"
+                ></i>
               </div>
             </li>
           </template>
-          <template v-for="(item,index) in ownerList">
+          <template v-for="(item, index) in ownerList">
             <li v-if="item.selected" :key="item.label">
               <div>
-                <span>{{item.label}}</span>
-                <i class="el-icon-close clear" @click="handleDelete(index,'ownerList')"></i>
+                <span>{{ item.label }}</span>
+                <i
+                  class="el-icon-close clear"
+                  @click="handleDelete(index, 'ownerList')"
+                ></i>
               </div>
             </li>
           </template>
-          <template v-for="(item,index) in agentList">
+          <template v-for="(item, index) in agentList">
             <li v-if="item.selected" :key="item.label">
               <div>
-                <span>{{item.label}}</span>
-                <i class="el-icon-close clear" @click="handleDelete(index,'agentList')"></i>
+                <span>{{ item.label }}</span>
+                <i
+                  class="el-icon-close clear"
+                  @click="handleDelete(index, 'agentList')"
+                ></i>
+              </div>
+            </li>
+          </template>
+          <template v-for="(item, index) in addrList">
+            <li v-if="item.selected" :key="item.label">
+              <div>
+                <span>{{ item.label }}</span>
+                <i
+                  class="el-icon-close clear"
+                  @click="handleDelete(index, 'addrList')"
+                ></i>
               </div>
             </li>
           </template>
@@ -131,6 +185,12 @@ export default {
       }
     },
     agentList: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
+    addrList: {
       type: Array,
       default() {
         return []

@@ -9,6 +9,7 @@ import './assets/sass/common.scss'
 // import '@/assets/iconfont/iconfont.css'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import VueClipboard from 'vue-clipboard2'
 // 全局注册基础组件
 import '@/utils/globalRegistComp'
 // 引入工具函数
@@ -16,6 +17,7 @@ import GlobalTools from '@/utils/globaltools'
 import * as echarts from 'echarts'
 import './permission' // permission control
 import _ from 'lodash'
+Vue.use(VueClipboard)
 Vue.use(GlobalTools)
 Vue.config.productionTip = false
 Vue.use(ElementUI)

@@ -18,7 +18,8 @@
         <!-- 左侧 -->
         <div class="left">
           <div class="img-wrap flex-cc">
-            <img src="https://dummyimage.com/600x400/000/fff" alt="">
+            <!-- <img src="https://dummyimage.com/600x400/000/fff" alt="" /> -->
+            <img :src="$imgUrl + detailInfo.reg_id + '.jpg'" alt="" />
           </div>
           <div class="status flex-cc">
             <div class="btn-wrap">已注册</div>
@@ -28,13 +29,13 @@
         <!-- 右侧 -->
         <div class="right">
           <div class="info-wrap">
-            <baseInfo></baseInfo>
+            <baseInfo :detailInfo="detailInfo"></baseInfo>
           </div>
           <div class="info-wrap">
-            <goodServe></goodServe>
+            <goodServe :detailInfo="detailInfo"></goodServe>
           </div>
           <div class="info-wrap">
-            <markFlow></markFlow>
+            <markFlow :detailInfo="detailInfo"></markFlow>
           </div>
         </div>
       </div>
@@ -46,6 +47,7 @@
 import baseInfo from './components/baseInfo.vue'
 import goodServe from './components/goodServe.vue'
 import markFlow from './components/markFlow.vue'
+import apiSearch from '@/api/search'
 
 export default {
   name: 'TrademarkDetail',
@@ -68,10 +70,27 @@ export default {
         {
           spread: false
         }
-      ]
+      ],
+      detailInfo: {}
     }
   },
+  created() {
+    const id = this.$route.query.b_id || ''
+    this.getDetailInfo(id)
+  },
   methods: {
+    // 获取纤细信息
+    getDetailInfo(id) {
+      apiSearch
+        .getDetailInfo(id)
+        .then((res) => {
+          this.detailInfo = res
+        })
+        .catch((err) => {
+          console.log(333)
+          console.log(err)
+        })
+    },
     handleToggle(item, flag) {
       item.spread = flag
     }

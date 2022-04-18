@@ -31,6 +31,7 @@
         :header-cell-style="{ background: '#fafafa', color: '#666666' }"
         row-class-name="row-style"
         @selection-change="handleSelectionChange"
+        @row-click="handleRowClick"
       >
         <el-table-column show-overflow-tooltip type="selection">
         </el-table-column>
@@ -218,6 +219,14 @@ export default {
     },
     sort(sortKey) {
       this.$emit('sort', sortKey)
+    },
+    handleRowClick(row) {
+      console.log(row)
+      const routeData = this.$router.resolve({
+        name: 'TrademarkDetail',
+        query: { b_id: row.b_id }
+      })
+      window.open(routeData.href, '_blank')
     },
     // 记录勾选的行信息
     handleSelectionChange(selectedRow) {
