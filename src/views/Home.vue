@@ -1,27 +1,43 @@
 <template>
   <div v-loading="loading" class="home">
     <div class="search">
-      <img src="@/assets/imgs/search-bg.jpg" alt="" class="wave-bg">
+      <img src="@/assets/imgs/search-bg.jpg" alt="" class="wave-bg" />
       <canvas id="waves"></canvas>
       <div class="input-wrap flex-ccc">
         <div class="flex-cc iknow"><span>知了</span></div>
-        <BaseSearchClass class="search-class" type="home" @selectClass="handleClass"></BaseSearchClass>
-        <BaseInput icon="search" width="450px" :isHome="true" :border="false" :searchClass="searchClass"
-          @search="handleSearch" bgColor="#f7f7f7" placeholder="">
+        <BaseSearchClass
+          class="search-class"
+          type="home"
+          @selectClass="handleClass"
+        ></BaseSearchClass>
+        <BaseInput
+          icon="search"
+          width="450px"
+          :isHome="true"
+          :border="false"
+          :searchClass="searchClass"
+          @search="handleSearch"
+          bgColor="#f7f7f7"
+          placeholder=""
+        >
         </BaseInput>
       </div>
     </div>
     <div class="ai bg">
       <div class="base-title">
-        <img class="title-1" src="@/assets/imgs/trademark.png" alt="">
+        <img class="title-1" src="@/assets/imgs/trademark.png" alt="" />
         <span class="title-2">商标大数据AI分析平台</span>
       </div>
       <div class="ai-list flex-cc">
-        <div v-for="(item,index) in alList" :key="index" class="ai-item flex-ccc">
+        <div
+          v-for="(item, index) in alList"
+          :key="index"
+          class="ai-item flex-ccc"
+        >
           <div class="img-wrap flex-cc">
-            <img :src="item.img" alt="">
+            <img :src="item.img" alt="" />
           </div>
-          <span class="ai-text">{{item.label}}</span>
+          <span class="ai-text">{{ item.label }}</span>
         </div>
       </div>
     </div>
@@ -29,17 +45,30 @@
     <div class="swipper bg">
       <!-- <img src="@assets/imgs/swipperbg.png" class="bg"> -->
       <div class="tabs flex-cc">
-        <div v-for="(item,index) in tabsList" :key="item.label"
-          :class="{tab:true,'tab-active':activeTab===index?true:false}" @click="ManualChange(index)">{{item.label}}
+        <div
+          v-for="(item, index) in tabsList"
+          :key="item.label"
+          :class="{
+            tab: true,
+            'tab-active': activeTab === index ? true : false
+          }"
+          @click="ManualChange(index)"
+        >
+          {{ item.label }}
         </div>
       </div>
       <div class="tips-wrap flex-ccc">
-        <span>{{tabsList[activeTab].tips}}</span>
+        <span>{{ tabsList[activeTab].tips }}</span>
       </div>
       <div class="carousel">
-        <el-carousel ref="carousel" indicator-position="outside" height="540px" @change="handleChange">
+        <el-carousel
+          ref="carousel"
+          indicator-position="outside"
+          height="540px"
+          @change="handleChange"
+        >
           <el-carousel-item v-for="item in 3" :key="item">
-            <img src="@/assets/imgs/swiper0.png" alt="">
+            <img src="@/assets/imgs/swiper0.png" alt="" />
           </el-carousel-item>
         </el-carousel>
       </div>
@@ -47,29 +76,31 @@
     <!-- compony -->
     <div class="compony">
       <div class="base-title">
-        <img class="title-1" src="@/assets/imgs/partner.png" alt="">
+        <img class="title-1" src="@/assets/imgs/partner.png" alt="" />
         <span class="title-2">企业用户</span>
       </div>
       <div class="content flex-cc">
-        <img src="@/assets/imgs/all-company.png" alt="">
+        <img src="@/assets/imgs/all-company.png" alt="" />
       </div>
     </div>
     <!-- member -->
     <div class="member">
       <div class="base-title">
-        <img class="title-1" src="@/assets/imgs/partner.png" alt="">
+        <img class="title-1" src="@/assets/imgs/partner.png" alt="" />
         <span class="title-2">用户好评</span>
       </div>
       <div class="content flex-bc">
         <div class="c-item">
-          <img class="yin" src="@/assets/imgs/yin.png" alt="">
-          <div class="c-text">转轮方式展现全部的类别及群组，中细软，非常直观
+          <img class="yin" src="@/assets/imgs/yin.png" alt="" />
+          <div class="c-text">
+            转轮方式展现全部的类别及群组，中细软，非常直观
             独特。公司可以通过中细软准确统计并自动监控公司
             名下商标情况，并且根据不同流程及程序进行分类筛选，
-            非常值得推荐使用。</div>
+            非常值得推荐使用。
+          </div>
           <div class="people flex-sc">
             <div class="logo">
-              <img src="@/assets/imgs/momento.png" alt="">
+              <img src="@/assets/imgs/momento.png" alt="" />
             </div>
             <div class="info">
               <div class="name">马东强</div>
@@ -78,14 +109,16 @@
           </div>
         </div>
         <div class="c-item">
-          <img class="yin" src="@/assets/imgs/yin.png" alt="">
-          <div class="c-text">转轮方式展现全部的类别及群组，中细软，非常直观
+          <img class="yin" src="@/assets/imgs/yin.png" alt="" />
+          <div class="c-text">
+            转轮方式展现全部的类别及群组，中细软，非常直观
             独特。公司可以通过中细软准确统计并自动监控公司
             名下商标情况，并且根据不同流程及程序进行分类筛选，
-            非常值得推荐使用。</div>
+            非常值得推荐使用。
+          </div>
           <div class="people flex-sc">
             <div class="logo">
-              <img src="@/assets/imgs/ifeng.png" alt="">
+              <img src="@/assets/imgs/ifeng.png" alt="" />
             </div>
             <div class="info">
               <div class="name">马东强</div>
@@ -94,14 +127,16 @@
           </div>
         </div>
         <div class="c-item">
-          <img class="yin" src="@/assets/imgs/yin.png" alt="">
-          <div class="c-text">转轮方式展现全部的类别及群组，中细软，非常直观
+          <img class="yin" src="@/assets/imgs/yin.png" alt="" />
+          <div class="c-text">
+            转轮方式展现全部的类别及群组，中细软，非常直观
             独特。公司可以通过中细软准确统计并自动监控公司
             名下商标情况，并且根据不同流程及程序进行分类筛选，
-            非常值得推荐使用。</div>
+            非常值得推荐使用。
+          </div>
           <div class="people flex-sc">
             <div class="logo">
-              <img src="@/assets/imgs/sanyou.png" alt="">
+              <img src="@/assets/imgs/sanyou.png" alt="" />
             </div>
             <div class="info">
               <div class="name">马东强</div>
@@ -114,19 +149,19 @@
     <!-- more -->
     <div class="more">
       <div class="base-title">
-        <img class="title-1" src="@/assets/imgs/information.png" alt="">
+        <img class="title-1" src="@/assets/imgs/information.png" alt="" />
         <span class="title-2">更多中细软资讯</span>
       </div>
       <div class="content flex-bc">
         <div v-for="item in moreList" :key="item.id" class="c-item">
           <div class="img-wrap">
-            <img :src="item.img" alt="">
-            <div class="alt omit-1">{{item.alt}}</div>
+            <img :src="item.img" alt="" />
+            <div class="alt omit-1">{{ item.alt }}</div>
           </div>
           <div class="c-text">
-            <div class="title omit-1">{{item.title}}</div>
-            <div class="time omit-1">{{item.time}}</div>
-            <div class="sub omit-2">{{item.content}}</div>
+            <div class="title omit-1">{{ item.title }}</div>
+            <div class="time omit-1">{{ item.time }}</div>
+            <div class="sub omit-2">{{ item.content }}</div>
           </div>
         </div>
       </div>
@@ -134,16 +169,16 @@
     <!-- data -->
     <div class="data">
       <div class="base-title">
-        <img class="title-1" src="@/assets/imgs/data.png" alt="">
+        <img class="title-1" src="@/assets/imgs/data.png" alt="" />
         <span class="title-2">中细软，融入专业初心的数据</span>
       </div>
       <div class="content flex-bc">
         <div v-for="item in dataList" :key="item.label" class="c-item">
           <div class="num-wrap">
-            <span class="num">{{item.num}} </span>
+            <span class="num">{{ item.num }} </span>
             <span class="han">万+</span>
           </div>
-          <div class="explain">{{item.label}}</div>
+          <div class="explain">{{ item.label }}</div>
         </div>
       </div>
     </div>
@@ -268,7 +303,7 @@ export default {
   },
   watch: {
     $route: {
-      handler: function(route) {
+      handler: function (route) {
         const query = route.query
         if (query) {
           this.redirect = query.redirect
@@ -331,9 +366,7 @@ export default {
     },
     // 处理扫码登录
     handleQRLogin() {
-      // const isLogin = this.$store.getters.isLogin
       const code = this.$route.query.code
-      console.log('this.$route.query.code', this.$route.query.code)
       if (!this.isLogin && code) {
         this.loading = true
         this.$store
@@ -358,7 +391,7 @@ export default {
 
       let size = 10
       let up = true
-      setInterval(function() {
+      setInterval(function () {
         if (up) {
           size += 10
           if (size >= 240) {

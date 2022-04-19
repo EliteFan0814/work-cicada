@@ -1,13 +1,24 @@
 <template>
   <div class="base-search-class">
-    <ul v-if="type==='default'">
-      <li v-for="item in searchList" :key="item.value" :class="{active:item.value === activeValue}"
-        @click="handleSelect(item.value)">{{item.label}}</li>
+    <ul v-if="type === 'default'">
+      <li
+        v-for="item in searchList"
+        :key="item.value"
+        :class="{ active: item.value === activeValue }"
+        @click="handleSelect(item.value)"
+      >
+        {{ item.label }}
+      </li>
     </ul>
-    <ul v-if="type==='home'">
-      <li v-for="item in searchList" :key="item.value"
-        :class="{'homi-li':true,'active-home':item.value === activeValue}" @click="handleSelect(item.value)">
-        {{item.label}}</li>
+    <ul v-if="type === 'home'">
+      <li
+        v-for="item in searchList"
+        :key="item.value"
+        :class="{ 'homi-li': true, 'active-home': item.value === activeValue }"
+        @click="handleSelect(item.value)"
+      >
+        {{ item.label }}
+      </li>
     </ul>
   </div>
 </template>

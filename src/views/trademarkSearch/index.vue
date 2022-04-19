@@ -42,6 +42,20 @@
         <div class="search-detail">
           <div class="detail-top">
             <div class="common">
+              <div v-if="searchClass === 1" class="same-slide">
+                <div class="same-name">查询近似度：</div>
+                <el-slider
+                  class="same-slider"
+                  v-model="slideValue"
+                  :min="6"
+                  :max="16"
+                  :step="2"
+                  show-input
+                  :show-input-controls="false"
+                  @change="changeFilter"
+                >
+                </el-slider>
+              </div>
               <SearchFilterItem
                 title="国际分类"
                 :show="true"
@@ -126,6 +140,7 @@ export default {
   data() {
     return {
       loading: false,
+      slideValue: 6,
       searchKey: {
         keyword: '',
         page: 1,
@@ -252,6 +267,11 @@ export default {
     apiSearch() {
       if (this.$store.getters.isLogin) {
         this.loading = true
+        if (this.searchClass === 1) {
+          this.searchKey.min_score = this.slideValue
+        } else {
+          this.$delete(this.searchKey, 'min_score')
+        }
         apiSearch
           .getInfoByName(this.searchKey, this.searchClass)
           .then((res) => {
@@ -455,6 +475,16 @@ export default {
             padding: 6px 20px;
             background-color: #fafafa;
             border-radius: 2px;
+            .same-slide {
+              display: flex;
+              align-items: center;
+              .same-name {
+                padding-right: 10px;
+              }
+              .same-slider {
+                width: 500px;
+              }
+            }
           }
         }
         .detail-btm {

@@ -2,12 +2,12 @@
   <div class="analyse-risk">
     <div class="content-wrap">
       <div class="close pointer">
-        <span>关闭本页</span>
+        <span @click="closePage">关闭本页</span>
       </div>
       <div class="title-wrap">
         <div class="title flex-ccc">
-          <span>中细软注册风险报告</span>
-          <span class="sub">分析日期：2021-08-08</span>
+          <span>“{{ detailName }}”商标档案</span>
+          <span class="sub">分析日期：{{ createDate }}</span>
           <span class="copy pointer">复制本商标号去中国商标网核查</span>
         </div>
         <div class="download">
@@ -22,7 +22,9 @@
             <img :src="$imgUrl + detailInfo.reg_id + '.jpg'" alt="" />
           </div>
           <div class="status flex-cc">
-            <div class="btn-wrap">已注册</div>
+            <div class="btn-wrap">
+              {{ $transStatus(detailInfo.status || -1) }}
+            </div>
           </div>
           <div class="chart"></div>
         </div>
@@ -71,11 +73,14 @@ export default {
           spread: false
         }
       ],
-      detailInfo: {}
+      detailInfo: {},
+      detailName: undefined,
+      createDate: undefined
     }
   },
   created() {
     const id = this.$route.query.b_id || ''
+    this.detailName = this.$route.query.name || ''
     this.getDetailInfo(id)
   },
   methods: {
@@ -85,14 +90,19 @@ export default {
         .getDetailInfo(id)
         .then((res) => {
           this.detailInfo = res
+          this.createDate = this.$dayjs(this.detailInfo.created_at).format(
+            'YYYY-MM-DD'
+          )
         })
         .catch((err) => {
-          console.log(333)
           console.log(err)
         })
     },
     handleToggle(item, flag) {
       item.spread = flag
+    },
+    closePage() {
+      window.close()
     }
   }
 }

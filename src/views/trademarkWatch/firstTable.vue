@@ -96,7 +96,6 @@ export default {
           this.isLoading = false
           this.showDialog = true
           this.editSourceInfo = { email: res.email, ...res.condition }
-          console.log('editSourceInfo', this.editSourceInfo)
         })
         .catch(() => {
           this.isLoading = false

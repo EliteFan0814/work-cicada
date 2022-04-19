@@ -69,11 +69,6 @@ export default {
       }
     }
   },
-  watch: {
-    // activeName(newVal) {
-    //   console.log(newVal)
-    // }
-  },
   mounted() {
     this.getWatchList()
   },
@@ -108,7 +103,6 @@ export default {
     },
     // 切换列表
     handleClick(value) {
-      console.log(value)
       this.nowPageNum = 1
       this.genre = value
       this.getWatchList()

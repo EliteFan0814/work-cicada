@@ -4,8 +4,6 @@
       title="商品服务"
       duan
       lie
-      bing
-      en
       @showSet="handleShowSet"
       @activeGroup="activeGroup"
       @activeEn="activeEn"

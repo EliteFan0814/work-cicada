@@ -193,7 +193,6 @@ export default {
   watch: {
     editSourceInfo: {
       handler(newValue) {
-        console.log('newValue', newValue)
         if (this.isAdd) {
           this.email = newValue.email || ''
           this.categories = newValue.categories || []
@@ -310,7 +309,6 @@ export default {
     },
     // 持有人变更
     ownersChange(ownersList) {
-      console.log('ownersList', ownersList)
       this.owners = ownersList
     },
     // 代理机构变更
@@ -351,7 +349,6 @@ export default {
         biz_genre,
         flows
       }
-      // console.log({ genre: this.genre, email: this.email, condition })
       this.loading = true
       watch
         .watchListAdd({ genre: this.genre, email: this.email, condition })

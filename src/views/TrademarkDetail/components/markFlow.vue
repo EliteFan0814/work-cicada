@@ -1,6 +1,6 @@
 <template>
   <div class="base-info">
-    <ftitle title="商标流程" time more @timeClass="timeClass"> </ftitle>
+    <ftitle title="商标流程" time @timeClass="timeClass"> </ftitle>
     <div v-if="isTime" class="detail-wrap">
       <!-- <div class="rol">
         <fcol name="2009-10-27" :value="testValue" :copy="false">

@@ -109,13 +109,9 @@ export default {
     }
   },
   mounted() {
-    // this.id = this.$route.query.id
     this.id = 'f8b2160a7a97723ca453935e382f3b2e'
     this.getMainFn()
   },
-  // updated() {
-  //   console.log(this.$router)
-  // },
   methods: {
     handleChangeTab(item) {
       this.$router.push({

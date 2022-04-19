@@ -188,7 +188,7 @@ export default {
       this.totalNum = newVal
     },
     pageInfo: {
-      handler: function(val, oldVal) {
+      handler: function (val, oldVal) {
         this.nowPageNum = val.page
         this.pageSize = val.size
       },
@@ -221,10 +221,9 @@ export default {
       this.$emit('sort', sortKey)
     },
     handleRowClick(row) {
-      console.log(row)
       const routeData = this.$router.resolve({
         name: 'TrademarkDetail',
-        query: { b_id: row.b_id }
+        query: { b_id: row.b_id, name: row.name }
       })
       window.open(routeData.href, '_blank')
     },

@@ -59,5 +59,72 @@ export default {
     Object.defineProperty(Vue.prototype, '$downloadBaseUrl', {
       value: 'http://10.10.102.23:8010/'
     })
+    // 商标法律状态
+    Object.defineProperty(Vue.prototype, '$transStatus', {
+      value: function(status) {
+        switch (status) {
+          case 100:
+            return '已消亡'
+          case 101:
+            return '待审中'
+          case 102:
+            return '已注册'
+          case 103:
+            return '已驳回'
+          case 104:
+            return '已初审'
+          default:
+            return '暂无信息'
+        }
+      }
+    })
+    // 商标类型
+    Object.defineProperty(Vue.prototype, '$transMarkClass', {
+      value: function(value) {
+        switch (value) {
+          case 1:
+            return '普通'
+          case 2:
+            return '集体'
+          case 3:
+            return '证明'
+          case 4:
+            return '特殊'
+          case 5:
+            return '国际'
+          case 6:
+            return '驰名'
+          case 7:
+            return '著名'
+          case 8:
+            return '立体'
+          case 9:
+            return '颜色'
+          case 10:
+            return '地理'
+          case 11:
+            return '声音'
+          default:
+            return '暂无信息'
+        }
+      }
+    })
+    // 商标形式
+    Object.defineProperty(Vue.prototype, '$transForm', {
+      value: function(value) {
+        switch (value) {
+          // case 0001:
+          //   return '文字'
+          // case 0010:
+          //   return '图形'
+          // case 0100:
+          //   return '声音'
+          case 1000:
+            return '气味'
+          default:
+            return '暂无信息'
+        }
+      }
+    })
   }
 }
