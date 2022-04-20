@@ -8,7 +8,9 @@
         <div class="title flex-ccc">
           <span>“{{ detailName }}”商标档案</span>
           <span class="sub">分析日期：{{ createDate }}</span>
-          <span class="copy pointer">复制本商标号去中国商标网核查</span>
+          <span class="copy pointer" @click="copyGoNnipa"
+            >复制本商标号去中国商标网核查</span
+          >
         </div>
         <div class="download">
           <BaseDownload></BaseDownload>
@@ -74,6 +76,7 @@ export default {
         }
       ],
       detailInfo: {},
+      regId: '',
       detailName: undefined,
       createDate: undefined
     }
@@ -90,6 +93,7 @@ export default {
         .getDetailInfo(id)
         .then((res) => {
           this.detailInfo = res
+          this.regId = res.reg_id
           this.createDate = this.$dayjs(this.detailInfo.created_at).format(
             'YYYY-MM-DD'
           )
@@ -100,6 +104,16 @@ export default {
     },
     handleToggle(item, flag) {
       item.spread = flag
+    },
+    copyGoNnipa() {
+      this.$copyText(this.regId)
+        .then((e) => {
+          // this.$message({ type: 'success', message: '复制成功！' })
+          window.open('http://wcjs.sbj.cnipa.gov.cn/txnT01.do', '_blank')
+        })
+        .catch((e) => {
+          this.$message({ type: 'error', message: '复制失败！' })
+        })
     },
     closePage() {
       window.close()

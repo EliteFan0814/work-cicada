@@ -9,7 +9,11 @@
           <!-- 非列表模式 -->
           <div v-if="!isList" class="s-rol-wrap">
             <span v-for="(item, index) in value" :key="index" class="s-rol">
-              <span :class="{ 'value-link': valueLink }">{{ item.value }}</span>
+              <span
+                :class="{ 'value-link': valueLink }"
+                @click="handleClick(item.value)"
+                >{{ item.value }}</span
+              >
               <span v-if="item.subText" class="sub-text">{{
                 item.subText
               }}</span>
@@ -18,7 +22,11 @@
           <!-- 列表模式 -->
           <div v-else class="m-rol-wrap">
             <span v-for="(item, index) in value" :key="index" class="s-rol">
-              <span :class="{ 'value-link': valueLink }">{{ item.value }}</span>
+              <span
+                :class="{ 'value-link': valueLink }"
+                @click="handleClick(item.value)"
+                >{{ item.value }}</span
+              >
               <span v-if="item.subText" class="sub-text">{{
                 item.subText
               }}</span>
@@ -79,6 +87,11 @@ export default {
       type: Boolean,
       default: false
     },
+    // 跳转搜索类型
+    linkType: {
+      type: String,
+      default: undefined
+    },
     name: {
       type: String
     },
@@ -116,6 +129,17 @@ export default {
     handleBaidu() {
       const href = `https://www.baidu.com/s?wd=${this.value[0].value}`
       window.open(href, '_blank')
+    },
+    // 搜索
+    handleClick(keyword) {
+      // 代理机构搜索
+      if (this.linkType === 'agencySearch') {
+        const routeData = this.$router.resolve({
+          name: 'TrademarkSearch',
+          query: { searchKey: keyword, searchClass: 4 }
+        })
+        window.open(routeData.href, '_blank')
+      }
     }
   }
 }

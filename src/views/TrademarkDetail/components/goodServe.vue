@@ -13,8 +13,8 @@
       <div class="rol">
         <fcol
           name="申请群组"
-          :valueLink="true"
-          :value="groupList"
+          :valueLink="false"
+          :value="applyCodeList"
           :copy="false"
         >
         </fcol>
@@ -31,8 +31,8 @@
       <div class="rol">
         <fcol
           name="商品服务"
-          :valueLink="true"
-          :value="testValue"
+          :valueLink="false"
+          :value="goodServeList"
           :isList="isList"
           :copy="false"
         ></fcol>
@@ -57,8 +57,18 @@ export default {
     fcol,
     ftitle
   },
+  props: {
+    detailInfo: {
+      type: Object,
+      default: function() {
+        return {}
+      }
+    }
+  },
   data() {
     return {
+      applyCodeList: [], // 申请群组
+      goodServeList: [], // 商品服务
       groupList: [
         {
           value: 'xxxxx'
@@ -98,6 +108,17 @@ export default {
       isList: false,
       activeGroupVal: false,
       activeEnVal: false
+    }
+  },
+  watch: {
+    detailInfo(newVal) {
+      this.applyCodeList = []
+      this.goodServeList = []
+      newVal.items = newVal.items ? newVal.items : []
+      newVal.items.map((item) => {
+        this.applyCodeList.push({ value: item.code })
+        this.goodServeList.push({ value: item.code, subText: item.name })
+      })
     }
   },
   methods: {
