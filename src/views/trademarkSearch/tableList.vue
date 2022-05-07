@@ -117,7 +117,7 @@
         :key="index"
         class="img-item base-hb"
       >
-        <div class="img-wrap">
+        <div class="img-wrap" @click="handleRowClick(item)">
           <img :src="item.imgUrl" alt="" />
         </div>
         <div class="content">
@@ -188,7 +188,7 @@ export default {
       this.totalNum = newVal
     },
     pageInfo: {
-      handler: function (val, oldVal) {
+      handler: function(val, oldVal) {
         this.nowPageNum = val.page
         this.pageSize = val.size
       },
