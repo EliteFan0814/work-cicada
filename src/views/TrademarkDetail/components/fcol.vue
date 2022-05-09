@@ -96,7 +96,7 @@ export default {
       type: String
     },
     sub: {
-      type: String
+      type: [String, Number]
     },
     value: {
       type: [Array],

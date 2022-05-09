@@ -161,11 +161,13 @@ export default {
   watch: {
     detailInfo(newVal) {
       this.ownerInfo = newVal.owner
-      this.flowsInfo = newVal.flowsInfo
+      this.flowsInfo = newVal.flows
       // 商标类型
       this.trademarkClass = this.$transMarkClass(this.ownerInfo.genre)
-      this.applyPerson = this.ownerInfo.name_cn
-      this.applyAddress = this.ownerInfo.addr_cn
+      this.applyPerson =
+        this.ownerInfo.name_cn || this.ownerInfo.name_en || '暂无信息'
+      this.applyAddress =
+        this.ownerInfo.addr_cn || this.ownerInfo.addr_en || '暂无信息'
       // 商标名称
       this.trademarkName = newVal.name
       // 商标形式
