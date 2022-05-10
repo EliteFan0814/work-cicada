@@ -114,10 +114,16 @@ export default {
     detailInfo(newVal) {
       this.applyCodeList = []
       this.goodServeList = []
+      let tempApplyCodeList = []
       newVal.items = newVal.items ? newVal.items : []
       newVal.items.map((item) => {
-        this.applyCodeList.push({ value: item.code })
+        tempApplyCodeList.push(item.code)
         this.goodServeList.push({ value: item.code, subText: item.name })
+      })
+      // 去除重复的群组代号
+      tempApplyCodeList = Array.from(new Set(tempApplyCodeList))
+      tempApplyCodeList.map((item) => {
+        this.applyCodeList.push({ value: item })
       })
     }
   },
