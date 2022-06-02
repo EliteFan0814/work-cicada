@@ -16,8 +16,10 @@
       </div> -->
       <div v-for="item in flowsInfo" :key="item.id" class="rol">
         <fcol
-          :name="item.created_at"
-          :value="[{ value: item.content }]"
+          :name="item.flow_at"
+          :value="[
+            { value: item.name, subText: `${item.process} - ${item.status}` }
+          ]"
           :copy="false"
         ></fcol>
       </div>
@@ -75,8 +77,8 @@ export default {
     detailInfo(newVal) {
       this.ownerInfo = newVal.owner
       this.flowsInfo = newVal.flows.map((item) => {
-        item.created_at = item.created_at
-          ? this.$dayjs(item.created_at).format('YYYY-MM-DD')
+        item.flow_at = item.flow_at
+          ? this.$dayjs(item.flow_at).format('YYYY-MM-DD')
           : '/'
         return item
       })
