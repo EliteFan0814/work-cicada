@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3150509 */
-  src: url('iconfont.woff2?t=1656491432460') format('woff2'),
-       url('iconfont.woff?t=1656491432460') format('woff'),
-       url('iconfont.ttf?t=1656491432460') format('truetype');
+  src: url('//at.alicdn.com/t/font_3150509_92miu8uxu2p.woff2?t=1642996537778') format('woff2'),
+       url('//at.alicdn.com/t/font_3150509_92miu8uxu2p.woff?t=1642996537778') format('woff'),
+       url('//at.alicdn.com/t/font_3150509_92miu8uxu2p.ttf?t=1642996537778') format('truetype');
 }
 
 .iconfont {
@@ -11,18 +11,6 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-.icon-radiobuttonselect:before {
-  content: "\e6ed";
-}
-
-.icon-arrow-down:before {
-  content: "\e665";
-}
-
-.icon-fanhui:before {
-  content: "\e606";
 }
 
 .icon-kefu:before {
@@ -72,4 +60,3 @@
 .icon-bing:before {
   content: "\e955";
 }
-

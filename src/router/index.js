@@ -33,6 +33,13 @@ const routes = [
         name: 'TrademarkDetail',
         meta: { title: '商标详情' }
       },
+      // 商标商机
+      {
+        path: 'trademarkBusiness',
+        component: () => import('@/views/trademarkBusiness/index.vue'),
+        name: 'TrademarkBusiness',
+        meta: { title: '商标商机' }
+      },
       // {
       //   path: 'graphics',
       //   component: () => import('@/views/Graphics.vue'),
