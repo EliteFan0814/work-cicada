@@ -35,7 +35,7 @@ const routes = [
       },
       // 商标商机
       {
-        path: 'trademarkBusiness',
+        path: 'trademark-business',
         component: () => import('@/views/trademarkBusiness/index.vue'),
         name: 'TrademarkBusiness',
         meta: { title: '商标商机' }

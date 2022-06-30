@@ -35,16 +35,6 @@ service.interceptors.request.use(
 
 // 响应拦截
 service.interceptors.response.use(
-  /**
-   * If you want to get http information such as headers or status
-   * Please return  response => response
-   */
-
-  /**
-   * Determine the request status by custom code
-   * Here is just an example
-   * You can also judge the status by HTTP Status Code
-   */
   (response) => {
     const res = response.data
     // 如果code不为0则说明有报错
@@ -94,6 +84,8 @@ service.interceptors.response.use(
     let errMsg = error.message
     if (errMsg.includes('timeout')) {
       errMsg = '请求超时'
+    } else if (errMsg.includes('500')) {
+      errMsg = '服务器错误，请稍后再试'
     }
     Message({
       message: errMsg,

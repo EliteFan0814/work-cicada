@@ -5,112 +5,123 @@
       border
       :data="tableData"
       style="width: 100%"
-      row-key="id"
+      row-key="reg_id"
       :expand-row-keys="expands"
       :highlight-current-row="true"
       :header-cell-style="headerCellStyle"
     >
       <!-- 隐藏展开列，自己实现点击展开 -->
       <el-table-column width="1" type="expand">
-        <template slot-scope="props">
+        <template slot-scope="scope">
           <div class="bus-expand">
-            <div class="expand-wrap">
-              <div class="expand-head">
-                <div class="head-item header1">流程</div>
-                <div class="head-item header3">业务名称</div>
-                <div class="head-item header3">环节</div>
-                <div class="head-item header3">日期</div>
-              </div>
-              <div class="expand-body">
-                <div class="body-item">
-                  <div class="progress header1">
-                    <i class="iconfont icon-radiobuttonselect"></i>
-                    <div class="line"></div>
-                  </div>
-                  <div class="bus-name header3"><span>商标注册申请</span></div>
-                  <div class="bus-step header3"><span>驳回通知发文</span></div>
-                  <div class="bus-date header3"><span>2015年5月2日</span></div>
-                </div>
-                <div class="body-item">
-                  <div class="progress header1">
-                    <i class="iconfont icon-radiobuttonselect"></i>
-                    <div class="line"></div>
-                  </div>
-                  <div class="bus-name header3"><span>商标注册申请</span></div>
-                  <div class="bus-step header3"><span>驳回通知发文</span></div>
-                  <div class="bus-date header3"><span>2015年5月2日</span></div>
-                </div>
-              </div>
-              <div class="body-more">
-                <span>更多</span>
-                <i class="iconfont icon-arrow-down"></i>
-              </div>
+            <!-- 流程类展示 genre值为1-5 -->
+            <div v-if="genre > 0 && genre < 6" class="expand-wrap">
+              <flowsTable :tableData="scope.row.flows"></flowsTable>
+            </div>
+            <!-- 初审近似类展示 genre值为6 -->
+            <div v-else-if="genre === 6" class="expand-wrap">
+              <similarsTable :tableData="scope.row.similars"></similarsTable>
+            </div>
+            <!-- 变更展示 genre值为8 -->
+            <div v-else-if="genre === 8" class="expand-wrap">
+              <el-form
+                size="small"
+                style="background-color: #fff; padding: 10px"
+              >
+                <el-form-item label="持有人名称:">
+                  <span>{{ scope.row.owner.name }}</span>
+                </el-form-item>
+                <el-form-item label="持有人地址:">
+                  <span>{{ scope.row.owner.addr }}</span>
+                </el-form-item>
+              </el-form>
             </div>
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="序号" prop="id" align="center"></el-table-column>
+      <el-table-column
+        width="50px"
+        label="序号"
+        type="index"
+        align="center"
+      ></el-table-column>
       <el-table-column label="商机" prop="name" align="center">
         <template slot-scope="scope">
           <div class="bus-wrap">
-            <div>驳回复审商机</div>
-            <div class="bus-detail" @click="expandRow(scope.row)">
+            <div>{{ scope.row.description }}</div>
+            <!-- genre为7 没有详情按钮 -->
+            <div
+              v-if="genre !== 7"
+              class="bus-detail"
+              @click="expandRow(scope.row)"
+            >
               <span>详情</span>
-              <i class="iconfont icon-arrow-down"></i>
+              <i
+                class="iconfont icon-arrow-down"
+                :class="{ 'arrow-up': checkRowExpand(scope.row.reg_id) }"
+              ></i>
             </div>
           </div>
         </template>
       </el-table-column>
       <el-table-column
         label="注册号"
-        prop="desc"
+        prop="reg_id"
         align="center"
       ></el-table-column>
       <el-table-column
         label="类别"
+        prop="category"
+        align="center"
+        width="50px"
+      ></el-table-column>
+      <el-table-column
+        label="商标状态"
         prop="desc"
         align="center"
-      ></el-table-column>
-      <el-table-column label="商标状态" prop="desc" align="center">
+        width="100px"
+      >
         <template slot-scope="scope">
           <div>
-            <el-tag effect="dark" type="warning" size="small">待审中</el-tag>
+            <el-tag effect="dark" type="warning" size="small">
+              {{ scope.row.status }}
+            </el-tag>
           </div>
         </template>
       </el-table-column>
       <el-table-column label="商标名称" prop="desc" align="center">
         <template slot-scope="scope">
           <div>
-            <div>五月花</div>
-            <div>WUYUEHUA</div>
+            <div>{{ scope.row.name }}</div>
+            <div>dfdfdfd</div>
           </div>
         </template>
       </el-table-column>
       <el-table-column label="时间" prop="desc" align="center">
         <template slot-scope="scope">
-          <div>
-            <div>
+          <div class="table-time">
+            <div class="table-time-item">
               <span>申请日期：</span>
-              <span>2021-05-08</span>
+              <span>{{ scope.row.date_app | $formatDate }}</span>
             </div>
-            <div>
+            <div class="table-time-item">
               <span>初审日期：</span>
-              <span>2021-05-08</span>
+              <span>{{ scope.row.date_pre | $formatDate }}</span>
             </div>
-            <div>
+            <div class="table-time-item">
               <span>注册日期：</span>
-              <span>2021-05-08</span>
+              <span>{{ scope.row.date_reg | $formatDate }}</span>
             </div>
-            <div>
+            <div class="table-time-item">
               <span>有 效 期：</span>
-              <span>2021-05-08</span>
+              <span>{{ scope.row.date_end | $formatDate }}</span>
             </div>
           </div>
         </template>
       </el-table-column>
       <el-table-column
         label="代理机构"
-        prop="desc"
+        prop="agent_name"
         align="center"
       ></el-table-column>
     </el-table>
@@ -118,47 +129,68 @@
 </template>
 
 <script>
+import similarsTable from './similarsTable.vue'
+import flowsTable from './flowsTable.vue'
 export default {
+  components: { similarsTable, flowsTable },
+  props: {
+    tableData: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
+    genre: {
+      type: Number,
+      default: undefined
+    }
+  },
+  watch: {
+    // 当数据更改时，重置已展开列表的数据
+    tableData() {
+      this.expands = []
+    }
+  },
   data() {
     return {
-      tableData: [
-        {
-          id: '12987122',
-          name: '好滋好味鸡蛋仔',
-          category: '江浙小吃、小吃零食',
-          desc: '荷兰优质淡奶，奶香浓而不腻',
-          address: '上海市普陀区真北路',
-          shop: '王小虎夫妻店',
-          shopId: '10333'
-        },
-        {
-          id: '12987123',
-          name: '好滋好味鸡蛋仔',
-          category: '江浙小吃、小吃零食',
-          desc: '荷兰优质淡奶，奶香浓而不腻',
-          address: '上海市普陀区真北路',
-          shop: '王小虎夫妻店',
-          shopId: '10333'
-        },
-        {
-          id: '12987125',
-          name: '好滋好味鸡蛋仔',
-          category: '江浙小吃、小吃零食',
-          desc: '荷兰优质淡奶，奶香浓而不腻',
-          address: '上海市普陀区真北路',
-          shop: '王小虎夫妻店',
-          shopId: '10333'
-        },
-        {
-          id: '12987126',
-          name: '好滋好味鸡蛋仔',
-          category: '江浙小吃、小吃零食',
-          desc: '荷兰优质淡奶，奶香浓而不腻',
-          address: '上海市普陀区真北路',
-          shop: '王小虎夫妻店',
-          shopId: '10333'
-        }
-      ],
+      // tableData: [
+      //   {
+      //     id: '12987122',
+      //     name: '好滋好味鸡蛋仔',
+      //     category: '江浙小吃、小吃零食',
+      //     desc: '荷兰优质淡奶，奶香浓而不腻',
+      //     address: '上海市普陀区真北路',
+      //     shop: '王小虎夫妻店',
+      //     shopId: '10333'
+      //   },
+      //   {
+      //     id: '12987123',
+      //     name: '好滋好味鸡蛋仔',
+      //     category: '江浙小吃、小吃零食',
+      //     desc: '荷兰优质淡奶，奶香浓而不腻',
+      //     address: '上海市普陀区真北路',
+      //     shop: '王小虎夫妻店',
+      //     shopId: '10333'
+      //   },
+      //   {
+      //     id: '12987125',
+      //     name: '好滋好味鸡蛋仔',
+      //     category: '江浙小吃、小吃零食',
+      //     desc: '荷兰优质淡奶，奶香浓而不腻',
+      //     address: '上海市普陀区真北路',
+      //     shop: '王小虎夫妻店',
+      //     shopId: '10333'
+      //   },
+      //   {
+      //     id: '12987126',
+      //     name: '好滋好味鸡蛋仔',
+      //     category: '江浙小吃、小吃零食',
+      //     desc: '荷兰优质淡奶，奶香浓而不腻',
+      //     address: '上海市普陀区真北路',
+      //     shop: '王小虎夫妻店',
+      //     shopId: '10333'
+      //   }
+      // ],
       expands: [],
       headerCellStyle: {
         backgroundColor: '#f3f9fc',
@@ -170,11 +202,19 @@ export default {
   methods: {
     expandRow(row) {
       // this.$refs['detail-table'].toggleRowExpansion(row)
-      if (this.expands.indexOf(row.id) < 0) {
+      if (this.expands.indexOf(row.reg_id) < 0) {
         this.expands = []
-        this.expands.push(row.id)
+        this.expands.push(row.reg_id)
       } else {
         this.expands = []
+      }
+    },
+    // 判定当前行是否展开
+    checkRowExpand(id) {
+      if (this.expands.includes(id)) {
+        return true
+      } else {
+        return false
       }
     }
   }
@@ -192,98 +232,6 @@ export default {
   .bus-expand {
     padding: 15px 20px;
     background-color: #fafafa;
-    .expand-wrap {
-      .expand-head {
-        padding: 10px 20px;
-        width: 100%;
-        background-color: #f3f9fc;
-        border: 1px solid #e5eef6;
-        border-bottom: none;
-        display: flex;
-        .head-item {
-          padding: 5px 0;
-          text-align: center;
-        }
-        .header1 {
-          width: 10%;
-        }
-        .header3 {
-          width: 30%;
-        }
-      }
-      .expand-body {
-        padding: 10px 20px;
-        background-color: #fff;
-        border: 1px solid #e5eef6;
-        overflow: hidden;
-        .body-item {
-          padding-bottom: 5px;
-          background-color: #fff;
-          display: flex;
-          align-items: center;
-          .progress {
-            position: relative;
-            .icon-radiobuttonselect {
-              font-size: 20px;
-              color: #3285ff;
-            }
-            .line {
-              box-sizing: border-box;
-              position: absolute;
-              top: 32px;
-              left: 50%;
-              transform: translateX(-50%);
-              height: 38px;
-              width: 0px;
-              border-left: 3px dashed #e5eef6;
-            }
-          }
-          .bus-name {
-            background-color: #f3f9fc;
-            position: relative;
-            ::before {
-              position: absolute;
-              top: 50%;
-              left: -10px;
-              transform: translateY(-50%);
-              display: block;
-              content: '';
-              border: 5px solid;
-              border-color: transparent #f3f9fc transparent transparent;
-            }
-          }
-          .header1 {
-            text-align: center;
-            padding: 15px 0;
-            width: 10%;
-          }
-          .header3 {
-            padding: 15px 0;
-            background-color: #f3f9fc;
-            text-align: center;
-            width: 30%;
-          }
-        }
-      }
-      .body-more {
-        background-image: url(../../../assets/img/trapezoid.png);
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 93px;
-        height: 28px;
-        margin: -1px auto 0;
-        color: #3285ff;
-        cursor: pointer;
-        // border-radius: 5px;
-        // transform: perspective(0.5em) rotateX(5deg);
-        // transform-origin: bottom;
-        // border: 1px solid red;
-      }
-    }
   }
   .bus-wrap {
     .bus-detail {
@@ -294,6 +242,19 @@ export default {
       font-size: 14px;
       line-height: 1;
       color: #368cf0;
+      .icon-arrow-down {
+        transition: all 0.3s;
+      }
+      .arrow-up {
+        transform: rotate(-180deg);
+      }
+    }
+  }
+  .table-time {
+    .table-time-item {
+      margin: 0 auto;
+      width: 160px;
+      text-align: right;
     }
   }
 }

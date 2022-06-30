@@ -27,6 +27,10 @@ Vue.prototype._ = _
 Vue.prototype.$dayjs = dayjs
 Vue.prototype.$imgUrl = 'http://image.gbicdn.com/tmimage/'
 
+Vue.filter('$formatDate', (value) => {
+  if (!value) return ''
+  return dayjs(value).format('YYYY-MM-DD')
+})
 new Vue({
   router,
   store,
