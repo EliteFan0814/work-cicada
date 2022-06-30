@@ -61,32 +61,32 @@ export default {
         {
           label: '报告总览',
           name: '0',
-          routerInfo: { path: '/AnalyseDetail/index' }
+          routerInfo: { path: '/analyse-detail/index' }
         },
         {
           label: '风险分析',
           name: '1',
-          routerInfo: { path: '/AnalyseDetail/risk' }
+          routerInfo: { path: '/analyse-detail/risk' }
         },
         {
           label: '申请人档案',
           name: '2',
-          routerInfo: { path: '/AnalyseDetail/owner' }
+          routerInfo: { path: '/analyse-detail/owner' }
         },
         {
           label: '品牌分析',
           name: '3',
-          routerInfo: { path: '/AnalyseDetail/brand' }
+          routerInfo: { path: '/analyse-detail/brand' }
         },
         {
           label: '商标档案',
           name: '4',
-          routerInfo: { path: '/AnalyseDetail/goods' }
+          routerInfo: { path: '/analyse-detail/goods' }
         },
         {
           label: '代理机构档案',
           name: '5',
-          routerInfo: { path: '/AnalyseDetail/agent' }
+          routerInfo: { path: '/analyse-detail/agent' }
         }
       ],
       menuIndex: 0,

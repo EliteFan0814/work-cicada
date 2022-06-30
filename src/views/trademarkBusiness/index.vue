@@ -115,11 +115,14 @@
 import rowSingle from './components/rowSingle.vue'
 import rowDouble from './components/rowDouble.vue'
 import tableDetail from './components/tableDetail.vue'
+
+import search from '@/api/search'
 export default {
   name: 'TrademarkBusiness',
   components: { rowSingle, rowDouble, tableDetail },
   data() {
     return {
+      eid: undefined,
       doubleNameList: [
         { name1: '法定代表人', name2: '统一社会信用代码' },
         { name1: '注册资本', name2: '登记状态' },
@@ -138,6 +141,9 @@ export default {
       ]
     }
   },
+  created() {
+    this.eid = this.$route.query.eid || ''
+  },
   methods: {
     // 复制
     handleCopy(copyValue) {
@@ -149,6 +155,7 @@ export default {
           this.$message({ type: 'error', message: '复制失败！' })
         })
     },
+    // 处理切换
     handletab(index) {
       this.tabsList.map((item) => {
         item.isActive = false
@@ -208,7 +215,7 @@ export default {
     }
   }
   .table1-wrap {
-    margin: 10px 10px 0;
+    margin: 30px 10px 0;
     // padding: 10px;
     background: #fff;
     .tabs-wrap {

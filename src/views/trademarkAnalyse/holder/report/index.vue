@@ -49,7 +49,7 @@
               <loading></loading>
             </div>
             <h3 class="brand-list-title">商标品牌TOP10
-              <router-link class="link" :to="{path: '/AnalyseDetail/brand', query: {id: id}}">全部品牌</router-link>
+              <router-link class="link" :to="{path: '/analyse-detail/brand', query: {id: id}}">全部品牌</router-link>
             </h3>
             <div class="brand-list">
               <div @click="toBrandFn(item)" class="list-box" btn v-for="(item, index) in brandList" :key="index">

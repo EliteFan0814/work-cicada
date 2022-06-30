@@ -62,6 +62,14 @@ export default {
       method: 'get',
       params: { keyword }
     })
+  },
+  // 获取商机详情
+  getBusinessInfo(eid) {
+    return request({
+      url: '/business/show',
+      method: 'get',
+      params: { eid }
+    })
   }
 }
 // 按商标名检索

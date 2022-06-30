@@ -41,7 +41,10 @@
                   <div class="bus-date header3"><span>2015年5月2日</span></div>
                 </div>
               </div>
-              <div class="body-more">更多</div>
+              <div class="body-more">
+                <span>更多</span>
+                <i class="iconfont icon-arrow-down"></i>
+              </div>
             </div>
           </div>
         </template>
@@ -194,6 +197,8 @@ export default {
         padding: 10px 20px;
         width: 100%;
         background-color: #f3f9fc;
+        border: 1px solid #e5eef6;
+        border-bottom: none;
         display: flex;
         .head-item {
           padding: 5px 0;
@@ -207,8 +212,10 @@ export default {
         }
       }
       .expand-body {
-        padding: 10px 20px ;
+        padding: 10px 20px;
         background-color: #fff;
+        border: 1px solid #e5eef6;
+        overflow: hidden;
         .body-item {
           padding-bottom: 5px;
           background-color: #fff;
@@ -258,14 +265,23 @@ export default {
           }
         }
       }
-      .body-more{
-        background-color: red;
-        width: 50px;
-        height: 30px;
-        border-radius: 5px;
-        transform: perspective(0.5em) rotateX(5deg);
-        transform-origin: bottom;
-        border: 1px solid red;
+      .body-more {
+        background-image: url(../../../assets/img/trapezoid.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 93px;
+        height: 28px;
+        margin: -1px auto 0;
+        color: #3285ff;
+        cursor: pointer;
+        // border-radius: 5px;
+        // transform: perspective(0.5em) rotateX(5deg);
+        // transform-origin: bottom;
+        // border: 1px solid red;
       }
     }
   }

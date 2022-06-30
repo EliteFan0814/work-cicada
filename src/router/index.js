@@ -22,13 +22,13 @@ const routes = [
       },
       // 商标查询
       {
-        path: 'trademarkSearch',
+        path: 'trademark-search',
         component: () => import('@/views/trademarkSearch/index.vue'),
         name: 'TrademarkSearch',
         meta: { title: '商标查询' }
       },
       {
-        path: 'trademarkDetail',
+        path: 'trademark-detail',
         component: () => import('@/views/trademarkDetail/index.vue'),
         name: 'TrademarkDetail',
         meta: { title: '商标详情' }
@@ -48,14 +48,14 @@ const routes = [
       // },
       // 商标监控
       {
-        path: 'trademarkWatch',
+        path: 'trademark-watch',
         component: () => import('@/views/trademarkWatch/index.vue'),
         name: 'TrademarkWatch',
         meta: { title: '商标监控' }
       },
       // 商标分析 总页面列表
       {
-        path: 'trademarkAnalyse',
+        path: 'trademark-analyse',
         component: () => import('@/views/trademarkAnalyse/index.vue'),
         name: 'TrademarkAnalyse',
         meta: { title: '商标分析' }
@@ -63,7 +63,7 @@ const routes = [
       // 商标分析  详情页
       // 普通分析-报告总览
       {
-        path: 'AnalyseDetail',
+        path: 'analyse-detail',
         name: 'AnalyseDetail',
         component: (resolve) =>
           require(['@/views/trademarkAnalyse/holder/index.vue'], resolve),
@@ -146,13 +146,13 @@ const routes = [
       },
       // 商标分析 注册风险分析
       {
-        path: 'analyseRisk',
+        path: 'analyse-risk',
         component: () => import('@/views/trademarkAnalyse/AnalyseRisk.vue'),
         name: 'AnalyseRisk',
         meta: { title: '风险分析' }
       }
       // {
-      //   path: 'memberLogin',
+      //   path: 'member-login',
       //   component: () => import('@/views/MemberLogin.vue'),
       //   name: 'MemberLogin',
       //   meta: { title: '会员登录' }
