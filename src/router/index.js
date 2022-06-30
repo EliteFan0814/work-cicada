@@ -150,6 +150,13 @@ const routes = [
         component: () => import('@/views/trademarkAnalyse/AnalyseRisk.vue'),
         name: 'AnalyseRisk',
         meta: { title: '风险分析' }
+      },
+      {
+        path: '/404',
+        component: () =>
+          import(/* webpackChunkName: "about" */ '@/views/404.vue'),
+        name: '404',
+        meta: { title: '页面未找到' }
       }
       // {
       //   path: 'member-login',
@@ -167,7 +174,9 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+  },
+
+  { path: '*', redirect: '/404' }
 ]
 
 const router = new VueRouter({

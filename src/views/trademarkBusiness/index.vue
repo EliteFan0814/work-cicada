@@ -251,6 +251,7 @@ export default {
 .new-business {
   min-height: 700px;
   background: #f7f9fc;
+  padding-bottom: 15px;
   h2 {
     font-size: 30px;
     font-weight: bold;
