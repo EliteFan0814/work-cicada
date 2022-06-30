@@ -29,20 +29,15 @@
         </rowDouble>
         <rowDouble :name="doubleNameList[2]">
           <template v-slot:value1>
-            <div>dfdfdf</div>
-          </template>
-          <template v-slot:value2>
-            <div>{{ companyInfo.start_at | $formatDate }}</div>
-          </template>
-        </rowDouble>
-        <rowDouble :name="doubleNameList[3]">
-          <template v-slot:value1>
             <div>{{ companyInfo.genre }}</div>
           </template>
           <template v-slot:value2>
             <div>{{ companyInfo.email }}</div>
           </template>
         </rowDouble>
+        <rowSingle name="成立时间">
+          <div>{{ companyInfo.start_at | $formatDate }}</div>
+        </rowSingle>
         <rowSingle name="英文名">
           <div>{{ companyInfo.name_en }}</div>
         </rowSingle>
@@ -98,6 +93,7 @@
         <tableDetail
           :tableData="activeTableInfo"
           :genre="activeTableGenre"
+          :timestamp="timestamp"
         ></tableDetail>
       </div>
     </div>
@@ -117,11 +113,13 @@ export default {
     return {
       loading: false,
       eid: undefined,
+      // 高亮时间戳
+      timestamp: undefined,
       doubleNameList: [
         { name1: '法定代表人', name2: '统一社会信用代码' },
         { name1: '注册资本', name2: '登记状态' },
-        { name1: '组织机构代码', name2: '成立时间' },
         { name1: '企业类型', name2: '邮箱' }
+        // { name1: '组织机构代码', name2: '成立时间' },
       ],
       tabsList: [
         // { label: '异议', value: 0, isActive: true, tips: 0 },
@@ -141,6 +139,7 @@ export default {
     }
   },
   created() {
+    this.timestamp = this.$route.query.t || ''
     this.eid = this.$route.query.eid || ''
     this.getBusinessInfo()
   },

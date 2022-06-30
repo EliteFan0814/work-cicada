@@ -48,7 +48,11 @@
       <el-table-column label="商机" prop="name" align="center">
         <template slot-scope="scope">
           <div class="bus-wrap">
-            <div>{{ scope.row.description }}</div>
+            <div
+              :class="{ flsorescence: scope.row.send_timestamp === timestamp }"
+            >
+              {{ scope.row.description }}
+            </div>
             <!-- genre为7 没有详情按钮 -->
             <div
               v-if="genre !== 7"
@@ -143,6 +147,10 @@ export default {
     genre: {
       type: Number,
       default: undefined
+    },
+    timestamp: {
+      type: String,
+      default: ''
     }
   },
   watch: {
@@ -234,6 +242,11 @@ export default {
     background-color: #fafafa;
   }
   .bus-wrap {
+    .flsorescence {
+      font-weight: bold;
+      color: #333;
+      text-shadow: 0px 0px 10px #ff1212;
+    }
     .bus-detail {
       cursor: pointer;
       display: flex;
