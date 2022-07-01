@@ -176,53 +176,6 @@ export default {
             this.companyInfo = res.company || {}
             this.customer_code = res.customer_code || ''
             res.businesses = res.businesses || []
-            res.businesses.push({
-              count: 2,
-              name: '无效',
-              genre: 2,
-              brands: [
-                {
-                  reg_id: '8717420',
-                  category: 41,
-                  status: '已注册',
-                  name: '小小乐园',
-                  date_app: '2010-10-08T00:00:00+08:00',
-                  date_pre: '2013-09-27T00:00:00+08:00',
-                  date_reg: '2013-12-28T00:00:00+08:00',
-                  date_end: '2023-12-27T00:00:00+08:00',
-                  agent_name: '上海东方专利商标代理有限公司',
-                  description: '差6个月到续展期',
-                  send_timestamp: 0,
-                  flows: [
-                    { name: '超', process: '大学', flow_at: '2022-05-08' },
-                    { name: '校超', process: '大学', flow_at: '2022-05-08' },
-                    { name: '45', process: '大学', flow_at: '2022-05-08' },
-                    { name: '23', process: '大学', flow_at: '2022-05-08' },
-                    { name: 'we', process: '大学', flow_at: '2022-05-08' },
-                    { name: 'rt', process: '大学', flow_at: '2022-05-08' },
-                    { name: 'yuuuuu', process: '大学', flow_at: '2022-05-08' },
-                    { name: '67', process: '大学', flow_at: '2022-05-08' }
-                  ]
-                },
-                {
-                  reg_id: '7396054',
-                  category: 9,
-                  status: '已注册',
-                  name: '开心农场',
-                  date_app: '2009-05-14T00:00:00+08:00',
-                  date_pre: '2013-06-27T00:00:00+08:00',
-                  date_reg: '2013-09-28T00:00:00+08:00',
-                  date_end: '2023-09-27T00:00:00+08:00',
-                  agent_name: '上海东方专利商标代理有限公司',
-                  description: '差3个月到续展期',
-                  send_timestamp: 0,
-                  flows: [
-                    { name: 'fan校超', process: '大学', flow_at: '2022-05-08' },
-                    { name: 'fan超', process: '大学', flow_at: '2022-05-08' }
-                  ]
-                }
-              ]
-            })
             this.tableInfoList = res.businesses
             // 默认展示第一个信息
             this.activeTableInfo = this.tableInfoList[0].brands

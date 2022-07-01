@@ -87,8 +87,14 @@
       >
         <template slot-scope="scope">
           <div>
-            <el-tag effect="dark" type="warning" size="small">
-              {{ scope.row.status }}
+            <el-tag
+              effect="dark"
+              type="warning"
+              class="fpc-el-tag"
+              :class="`fpc-el-tag${scope.row.status || ''}`"
+              size="small"
+            >
+              {{ scope.row.status_text }}
             </el-tag>
           </div>
         </template>
@@ -97,7 +103,7 @@
         <template slot-scope="scope">
           <div>
             <div>{{ scope.row.name }}</div>
-            <div>{{ scope.row.name_en||'' }}</div>
+            <div>{{ scope.row.name_en || '' }}</div>
           </div>
         </template>
       </el-table-column>
@@ -262,6 +268,30 @@ export default {
         transform: rotate(-180deg);
       }
     }
+  }
+  .fpc-el-tag {
+    background-color: #cccccc;
+    border: 1px solid #cccccc;
+  }
+  .fpc-el-tag100 {
+    background-color: #ff6666;
+    border: 1px solid #ff6666;
+  }
+  .fpc-el-tag101 {
+    background-color: #FF9900;
+    border: 1px solid #FF9900;
+  }
+  .fpc-el-tag102 {
+    background-color: #0099cc;
+    border: 1px solid #0099cc;
+  }
+  .fpc-el-tag103 {
+    background-color: #ffcc33;
+    border: 1px solid #ffcc33;
+  }
+  .fpc-el-tag104 {
+    background-color: #ff6600;
+    border: 1px solid #ff6600;
   }
   .table-time {
     .table-time-item {
