@@ -1,7 +1,10 @@
 <template>
   <div class="layout-wrap">
-    <Header :class="{absolute:headerInfo.absolute}" :opacity="headerInfo.opacity" :bgColor="headerInfo.bgColor">
-    </Header>
+    <Header
+      :class="{ absolute: headerInfo.absolute }"
+      :opacity="headerInfo.opacity"
+      :bgColor="headerInfo.bgColor"
+    ></Header>
     <div class="content-wrap">
       <router-view />
     </div>
@@ -26,6 +29,11 @@ export default {
   },
   computed: {
     showLoginDialog() {
+      // 如果弹出登录窗口，则记录当前路由，便于登录后重定向到此页面
+      if (this.$store.state.showLoginDialog) {
+        // 'this.$route.fullPath'
+        this.$store.commit('SET_REDIRECT', this.$route.path)
+      }
       return this.$store.state.showLoginDialog
     },
     headerInfo() {

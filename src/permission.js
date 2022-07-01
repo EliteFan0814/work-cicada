@@ -3,7 +3,8 @@ import store from './store'
 import { Message } from 'element-ui'
 import { getToken } from '@/utils/auth' // get token from cookie
 
-const whiteList = ['/login', '/home', '/auth-redirect', '/trademark-business'] // no redirect whitelist
+const whiteList = ['/login', '/home', '/trademark-business'] // no redirect whitelist
+// const whiteList = ['/login', '/home', '/auth-redirect'] // no redirect whitelist
 
 router.beforeEach(async(to, from, next) => {
   // 设置page title
@@ -18,7 +19,7 @@ router.beforeEach(async(to, from, next) => {
       next()
     }
   } else {
-    // 如果请求存在于白名单，则直接进入相应路由
+    // 如果请求路由存在于白名单，则直接进入相应路由
     if (whiteList.includes(to.path)) {
       next()
     } else {

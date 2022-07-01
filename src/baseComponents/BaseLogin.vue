@@ -1,14 +1,26 @@
 <template>
   <div class="pop-confirm">
-    <el-dialog :close-on-click-modal="false" center :visible="true" :show-close="true" width="440px"
-      @close="handleClose">
+    <el-dialog
+      :close-on-click-modal="false"
+      center
+      :visible="true"
+      :show-close="true"
+      width="440px"
+      @close="handleClose"
+    >
       <div class="content">
-        <div class="img"><img src="@/assets/imgs/logo-login.png" alt=""></div>
+        <div class="img"><img src="@/assets/imgs/logo-login.png" alt="" /></div>
         <div class="info flex-cc">
           <!-- <img src="@/assets/imgs/qr-login.png" alt=""> -->
           <!-- <div id="wxqrcode"></div> -->
-          <iframe id="square" :src="iframeSrc" frameborder="0" scrolling="no" width="300px" height="400px"></iframe>
-
+          <iframe
+            id="square"
+            :src="iframeSrc"
+            frameborder="0"
+            scrolling="no"
+            width="300px"
+            height="400px"
+          ></iframe>
         </div>
         <!-- <div class="tips" @click="handleLoginTemp">点击临时登录</div> -->
       </div>
@@ -63,12 +75,16 @@ export default {
       password: '',
       appid: 'wxdf237e7c63de94bb',
       agentid: '1000032',
-      // redirect_uri: 'http%3A%2F%2Fiknow.d.gbicom.com%2F',
+      // 微信重定向地址源码（源码 编码请同时修改）
+      redirect_uri_original: 'http://iknow.d.gbicom.com/#/home',
+      // 微信重定向地址编码
       redirect_uri: 'http%3A%2F%2Fiknow.d.gbicom.com%2F%23%2Fhome',
       state: '',
       href: '',
       lang: 'zh',
-      self_redirect: false
+      self_redirect: false,
+      // 登录后重定向的路由地址
+      redirectRoute: undefined
     }
   },
   computed: {
@@ -76,7 +92,15 @@ export default {
       return `https://open.work.weixin.qq.com/wwopen/sso/qrConnect?appid=${this.appid}&agentid=${this.agentid}&redirect_uri=${this.redirect_uri}&state=${this.state}&self_redirect=${this.self_redirect}`
     }
   },
-  mounted() {
+  created() {
+    this.redirectRoute = this.$store.state.redirectRoute
+    // 如果页面重定向参数存在
+    if (this.redirectRoute) {
+      // 二次加工微信重定向地址，若页面重定向参数存在，则加入此参数
+      this.redirect_uri_original = `${this.redirect_uri_original}?redirect=${this.redirectRoute}`
+      // 重新编码微信重定向地址
+      this.redirect_uri = encodeURIComponent(this.redirect_uri_original)
+    }
     // this.handleClick({ name: 'first' })
     // this.getWxLoginImg()
   },

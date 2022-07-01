@@ -12,12 +12,15 @@ export default new Vuex.Store({
     // 登录弹框的展示
     showLoginDialog: false,
     // 获取token
-    token: getToken()
+    token: getToken(),
+    // 重定向路由地址
+    redirectRoute: undefined
   },
   getters: {
     isLogin: (state) => state.isLogin,
     showLoginDialog: (state) => state.showLoginDialog,
-    token: (state) => state.token
+    token: (state) => state.token,
+    redirectRoute: (state) => state.redirectRoute
   },
   mutations: {
     SET_TOKEN: (state, token) => {
@@ -28,6 +31,9 @@ export default new Vuex.Store({
     },
     SET_IS_LOGIN_DIALOG: (state, isShow) => {
       state.showLoginDialog = isShow
+    },
+    SET_REDIRECT: (state, redirectRoute) => {
+      state.redirectRoute = redirectRoute
     }
   },
   actions: {
@@ -80,20 +86,10 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit('SET_TOKEN', '')
         commit('SET_IS_LOGIN', false)
-        // commit('SET_IS_LOGIN_DIALOG', true)
+        commit('SET_IS_LOGIN_DIALOG', true)
         removeToken()
-        router.push({ name: 'Home' })
+        // router.push({ name: 'Home' })
         resolve()
-
-        // logout(state.token)
-        //   .then(() => {
-        //     commit('SET_TOKEN', '')
-        //     removeToken()
-        //     resolve()
-        //   })
-        //   .catch((error) => {
-        //     reject(error)
-        //   })
       })
     }
   },

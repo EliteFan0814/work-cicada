@@ -39,7 +39,7 @@ service.interceptors.response.use(
     const res = response.data
     // 如果code不为0则说明有报错
     if (res.code !== 0) {
-      // token失效
+      // token过期失效
       if (res.code === 10003) {
         store.dispatch('logout').then(() => {
           Message({
@@ -74,7 +74,7 @@ service.interceptors.response.use(
           })
         })
       }
-      return Promise.reject(new Error(res.message || 'Error'))
+      return Promise.reject(new Error(res.msg || 'Error'))
     } else {
       return res.data
     }

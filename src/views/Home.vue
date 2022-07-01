@@ -19,8 +19,7 @@
           @search="handleSearch"
           bgColor="#f7f7f7"
           placeholder=""
-        >
-        </BaseInput>
+        ></BaseInput>
       </div>
     </div>
     <div class="ai bg">
@@ -175,7 +174,7 @@
       <div class="content flex-bc">
         <div v-for="item in dataList" :key="item.label" class="c-item">
           <div class="num-wrap">
-            <span class="num">{{ item.num }} </span>
+            <span class="num">{{ item.num }}</span>
             <span class="han">万+</span>
           </div>
           <div class="explain">{{ item.label }}</div>
@@ -301,19 +300,20 @@ export default {
       return this.$store.getters.isLogin
     }
   },
-  watch: {
-    $route: {
-      handler: function (route) {
-        const query = route.query
-        if (query) {
-          this.redirect = query.redirect
-          this.handleQRLogin()
-        }
-      },
-      immediate: true
-    }
-  },
+  // watch: {
+  //   $route: {
+  //     handler: function (route) {
+  //       const query = route.query
+  //       if (query) {
+  //         this.redirect = query.redirect
+  //         // this.handleQRLogin()
+  //       }
+  //     },
+  //     immediate: true
+  //   }
+  // },
   created() {
+    this.redirect = this.$route.query.redirect || ''
     this.handleQRLogin()
   },
   mounted() {
@@ -364,9 +364,10 @@ export default {
         this.$store.commit('SET_IS_LOGIN_DIALOG', true)
       }
     },
-    // 处理扫码登录
+    // 处理扫码登录 微信授权登录后跳转的指定地址，存在code码
     handleQRLogin() {
       const code = this.$route.query.code
+      // 如果是微信授权登录接口跳转过来的，则进行登录操作
       if (!this.isLogin && code) {
         this.loading = true
         this.$store
@@ -391,7 +392,7 @@ export default {
 
       let size = 10
       let up = true
-      setInterval(function () {
+      setInterval(function() {
         if (up) {
           size += 10
           if (size >= 240) {

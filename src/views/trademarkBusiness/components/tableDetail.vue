@@ -97,7 +97,7 @@
         <template slot-scope="scope">
           <div>
             <div>{{ scope.row.name }}</div>
-            <div>dfdfdfd</div>
+            <div>{{ scope.row.name_en||'' }}</div>
           </div>
         </template>
       </el-table-column>
