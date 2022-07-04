@@ -49,7 +49,7 @@
         <template slot-scope="scope">
           <div class="bus-wrap">
             <div
-              :class="{ flsorescence: scope.row.send_timestamp === timestamp }"
+              :class="{ flsorescence: scope.row.send_timestamp == timestamp }"
             >
               {{ scope.row.description }}
             </div>
@@ -110,19 +110,19 @@
       <el-table-column label="时间" prop="desc" align="center">
         <template slot-scope="scope">
           <div class="table-time">
-            <div class="table-time-item">
+            <div v-if="scope.row.date_app" class="table-time-item">
               <span>申请日期：</span>
               <span>{{ scope.row.date_app | $formatDate }}</span>
             </div>
-            <div class="table-time-item">
+            <div v-if="scope.row.date_pre" class="table-time-item">
               <span>初审日期：</span>
               <span>{{ scope.row.date_pre | $formatDate }}</span>
             </div>
-            <div class="table-time-item">
+            <div v-if="scope.row.date_reg" class="table-time-item">
               <span>注册日期：</span>
               <span>{{ scope.row.date_reg | $formatDate }}</span>
             </div>
-            <div class="table-time-item">
+            <div v-if="scope.row.date_end" class="table-time-item">
               <span>有 效 期：</span>
               <span>{{ scope.row.date_end | $formatDate }}</span>
             </div>
@@ -156,7 +156,7 @@ export default {
     },
     timestamp: {
       type: String,
-      default: ''
+      default: undefined
     }
   },
   watch: {
@@ -278,8 +278,8 @@ export default {
     border: 1px solid #ff6666;
   }
   .fpc-el-tag101 {
-    background-color: #FF9900;
-    border: 1px solid #FF9900;
+    background-color: #ff9900;
+    border: 1px solid #ff9900;
   }
   .fpc-el-tag102 {
     background-color: #0099cc;

@@ -7,7 +7,7 @@
       <div class="head-item header3">日期</div>
     </div>
     <div class="expand-body">
-      <div v-for="item in showData" :key="item.name" class="body-item">
+      <div v-for="item in showData" :key="item.flow_at" class="body-item">
         <div class="progress header1">
           <i class="iconfont icon-radiobuttonselect"></i>
           <div class="line"></div>
@@ -19,7 +19,7 @@
           <span>{{ item.process }}</span>
         </div>
         <div class="bus-date header3">
-          <span>{{ item.flow_at }}</span>
+          <span>{{ item.flow_at | $formatDate}}</span>
         </div>
       </div>
     </div>

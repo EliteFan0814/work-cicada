@@ -42,17 +42,31 @@
           <div>{{ companyInfo.name_en }}</div>
         </rowSingle>
         <rowSingle name="电话">
-          <div class="phone">
+          <div v-if="companyInfo.checked_phones" class="phone">
             <div
-              v-for="item in companyInfo.phones"
-              :key="item"
+              v-for="item in companyInfo.checked_phones"
+              :key="item.mobile"
               class="phone-item"
             >
-              <span class="phone-val">{{ item }}</span>
+              <el-tooltip effect="dark" placement="top-start">
+                <template slot="content">
+                  <span>
+                    {{ item.area }} {{ item.operator }} {{ item.status_text }}
+                  </span>
+                </template>
+                <span>
+                  <span
+                    class="phone-val"
+                    :class="{ 'no-real': item.status != 1 }"
+                  >
+                    {{ item.mobile }}
+                  </span>
+                </span>
+              </el-tooltip>
               <span
                 class="iconfont icon-copy"
                 title="复制"
-                @click="handleCopy(item)"
+                @click="handleCopy(item.mobile || '')"
               >
                 复制
               </span>
@@ -83,7 +97,11 @@
           @click="handletab(index)"
         >
           <div class="tab-item">
-            <el-badge :value="item.tips" :hidden="item.tips === 0">
+            <el-badge
+              :value="item.tips"
+              :hidden="item.tips === 0"
+              type="primary"
+            >
               <div class="tab-name">{{ item.label }}</div>
             </el-badge>
           </div>
@@ -163,7 +181,6 @@ export default {
       // 替换当前正在展示的信息以及该信息的类别
       this.activeTableInfo = this.tableInfoList[index].brands
       this.activeTableGenre = this.tableInfoList[index].genre
-      console.log(this.activeTableInfo)
     },
     // 获取页面信息
     getBusinessInfo() {
@@ -189,7 +206,6 @@ export default {
               temp.tips = item.count
               return temp
             })
-            console.log(res)
           })
           .catch(() => {
             this.loading = false
@@ -235,7 +251,11 @@ export default {
         .phone-item {
           padding-right: 25px;
           .phone-val {
+            cursor: pointer;
             padding-right: 5px;
+          }
+          .no-real {
+            text-decoration: line-through;
           }
           .icon-copy {
             font-size: 13px;
