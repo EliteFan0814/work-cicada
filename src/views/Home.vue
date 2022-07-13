@@ -300,21 +300,17 @@ export default {
       return this.$store.getters.isLogin
     }
   },
-  // watch: {
-  //   $route: {
-  //     handler: function (route) {
-  //       const query = route.query
-  //       if (query) {
-  //         this.redirect = query.redirect
-  //         // this.handleQRLogin()
-  //       }
-  //     },
-  //     immediate: true
-  //   }
-  // },
+  watch: {
+    $route: {
+      handler: function(route) {
+        this.handleQRLogin()
+      },
+      immediate: true
+    }
+  },
   created() {
     this.redirect = this.$route.query.redirect || ''
-    this.handleQRLogin()
+    // this.handleQRLogin()
   },
   mounted() {
     this.initWaves()

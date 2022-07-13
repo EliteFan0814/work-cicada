@@ -157,7 +157,7 @@ export default {
     }
   },
   created() {
-    this.timestamp = this.$route.query.t || ''
+    this.timestamp = this.$route.query.t || '-1'
     this.eid = this.$route.query.eid || ''
     this.getBusinessInfo()
   },

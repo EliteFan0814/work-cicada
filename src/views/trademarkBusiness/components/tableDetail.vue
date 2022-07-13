@@ -156,7 +156,7 @@ export default {
     },
     timestamp: {
       type: String,
-      default: undefined
+      default: '-1'
     }
   },
   watch: {

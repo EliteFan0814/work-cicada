@@ -31,8 +31,8 @@ export default {
     showLoginDialog() {
       // 如果弹出登录窗口，则记录当前路由，便于登录后重定向到此页面
       if (this.$store.state.showLoginDialog) {
-        // 'this.$route.fullPath'
-        this.$store.commit('SET_REDIRECT', this.$route.path)
+        // 存储重定向地址
+        this.$store.commit('SET_REDIRECT', this.$route.query.redirect || '')
       }
       return this.$store.state.showLoginDialog
     },

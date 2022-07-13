@@ -23,7 +23,8 @@ router.beforeEach(async(to, from, next) => {
     if (whiteList.includes(to.path)) {
       next()
     } else {
-      next({ path: '/' })
+      // 检测到未登录，将当前地址存储为重定向地址，然后跳转登录页面
+      next({ path: '/', query: { redirect: to.fullPath } })
     }
     // if (whiteList.indexOf(to.path) !== -1) {
     //   // in the free login whitelist, go directly

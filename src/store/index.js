@@ -10,7 +10,7 @@ export default new Vuex.Store({
     // 登录状态
     isLogin: !!getToken(),
     // 登录弹框的展示
-    showLoginDialog: false,
+    showLoginDialog: !getToken(),
     // 获取token
     token: getToken(),
     // 重定向路由地址
