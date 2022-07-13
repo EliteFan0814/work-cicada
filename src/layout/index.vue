@@ -29,6 +29,10 @@ export default {
   },
   computed: {
     showLoginDialog() {
+      // 如果是无需登录页面则不弹出登录
+      if (this.$route.path.includes('trademark-business')) {
+        return false
+      }
       // 如果弹出登录窗口，则记录当前路由，便于登录后重定向到此页面
       if (this.$store.state.showLoginDialog) {
         // 存储重定向地址
@@ -48,6 +52,16 @@ export default {
           bgColor: 'rgba(49, 104, 217,1)'
         }
       }
+    }
+  },
+  watch: {
+    $route: {
+      handler: function(route) {
+        if (!this.$store.state.isLogin) {
+          this.$store.commit('SET_IS_LOGIN_DIALOG', true)
+        }
+      },
+      immediate: true
     }
   },
   methods: {

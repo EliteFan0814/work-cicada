@@ -1,13 +1,24 @@
 <template>
   <!-- <header class="header-wrap" :style="{backgroundColor:`rgba(49, 104, 217,${opacity})`}"> -->
-  <header class="header-wrap" :style="{backgroundColor:`${bgColor}`}">
+  <header class="header-wrap" :style="{ backgroundColor: `${bgColor}` }">
     <img src="@/assets/imgs/logo.png" class="logo" />
     <ul>
-      <li v-for="item in routerList" :key="item.name"
+      <li
+        v-for="item in routerList"
+        :key="item.name"
         :class="{ normal: true, 'normal-active': item.router === activeRouter }"
-        @click="handleNormalRouter(item.router)">{{ item.name }}</li>
-      <li v-if="!isLogin" :class="{ normal: true, }" @click="handleNormalRouter('Login')">登录</li>
-      <li v-else :class="{ normal: true, }">
+        @click="handleNormalRouter(item.router)"
+      >
+        {{ item.name }}
+      </li>
+      <li
+        v-if="!isLogin"
+        :class="{ normal: true }"
+        @click="handleNormalRouter('Home')"
+      >
+        登录
+      </li>
+      <li v-else :class="{ normal: true }">
         <el-popover placement="bottom" trigger="hover">
           <div class="more-info">
             <div class="logout" @click="logout">退出登录</div>
@@ -68,16 +79,20 @@ export default {
   },
   methods: {
     handleNormalRouter(router) {
-      if (this.isLogin) {
-        this.activeRouter = router
-        this.$router.push({ name: router })
-      } else {
+      this.activeRouter = router
+      this.$router.push({ name: router })
+      if (!this.isLogin) {
         this.$store.commit('SET_IS_LOGIN_DIALOG', true)
       }
-      // if (router !== 'Login') {
+      // if (this.isLogin) {
       //   this.activeRouter = router
       //   this.$router.push({ name: router })
-      // } else if (router === 'Login') {
+      // } else {
+      //   if (this.$route.path.includes('trademark-business')) {
+      //     this.activeRouter = router
+      //     this.$router.push({ name: router })
+      //     // this.$router.push({ name: 'Home' })
+      //   }
       //   this.$store.commit('SET_IS_LOGIN_DIALOG', true)
       // }
     },
