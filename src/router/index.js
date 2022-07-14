@@ -35,6 +35,13 @@ const routes = [
       },
       // 商标商机
       {
+        path: 'trademark-business-get',
+        component: () => import('@/views/trademarkBusinessGet/index.vue'),
+        name: 'TrademarkBusinessGet',
+        meta: { title: '商标商机列表' }
+      },
+      // 商标商机
+      {
         path: 'trademark-business',
         component: () => import('@/views/trademarkBusiness/index.vue'),
         name: 'TrademarkBusiness',

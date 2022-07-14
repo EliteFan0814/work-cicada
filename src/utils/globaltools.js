@@ -1,9 +1,5 @@
 export default {
   install: function(Vue) {
-    // 无需弹出登录路由名称白名单
-    Object.defineProperty(Vue.prototype, '$noLoginWhitelist', {
-      value: ['TrademarkBusiness']
-    })
     // 下载地址baseUrl
     Object.defineProperty(Vue.prototype, '$downloadBaseUrl', {
       value: 'http://10.10.102.23:8010/'

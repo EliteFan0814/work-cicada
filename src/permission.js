@@ -2,9 +2,13 @@ import router from './router'
 import store from './store'
 import { Message } from 'element-ui'
 import { getToken } from '@/utils/auth' // get token from cookie
-
-const whiteList = ['/login', '/home', '/trademark-business'] // no redirect whitelist
-// const whiteList = ['/login', '/home', '/auth-redirect'] // no redirect whitelist
+import whiteList from './utils/whiteList'
+// const whiteList = [
+//   '/login',
+//   '/home',
+//   '/trademark-business',
+//   '/trademark-business-get'
+// ]
 
 router.beforeEach(async(to, from, next) => {
   // 设置page title
@@ -20,7 +24,7 @@ router.beforeEach(async(to, from, next) => {
     }
   } else {
     // 如果请求路由存在于白名单，则直接进入相应路由
-    if (whiteList.includes(to.path)) {
+    if (whiteList.includes(to.name)) {
       next()
     } else {
       // 检测到未登录，将当前地址存储为重定向地址，然后跳转登录页面
