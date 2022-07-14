@@ -30,7 +30,7 @@ export default {
   computed: {
     showLoginDialog() {
       // 如果是无需登录页面则不弹出登录
-      if (this.$route.path.includes('trademark-business')) {
+      if (this.$noLoginWhitelist.includes(this.$route.name)) {
         return false
       }
       // 如果弹出登录窗口，则记录当前路由，便于登录后重定向到此页面

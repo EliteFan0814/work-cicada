@@ -1,5 +1,13 @@
 export default {
   install: function(Vue) {
+    // 无需弹出登录路由名称白名单
+    Object.defineProperty(Vue.prototype, '$noLoginWhitelist', {
+      value: ['TrademarkBusiness']
+    })
+    // 下载地址baseUrl
+    Object.defineProperty(Vue.prototype, '$downloadBaseUrl', {
+      value: 'http://10.10.102.23:8010/'
+    })
     // 生成随机数id
     Object.defineProperty(Vue.prototype, '$createRandomId', {
       value: function() {
@@ -25,7 +33,7 @@ export default {
         return returnArr
       }
     })
-    // 深拷贝简单对象
+    // 上传图片
     Object.defineProperty(Vue.prototype, '$getImgUrl', {
       value: function(imgFile) {
         return new Promise(function(resolve, reject) {
@@ -54,10 +62,6 @@ export default {
         aLink.click()
         document.body.removeChild(aLink) // 点击完成后记得删除创建的链接
       }
-    })
-    // 下载地址baseUrl
-    Object.defineProperty(Vue.prototype, '$downloadBaseUrl', {
-      value: 'http://10.10.102.23:8010/'
     })
     // 商标法律状态
     Object.defineProperty(Vue.prototype, '$transStatus', {
