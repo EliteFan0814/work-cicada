@@ -50,6 +50,7 @@ export default new Vuex.Store({
         resolve()
       })
     },
+    // 用户登录
     login({ commit }, userInfo) {
       // 企业微信扫码登录
       return new Promise((resolve, reject) => {

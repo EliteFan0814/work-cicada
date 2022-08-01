@@ -70,6 +70,14 @@ export default {
       method: 'get',
       params: { eid }
     })
+  },
+  // 获取商机列表
+  getBusinessList(page, size) {
+    return request({
+      url: '/business/find',
+      method: 'get',
+      params: { page, size }
+    })
   }
 }
 // 按商标名检索
