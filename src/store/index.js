@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { wxQRLogin, login, logout, getInfo } from '@/api/user'
+import { wxQRLogin, crmToken2Token, login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router from '@/router'
 Vue.use(Vuex)
@@ -81,6 +81,24 @@ export default new Vuex.Store({
       //       reject(error)
       //     })
       // })
+    },
+    // CRM登录
+    crmLogin({ commit }, crmToken) {
+      return new Promise((resolve, reject) => {
+        crmToken2Token(crmToken)
+          .then((res) => {
+            const { token } = res
+            commit('SET_TOKEN', token)
+            commit('SET_IS_LOGIN', true)
+            commit('SET_IS_LOGIN_DIALOG', false)
+            // 存token到cookie
+            setToken(token)
+            resolve(true)
+          })
+          .catch((err) => {
+            reject(err)
+          })
+      })
     },
     // 用户登出
     logout({ commit, state, dispatch }) {

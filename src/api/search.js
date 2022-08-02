@@ -63,20 +63,34 @@ export default {
       params: { keyword }
     })
   },
-  // 获取商机详情
-  getBusinessInfo(eid) {
+  // 获取商机详情(本公司和非本公司)
+  getBusinessInfo(eid, busType = 'main') {
+    let url = ''
+    if (busType === 'main') {
+      url = 'show'
+    } else if (busType === 'other') {
+      url = 'find_detail'
+    }
     return request({
-      url: '/business/show',
+      url: `/business/${url}`,
       method: 'get',
       params: { eid }
     })
   },
-  // 获取商机列表
+  // 获取非本公司商机列表
   getBusinessList(page, size) {
     return request({
       url: '/business/find',
       method: 'get',
       params: { page, size }
+    })
+  },
+  // crmToken换token
+  crmToken2Token(crmToken) {
+    return request({
+      url: '/sns/crm',
+      method: 'get',
+      params: { crmToken }
     })
   }
 }

@@ -131,6 +131,7 @@ export default {
     return {
       loading: false,
       eid: undefined,
+      busType: 'mine', // 商机类型
       // 高亮时间戳
       timestamp: undefined,
       doubleNameList: [
@@ -159,6 +160,8 @@ export default {
   created() {
     this.timestamp = this.$route.query.t || '-1'
     this.eid = this.$route.query.eid || ''
+    // 是否是本公司商机
+    this.busType = this.$route.query.type || 'main'
     this.getBusinessInfo()
   },
   methods: {
@@ -187,7 +190,7 @@ export default {
       if (this.eid) {
         this.loading = true
         search
-          .getBusinessInfo(this.eid)
+          .getBusinessInfo(this.eid, this.busType)
           .then((res) => {
             this.loading = false
             this.companyInfo = res.company || {}
@@ -248,8 +251,9 @@ export default {
       .phone {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
         .phone-item {
-          padding-right: 25px;
+          padding:5px 10px;
           .phone-val {
             cursor: pointer;
             padding-right: 5px;

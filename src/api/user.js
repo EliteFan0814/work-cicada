@@ -15,7 +15,14 @@ export function wxQRLogin(params) {
     params
   })
 }
-
+// crmToken换token 登录
+export function crmToken2Token(crmToken) {
+  return request({
+    url: '/sns/crm',
+    method: 'get',
+    params: { crmToken }
+  })
+}
 export function getInfo(token) {
   return request({
     url: '/vue-element-admin/user/info',

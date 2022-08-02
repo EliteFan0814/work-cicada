@@ -78,26 +78,57 @@ export default {
     }
   },
   created() {
-    this.getTableData()
+    this.crmLoginAndGetDataAsync()
   },
   methods: {
+    // 是否使用CRM登录
+    async crmLoginAndGetDataAsync() {
+      // 获取查询字符串中的token
+      const crmToken = this.$route.query.token || ''
+      const isLogin = this.$store.getters.isLogin
+      // 如果未登录，crmToken换token进行登录
+      if (!isLogin) {
+        // crmToken存在 则进行CRM登录
+        if (crmToken) {
+          try {
+            const res = await this.$store.dispatch('crmLogin', crmToken)
+            // 若登录成功，请求数据
+            if (res) {
+              this.getTableData()
+            }
+          } catch (err) {}
+        } else {
+          this.$message({ type: 'error', message: '缺失token，CRM登录失败' })
+        }
+      } else {
+        this.getTableData()
+      }
+    },
+    // 获取表格数据
     getTableData() {
       this.loading = true
       search
         .getBusinessList(this.nowPageNum, this.pageSize)
         .then((res) => {
           this.loading = false
-          this.tableData = res
-          console.log(res)
+          this.tableData = res.data
+          this.totalNum = res.total
         })
         .catch(() => {
           this.loading = false
         })
     },
+    // 跳转到商机详情
     handleToDetail(eid) {
-      this.$router.push({ name: 'TrademarkBusiness', query: { eid } })
+      this.$router.push({
+        name: 'TrademarkBusiness',
+        query: { eid, type: 'other' }
+      })
     },
-    handlePageChange() {}
+    // 处理页码选择
+    handlePageChange() {
+      this.crmLoginAndGetDataAsync()
+    }
   }
 }
 </script>
