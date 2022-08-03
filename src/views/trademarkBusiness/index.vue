@@ -71,6 +71,14 @@
                 复制
               </span>
             </div>
+            <el-button
+              v-if="busType === 'other'"
+              type="primary"
+              size="small"
+              @click="handleShowDialogPhone"
+            >
+              转CRM客户
+            </el-button>
           </div>
         </rowSingle>
         <rowSingle name="曾用名">
@@ -115,6 +123,12 @@
         ></tableDetail>
       </div>
     </div>
+    <dialogSelectPhone
+      v-if="showSelectPhone"
+      :eid="eid"
+      :phoneList="companyInfo.checked_phones"
+      @submit="handleCrmPhoneSubmit"
+    ></dialogSelectPhone>
   </div>
 </template>
 
@@ -122,11 +136,12 @@
 import rowSingle from './components/rowSingle.vue'
 import rowDouble from './components/rowDouble.vue'
 import tableDetail from './components/tableDetail.vue'
+import dialogSelectPhone from './components/dialogSelectPhone.vue'
 
 import search from '@/api/search'
 export default {
   name: 'TrademarkBusiness',
-  components: { rowSingle, rowDouble, tableDetail },
+  components: { rowSingle, rowDouble, tableDetail, dialogSelectPhone },
   data() {
     return {
       loading: false,
@@ -154,7 +169,8 @@ export default {
       customer_code: undefined,
       tableInfoList: [],
       activeTableInfo: [],
-      activeTableGenre: undefined
+      activeTableGenre: undefined,
+      showSelectPhone: false
     }
   },
   created() {
@@ -214,6 +230,12 @@ export default {
             this.loading = false
           })
       }
+    },
+    handleShowDialogPhone() {
+      this.showSelectPhone = true
+    },
+    handleCrmPhoneSubmit(flag) {
+      this.showSelectPhone = false
     }
   }
 }
@@ -253,7 +275,7 @@ export default {
         align-items: center;
         flex-wrap: wrap;
         .phone-item {
-          padding:5px 10px;
+          padding: 5px 10px;
           .phone-val {
             cursor: pointer;
             padding-right: 5px;

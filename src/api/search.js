@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import { method } from 'lodash'
 
 export default {
   // 商标检索
@@ -85,12 +86,12 @@ export default {
       params: { page, size }
     })
   },
-  // crmToken换token
-  crmToken2Token(crmToken) {
+  // 商机创建CRM客户
+  busCreateCustomer(eid, phones) {
     return request({
-      url: '/sns/crm',
-      method: 'get',
-      params: { crmToken }
+      url: '/business/create_customer',
+      method: 'post',
+      data: { eid, phones }
     })
   }
 }
