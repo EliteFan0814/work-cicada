@@ -8,9 +8,12 @@ const apikey = '592255fd1ca345118376d7bef6e19202'
 const service = axios.create({
   // baseURL: process.env.NODE_ENV === 'development' ? '/v1' : 'http://kong.d.gbicom.com/iknow/v1', // url = base url + request url
   baseURL:
+    // process.env.NODE_ENV === 'development'
+    //   ? '/v1'
+    //   : 'http://10.10.102.23:8010/v1', // url = base url + request url
     process.env.NODE_ENV === 'development'
-      ? '/v1'
-      : 'http://10.10.102.23:8010/v1', // url = base url + request url
+      ? 'https://zhiliao-api-test.ipfool.com/v1'
+      : 'https://zhiliao-api.ipfool.com', // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 10000 // request timeout
 })

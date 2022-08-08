@@ -16,11 +16,11 @@ export function wxQRLogin(params) {
   })
 }
 // crmToken换token 登录
-export function crmToken2Token(crmToken) {
+export function crmToken2Token(token) {
   return request({
     url: '/sns/crm',
     method: 'get',
-    params: { crmToken }
+    params: { token }
   })
 }
 export function getInfo(token) {

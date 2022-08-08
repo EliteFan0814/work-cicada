@@ -1,8 +1,13 @@
 export default {
   install: function(Vue) {
-    // 下载地址baseUrl
+    // 常量 下载地址baseUrl
     Object.defineProperty(Vue.prototype, '$downloadBaseUrl', {
-      value: 'http://10.10.102.23:8010/'
+      // value: 'http://10.10.102.23:8010/'
+      value: 'https://zhiliao-api.ipfool.com/'
+    })
+    // 常量 微信重定向地址源码（源码 编码请同时修改）
+    Object.defineProperty(Vue.prototype, '$redirectUriOriginal', {
+      value: 'http://iknow.d.gbicom.com/#/home'
     })
     // 生成随机数id
     Object.defineProperty(Vue.prototype, '$createRandomId', {
