@@ -33,10 +33,15 @@
         @selection-change="handleSelectionChange"
         @row-click="handleRowClick"
       >
-        <el-table-column show-overflow-tooltip type="selection">
-        </el-table-column>
-        <el-table-column show-overflow-tooltip prop="name" label="商标名称">
-        </el-table-column>
+        <el-table-column
+          show-overflow-tooltip
+          type="selection"
+        ></el-table-column>
+        <el-table-column
+          show-overflow-tooltip
+          prop="name"
+          label="商标名称"
+        ></el-table-column>
         <el-table-column show-overflow-tooltip label="图样">
           <template slot-scope="scope">
             <div class="pre-img-wrap">
@@ -64,14 +69,26 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column show-overflow-tooltip prop="reg_id" label="申请号">
-        </el-table-column>
-        <el-table-column show-overflow-tooltip prop="owner" label="持有人">
-        </el-table-column>
-        <el-table-column show-overflow-tooltip prop="agent" label="代理机构">
-        </el-table-column>
-        <el-table-column show-overflow-tooltip prop="addr" label="地址">
-        </el-table-column>
+        <el-table-column
+          show-overflow-tooltip
+          prop="reg_id"
+          label="申请号"
+        ></el-table-column>
+        <el-table-column
+          show-overflow-tooltip
+          prop="owner"
+          label="持有人"
+        ></el-table-column>
+        <el-table-column
+          show-overflow-tooltip
+          prop="agent"
+          label="代理机构"
+        ></el-table-column>
+        <el-table-column
+          show-overflow-tooltip
+          prop="addr"
+          label="地址"
+        ></el-table-column>
         <el-table-column show-overflow-tooltip prop="date_app" label="申请日">
           <template slot="header" slot-scope="scope">
             <div class="class-wrap">
@@ -131,8 +148,8 @@
             {{ item.category }}
           </div>
           <div class="r">
-            <span class="r-id">{{ item.reg_id }}</span
-            ><span class="r-status">{{ item.statusStr }}</span>
+            <span class="r-id">{{ item.reg_id }}</span>
+            <span class="r-status">{{ item.statusStr }}</span>
           </div>
         </div>
       </div>

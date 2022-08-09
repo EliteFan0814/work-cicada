@@ -1,9 +1,15 @@
+// api请求地址
+export const apiRequestBaseUrl =
+  process.env.NODE_ENV === 'development'
+    ? 'https://zhiliao-api-test.ipfool.com/v1'
+    : 'https://zhiliao-api.ipfool.com/v1'
+
 export default {
   install: function(Vue) {
     // 常量 下载地址baseUrl
     Object.defineProperty(Vue.prototype, '$downloadBaseUrl', {
       // value: 'http://10.10.102.23:8010/'
-      value: 'https://zhiliao-api.ipfool.com/'
+      value: apiRequestBaseUrl
     })
     // 常量 微信重定向地址源码（源码 编码请同时修改）
     Object.defineProperty(Vue.prototype, '$redirectUriOriginal', {
