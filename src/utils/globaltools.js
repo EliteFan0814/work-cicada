@@ -4,12 +4,7 @@ export const apiRequestBaseUrl =
     ? 'https://zhiliao-api-test.ipfool.com/v1'
     : 'https://zhiliao-api.ipfool.com/v1'
 
-// 微信授权登录重定向地址
-export const wxAuthLoginUrl =
-  process.env.NODE_ENV === 'development'
-    ? 'http://iknow.d.gbicom.com/#/home'
-    : 'http://iknow.d.gbicom.com/#/home'
-
+// 微信授权登录配置
 export const getWxLoginConfig = function() {
   // 开发环境微信授权登录配置文件
   const devWxLoginConfig = {
@@ -45,9 +40,9 @@ export default {
       value: apiRequestBaseUrl
     })
     // 常量 微信重定向地址源码（源码 编码请同时修改）
-    Object.defineProperty(Vue.prototype, '$redirectUriOriginal', {
-      value: wxAuthLoginUrl
-    })
+    // Object.defineProperty(Vue.prototype, '$redirectUriOriginal', {
+    //   value: wxAuthLoginUrl
+    // })
     // 生成随机数id
     Object.defineProperty(Vue.prototype, '$createRandomId', {
       value: function() {
