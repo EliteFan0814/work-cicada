@@ -259,7 +259,7 @@ export default {
             genre: this.searchClass
           })
           .then((res) => {
-            this.$downloadByUrl(this.$downloadBaseUrl, res)
+            this.$downloadByUrl(this.$downloadBaseUrl + '/', res)
           })
       }
     }

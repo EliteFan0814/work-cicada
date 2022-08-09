@@ -55,10 +55,10 @@ export default {
     return {
       routerList: [
         { name: '首页', router: 'Home' },
-        { name: '商标查询', router: 'TrademarkSearch' },
+        { name: '商标查询', router: 'TrademarkSearch' }
         // { name: '图形查询', router: 'Graphics' },
-        { name: '商标监控', router: 'TrademarkWatch' },
-        { name: '商标分析', router: 'TrademarkAnalyse' }
+        // { name: '商标监控', router: 'TrademarkWatch' },
+        // { name: '商标分析', router: 'TrademarkAnalyse' }
         // { name: '登录', router: 'Login' }
       ],
       activeRouter: 'Home'

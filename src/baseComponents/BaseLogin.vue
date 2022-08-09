@@ -66,6 +66,7 @@
 </template>
 
 <script>
+import { getWxLoginConfig } from '@/utils/globaltools'
 export default {
   name: 'BaseLogin',
   data() {
@@ -73,13 +74,10 @@ export default {
       activeName: 'first',
       account: '',
       password: '',
-      appid: 'wxdf237e7c63de94bb',
-      agentid: '1000032',
+      appid: '',
+      agentid: '',
       // 微信重定向地址源码（源码 编码请同时修改）
-      // redirect_uri_original: 'http://iknow.d.gbicom.com/#/home',
-      redirect_uri_original: this.$redirectUriOriginal,
-      // 微信重定向地址编码
-      // redirect_uri: 'http%3A%2F%2Fiknow.d.gbicom.com%2F%23%2Fhome',
+      redirect_uri_original: '',
       state: '',
       href: '',
       lang: 'zh',
@@ -98,6 +96,7 @@ export default {
     }
   },
   created() {
+    this.handleWxLoginConfig()
     this.redirectRoute = this.$store.state.redirectRoute
     // 如果页面重定向参数存在
     if (this.redirectRoute) {
@@ -110,6 +109,15 @@ export default {
     // this.getWxLoginImg()
   },
   methods: {
+    // 获取微信授权登录配置信息
+    handleWxLoginConfig() {
+      const { appid, agentid, redirect_uri_original, state } =
+        getWxLoginConfig()
+      this.appid = appid
+      this.agentid = agentid
+      this.redirect_uri_original = redirect_uri_original
+      this.state = state
+    },
     handleClose() {
       this.$emit('closeDialog', false)
       // this.$store.commit('SET_IS_LOGIN', true)

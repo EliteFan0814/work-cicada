@@ -4,6 +4,39 @@ export const apiRequestBaseUrl =
     ? 'https://zhiliao-api-test.ipfool.com/v1'
     : 'https://zhiliao-api.ipfool.com/v1'
 
+// 微信授权登录重定向地址
+export const wxAuthLoginUrl =
+  process.env.NODE_ENV === 'development'
+    ? 'http://iknow.d.gbicom.com/#/home'
+    : 'http://iknow.d.gbicom.com/#/home'
+
+export const getWxLoginConfig = function() {
+  // 开发环境微信授权登录配置文件
+  const devWxLoginConfig = {
+    appid: 'wxdf237e7c63de94bb',
+    agentid: '1000039',
+    // 微信重定向地址源码（源码 编码请同时修改）
+    redirect_uri_original: 'http://iknow-dev.d.gbicom.com/#/home',
+    state: '',
+    href: ''
+  }
+
+  // 生产环境微信授权登录配置文件
+  const productionWxLoginConfig = {
+    appid: 'wxdf237e7c63de94bb',
+    agentid: '1000032',
+    // 微信重定向地址源码（源码 编码请同时修改）
+    redirect_uri_original: 'http://iknow.d.gbicom.com/#/home',
+    state: '',
+    href: ''
+  }
+
+  if (process.env.NODE_ENV === 'development') {
+    return devWxLoginConfig
+  } else {
+    return productionWxLoginConfig
+  }
+}
 export default {
   install: function(Vue) {
     // 常量 下载地址baseUrl
@@ -13,7 +46,7 @@ export default {
     })
     // 常量 微信重定向地址源码（源码 编码请同时修改）
     Object.defineProperty(Vue.prototype, '$redirectUriOriginal', {
-      value: 'http://iknow.d.gbicom.com/#/home'
+      value: wxAuthLoginUrl
     })
     // 生成随机数id
     Object.defineProperty(Vue.prototype, '$createRandomId', {
