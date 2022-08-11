@@ -1,6 +1,15 @@
 <template>
   <div v-loading="loading" class="busget-list">
     <div class="table-wrap">
+      <div class="collect">
+        <el-button
+          type="primary"
+          icon="el-icon-star-off"
+          @click="showTake = true"
+        >
+          已领取商机
+        </el-button>
+      </div>
       <el-table
         border
         :data="tableData"
@@ -51,23 +60,28 @@
           :total="totalNum"
           :nowPageNum.sync="nowPageNum"
           :pageSize.sync="pageSize"
+          :pageSizeList="pageSizeList"
           @pageChange="handlePageChange"
         ></BasePagination>
       </div>
     </div>
+    <collectDialog v-if="showTake" @submit="handleClose"></collectDialog>
   </div>
 </template>
 
 <script>
 import search from '@/api/search'
-
+import collectDialog from './components/collectDialog.vue'
 export default {
+  components: { collectDialog },
   data() {
     return {
       loading: false,
+      showTake: false,
       totalNum: 0,
       nowPageNum: 1,
-      pageSize: 10,
+      pageSize: 50,
+      pageSizeList: [20, 50, 100, 300, 500],
       headerCellStyle: {
         backgroundColor: '#f3f9fc',
         textAlign: 'center',
@@ -128,6 +142,9 @@ export default {
     // 处理页码选择
     handlePageChange() {
       this.crmLoginAndGetDataAsync()
+    },
+    handleClose(flag) {
+      this.showTake = flag
     }
   }
 }
@@ -140,6 +157,10 @@ export default {
   .table-wrap {
     padding: 10px;
     background-color: #fff;
+    .collect {
+      padding: 0 0 10px;
+      text-align: right;
+    }
     .bus-list {
       padding: 5px;
       text-align: left;

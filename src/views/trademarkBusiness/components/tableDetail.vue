@@ -57,7 +57,7 @@
             <div
               v-if="genre !== 7"
               class="bus-detail"
-              @click="expandRow(scope.row)"
+              @click="expandRow(scope.row,scope.$index)"
             >
               <span>详情</span>
               <i

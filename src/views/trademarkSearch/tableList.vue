@@ -237,6 +237,7 @@ export default {
     sort(sortKey) {
       this.$emit('sort', sortKey)
     },
+    // 新页面打开
     handleRowClick(row) {
       const routeData = this.$router.resolve({
         name: 'TrademarkDetail',

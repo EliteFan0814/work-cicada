@@ -1,5 +1,4 @@
 import request from '@/utils/request'
-import { method } from 'lodash'
 
 export default {
   // 商标检索
@@ -82,6 +81,14 @@ export default {
   getBusinessList(page, size) {
     return request({
       url: '/business/find',
+      method: 'get',
+      params: { page, size }
+    })
+  },
+  // 已领取商机列表
+  getMyBusinessList(page, size) {
+    return request({
+      url: '/business/my_take_list',
       method: 'get',
       params: { page, size }
     })
