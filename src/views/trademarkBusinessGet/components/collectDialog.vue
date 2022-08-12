@@ -66,13 +66,19 @@ export default {
       totalNum: 0,
       nowPageNum: 1,
       pageSize: 10,
-      tableData: []
+      tableData: [],
+      headerCellStyle: {
+        backgroundColor: '#f3f9fc',
+        textAlign: 'center',
+        color: '#2b2d32'
+      }
     }
   },
   created() {
     this.getTableInfo()
   },
   methods: {
+    // 获取列表数据
     getTableInfo() {
       this.loading = true
       search
@@ -97,7 +103,9 @@ export default {
       })
       window.open(routeData.href, '_blank')
     },
-    handlePageChange() {}
+    handlePageChange() {
+      this.getTableInfo()
+    }
   }
 }
 </script>

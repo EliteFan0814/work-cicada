@@ -5,7 +5,7 @@
       border
       :data="tableData"
       style="width: 100%"
-      row-key="reg_id"
+      row-key="tm_id"
       :expand-row-keys="expands"
       :highlight-current-row="true"
       :header-cell-style="headerCellStyle"
@@ -57,12 +57,12 @@
             <div
               v-if="genre !== 7"
               class="bus-detail"
-              @click="expandRow(scope.row,scope.$index)"
+              @click="expandRow(scope.row, scope.$index)"
             >
               <span>详情</span>
               <i
                 class="iconfont icon-arrow-down"
-                :class="{ 'arrow-up': checkRowExpand(scope.row.reg_id) }"
+                :class="{ 'arrow-up': checkRowExpand(scope.row.tm_id) }"
               ></i>
             </div>
           </div>
@@ -216,9 +216,9 @@ export default {
   methods: {
     expandRow(row) {
       // this.$refs['detail-table'].toggleRowExpansion(row)
-      if (this.expands.indexOf(row.reg_id) < 0) {
+      if (this.expands.indexOf(row.tm_id) < 0) {
         this.expands = []
-        this.expands.push(row.reg_id)
+        this.expands.push(row.tm_id)
       } else {
         this.expands = []
       }

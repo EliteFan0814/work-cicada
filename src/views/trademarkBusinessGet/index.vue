@@ -134,10 +134,15 @@ export default {
     },
     // 跳转到商机详情
     handleToDetail(eid) {
-      this.$router.push({
+      const routeData = this.$router.resolve({
         name: 'TrademarkBusiness',
         query: { eid, type: 'other' }
       })
+      window.open(routeData.href, '_blank')
+      // this.$router.push({
+      //   name: 'TrademarkBusiness',
+      //   query: { eid, type: 'other' }
+      // })
     },
     // 处理页码选择
     handlePageChange() {
