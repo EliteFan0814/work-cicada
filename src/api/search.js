@@ -82,7 +82,8 @@ export default {
     return request({
       url: '/business/find',
       method: 'get',
-      params: { page, size }
+      params: { page, size },
+      timeout: 20000
     })
   },
   // 已领取商机列表
