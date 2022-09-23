@@ -17,10 +17,13 @@ import GlobalTools from '@/utils/globaltools'
 import * as echarts from 'echarts'
 import './permission' // permission control
 import _ from 'lodash'
+// json数据直接导出为excel
+import excel from 'vue-excel-export'
 Vue.use(VueClipboard)
 Vue.use(GlobalTools)
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.use(excel)
 Vue.prototype.$echarts = echarts
 const dayjs = require('dayjs')
 Vue.prototype._ = _

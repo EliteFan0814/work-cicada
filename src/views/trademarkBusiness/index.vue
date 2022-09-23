@@ -114,6 +114,15 @@
             </el-badge>
           </div>
         </div>
+        <export-excel
+          class="export-excel"
+          type="xls"
+          :data="exportExcelData"
+          :fields="exportExcelHeaderConfig"
+          :name="exportExcelName"
+        >
+          <el-button type="primary" size="mini">导出到Excel</el-button>
+        </export-excel>
       </div>
       <div class="table-detail">
         <tableDetail
@@ -144,6 +153,20 @@ export default {
   components: { rowSingle, rowDouble, tableDetail, dialogSelectPhone },
   data() {
     return {
+      exportExcelHeaderConfig: {
+        商机: 'description',
+        注册号: 'reg_id',
+        类别: 'category',
+        商标状态: 'status_text',
+        商标名称: 'name',
+        申请日期: 'date_app',
+        初审日期: 'date_pre',
+        注册日期: 'date_reg',
+        有效期: 'date_end',
+        代理机构: 'agent_name'
+      },
+      exportExcelData: [],
+      exportExcelName: undefined,
       loading: false,
       eid: undefined,
       busType: 'mine', // 商机类型
@@ -225,6 +248,18 @@ export default {
               temp.tips = item.count
               return temp
             })
+            // 将table数据综合到一起用于直接导出为excel
+            this.exportExcelData = []
+            this.exportExcelName = `${
+              this.companyInfo.name || this.companyInfo.name_en || ''
+            }_${this.$dayjs().format('YYYY-MM-DD')}`
+            this.tableInfoList.map((item) => {
+              const tempItem = item.brands || []
+              tempItem.map((item) => {
+                this.exportExcelData.push(item)
+              })
+            })
+            console.log(this.exportExcelName)
           })
           .catch(() => {
             this.loading = false
@@ -306,7 +341,7 @@ export default {
       .tab {
         cursor: pointer;
         background-color: #fcfcfc;
-        width: 12.5%;
+        width: 10%;
         border: 1px solid #ededed;
         padding: 15px 0 10px;
         transition: all 0.3s;
@@ -327,6 +362,9 @@ export default {
             color: #ffffff;
           }
         }
+      }
+      .export-excel {
+        margin-left: 5px;
       }
     }
     .table-detail {

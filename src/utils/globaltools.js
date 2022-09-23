@@ -28,6 +28,7 @@ export const getWxLoginConfig = function() {
 
   if (process.env.NODE_ENV === 'development') {
     return devWxLoginConfig
+    // return productionWxLoginConfig
   } else {
     return productionWxLoginConfig
   }
