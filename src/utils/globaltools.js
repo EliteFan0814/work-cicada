@@ -1,7 +1,9 @@
 // api请求地址
+// 测试api https://zhiliao-api-test.ipfool.com/v1
+// 正式api https://zhiliao-api.ipfool.com/v1
 export const apiRequestBaseUrl =
   process.env.NODE_ENV === 'development'
-    ? 'https://zhiliao-api-test.ipfool.com/v1'
+    ? 'https://zhiliao-api.ipfool.com/v1'
     : 'https://zhiliao-api.ipfool.com/v1'
 
 // 微信授权登录配置
@@ -27,14 +29,18 @@ export const getWxLoginConfig = function() {
   }
 
   if (process.env.NODE_ENV === 'development') {
-    return devWxLoginConfig
-    // return productionWxLoginConfig
+    // return devWxLoginConfig
+    return productionWxLoginConfig
   } else {
     return productionWxLoginConfig
   }
 }
 export default {
   install: function(Vue) {
+    // 常量 图片地址的baseUrl
+    Object.defineProperty(Vue.prototype, '$imgUrl', {
+      value: 'http://image.gbicdn.com/tmimage/'
+    })
     // 常量 下载地址baseUrl
     Object.defineProperty(Vue.prototype, '$downloadBaseUrl', {
       value: apiRequestBaseUrl

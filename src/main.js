@@ -28,7 +28,7 @@ Vue.prototype.$echarts = echarts
 const dayjs = require('dayjs')
 Vue.prototype._ = _
 Vue.prototype.$dayjs = dayjs
-Vue.prototype.$imgUrl = 'http://image.gbicdn.com/tmimage/'
+// Vue.prototype.$imgUrl = 'http://image.gbicdn.com/tmimage/'
 
 Vue.filter('$formatDate', (value) => {
   if (!value) return ''
