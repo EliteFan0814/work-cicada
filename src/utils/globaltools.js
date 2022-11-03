@@ -3,7 +3,7 @@
 // 正式api https://zhiliao-api.ipfool.com/v1
 export const apiRequestBaseUrl =
   process.env.NODE_ENV === 'development'
-    ? 'https://zhiliao-api.ipfool.com/v1'
+    ? 'https://zhiliao-api-test.ipfool.com/v1'
     : 'https://zhiliao-api.ipfool.com/v1'
 
 // 微信授权登录配置

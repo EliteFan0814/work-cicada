@@ -53,16 +53,14 @@
                   show-input
                   :show-input-controls="false"
                   @change="changeFilter"
-                >
-                </el-slider>
+                ></el-slider>
               </div>
               <SearchFilterItem
                 title="国际分类"
                 :show="true"
                 :dataList="category"
                 @changeFilter="changeFilter"
-              >
-              </SearchFilterItem>
+              ></SearchFilterItem>
               <SearchFilterItem
                 title="有效状态"
                 :dataList="status"
@@ -76,8 +74,7 @@
                 :dataList="ownerList"
                 @changeFilter="changeFilter"
                 @moreFilter="moreFilter"
-              >
-              </SearchFilterItem>
+              ></SearchFilterItem>
               <SearchFilterItem
                 title="代理机构"
                 :show="false"
@@ -86,8 +83,7 @@
                 :dataList="agentList"
                 @changeFilter="changeFilter"
                 @moreFilter="moreFilter"
-              >
-              </SearchFilterItem>
+              ></SearchFilterItem>
               <SearchFilterItem
                 title="持有人地址"
                 :show="false"
@@ -96,8 +92,7 @@
                 :dataList="addrList"
                 @changeFilter="changeFilter"
                 @moreFilter="moreFilter"
-              >
-              </SearchFilterItem>
+              ></SearchFilterItem>
             </div>
             <!-- <searchFilter></searchFilter> -->
           </div>
@@ -120,8 +115,7 @@
             @pageChange="pageChange"
             @sort="sort"
             @handleFocus="handleFocus"
-          >
-          </TableList>
+          ></TableList>
         </div>
       </div>
     </div>
@@ -155,6 +149,7 @@ export default {
       setSelect: new Date(),
       total: 0,
       tableData: [],
+      tableSliceData: [], // 前端自行处理的分页数据
       // 搜索类
       searchClass: 1,
       preCategory: [
@@ -272,70 +267,87 @@ export default {
         } else {
           this.$delete(this.searchKey, 'min_score')
         }
-        apiSearch
-          .getInfoByName(this.searchKey, this.searchClass)
-          .then((res) => {
-            this.setSelect = new Date()
-            this.category = this.preCategory
-            this.status = this.preStatus
-            this.selectedId = res.categories || []
-            if (res.data) {
-              this.tableData = res.data.map((item) => {
-                item.imgUrl = this.$imgUrl + item.reg_id + '.jpg'
-                item.date_app = item.date_app
-                  ? this.$dayjs(item.date_app).format('YYYY-MM-DD')
-                  : ' - '
-                item.date_reg = item.date_reg
-                  ? this.$dayjs(item.date_reg).format('YYYY-MM-DD')
-                  : ' - '
-                return item
-              })
-            } else {
-              this.tableData = []
-            }
-            // this.total = res.pager.total
-            this.total = res.total
-            if (res.agents) {
-              this.agentList = res.agents.map((item) => {
-                if (this.searchKey.agents.includes(item)) {
-                  return { label: item, value: item, selected: true }
-                } else {
-                  return { label: item, value: item, selected: false }
+        // 检测是否为智能查询，若是则前端自行分页展示
+        if (this.searchClass === 1 && this.searchKey.page > 1) {
+          this.loading = false
+          this.tableData = this.tableSliceData[this.searchKey.page - 1]
+        } else {
+          apiSearch
+            .getInfoByName(this.searchKey, this.searchClass)
+            .then((res) => {
+              if (!res) {
+                this.tableData = []
+                return
+              }
+              this.setSelect = new Date()
+              this.category = this.preCategory
+              this.status = this.preStatus
+              this.selectedId = res.categories || []
+              if (res.data) {
+                this.tableData = res.data.map((item) => {
+                  item.imgUrl = this.$imgUrl + item.reg_id + '.jpg'
+                  item.date_app = item.date_app
+                    ? this.$dayjs(item.date_app).format('YYYY-MM-DD')
+                    : ' - '
+                  item.date_reg = item.date_reg
+                    ? this.$dayjs(item.date_reg).format('YYYY-MM-DD')
+                    : ' - '
+                  return item
+                })
+                // 智能查询后端没做分页，前端自己处理分页
+                if (this.searchClass === 1) {
+                  this.tableSliceData = this.$sliceArray(
+                    this.tableData,
+                    this.searchKey.size
+                  )
+                  this.tableData = this.tableSliceData[this.searchKey.page - 1]
                 }
-              })
-            } else {
-              this.agentList = []
-            }
+              } else {
+                this.tableData = []
+              }
+              this.total = res.total
+              if (res.agents) {
+                this.agentList = res.agents.map((item) => {
+                  if (this.searchKey.agents.includes(item)) {
+                    return { label: item, value: item, selected: true }
+                  } else {
+                    return { label: item, value: item, selected: false }
+                  }
+                })
+              } else {
+                this.agentList = []
+              }
 
-            if (res.owners) {
-              this.ownerList = res.owners.map((item) => {
-                if (this.searchKey.owners.includes(item)) {
-                  return { label: item, value: item, selected: true }
-                } else {
-                  return { label: item, value: item, selected: false }
-                }
-              })
-            } else {
-              this.ownerList = []
-            }
-            if (res.addrs) {
-              this.addrList = res.addrs.map((item) => {
-                if (this.searchKey.addrs.includes(item)) {
-                  return { label: item, value: item, selected: true }
-                } else {
-                  return { label: item, value: item, selected: false }
-                }
-              })
-            } else {
-              this.addrList = []
-            }
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-          .finally(() => {
-            this.loading = false
-          })
+              if (res.owners) {
+                this.ownerList = res.owners.map((item) => {
+                  if (this.searchKey.owners.includes(item)) {
+                    return { label: item, value: item, selected: true }
+                  } else {
+                    return { label: item, value: item, selected: false }
+                  }
+                })
+              } else {
+                this.ownerList = []
+              }
+              if (res.addrs) {
+                this.addrList = res.addrs.map((item) => {
+                  if (this.searchKey.addrs.includes(item)) {
+                    return { label: item, value: item, selected: true }
+                  } else {
+                    return { label: item, value: item, selected: false }
+                  }
+                })
+              } else {
+                this.addrList = []
+              }
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+            .finally(() => {
+              this.loading = false
+            })
+        }
       } else {
         this.$store.commit('SET_IS_LOGIN_DIALOG', true)
       }
