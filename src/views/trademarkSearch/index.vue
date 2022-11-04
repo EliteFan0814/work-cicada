@@ -42,7 +42,7 @@
         <div class="search-detail">
           <div class="detail-top">
             <div class="common">
-              <div v-if="searchClass === 1" class="same-slide">
+              <!-- <div v-if="searchClass === 1" class="same-slide">
                 <div class="same-name">查询近似度：</div>
                 <el-slider
                   class="same-slider"
@@ -54,7 +54,7 @@
                   :show-input-controls="false"
                   @change="changeFilter"
                 ></el-slider>
-              </div>
+              </div> -->
               <SearchFilterItem
                 title="国际分类"
                 :show="true"
@@ -94,16 +94,7 @@
                 @moreFilter="moreFilter"
               ></SearchFilterItem>
             </div>
-            <!-- <searchFilter></searchFilter> -->
           </div>
-          <!-- <div class="detail-btm">
-            <div class="detail-btm-l">
-              <searchFilter></searchFilter>
-            </div>
-            <div class="detail-btm-r">
-              <searchFilter></searchFilter>
-            </div>
-          </div> -->
         </div>
         <div class="table">
           <TableList
@@ -262,11 +253,12 @@ export default {
     apiSearch() {
       if (this.$store.getters.isLogin) {
         this.loading = true
-        if (this.searchClass === 1) {
-          this.searchKey.min_score = this.slideValue
-        } else {
-          this.$delete(this.searchKey, 'min_score')
-        }
+        // 查询相似度参数
+        // if (this.searchClass === 1) {
+        //   this.searchKey.min_score = this.slideValue
+        // } else {
+        //   this.$delete(this.searchKey, 'min_score')
+        // }
         // 检测是否为智能查询，若是则前端自行分页展示
         if (this.searchClass === 1 && this.searchKey.page > 1) {
           this.loading = false
