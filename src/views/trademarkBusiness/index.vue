@@ -122,14 +122,6 @@
         >
           导出到Excel
         </el-button>
-        <!-- <export-excel
-          class="export-excel"
-          type="xls"
-          :data="exportExcelData"
-          :fields="exportExcelHeaderConfig"
-          :name="exportExcelName"
-        >
-        </export-excel> -->
       </div>
       <div class="table-detail">
         <tableDetail
@@ -161,61 +153,6 @@ export default {
   components: { rowSingle, rowDouble, tableDetail, dialogSelectPhone },
   data() {
     return {
-      // json_fields: {
-      //   'Complete name': 'name',
-      //   City: 'city',
-      //   Telephone: 'phone.mobile',
-      //   'Telephone 2': {
-      //     field: 'phone.landline',
-      //     callback: (value) => {
-      //       return `Landline Phone - ${value}`
-      //     }
-      //   }
-      // },
-      // json_data: [
-      //   {
-      //     name: 'Tony Peña',
-      //     city: 'New York',
-      //     country: 'United States',
-      //     birthdate: '1978-03-15',
-      //     phone: {
-      //       mobile: '1-541-754-3010',
-      //       landline: '(541) 754-3010'
-      //     }
-      //   },
-      //   {
-      //     name: 'Thessaloniki',
-      //     city: 'Athens',
-      //     country: 'Greece',
-      //     birthdate: '1987-11-23',
-      //     phone: {
-      //       mobile: '+1 855 275 5071',
-      //       landline: '(2741) 2621-244'
-      //     }
-      //   }
-      // ],
-      // json_meta: [
-      //   [
-      //     {
-      //       key: 'charset',
-      //       value: 'utf-8'
-      //     }
-      //   ]
-      // ],
-      exportExcelHeaderConfig: {
-        商机: 'description',
-        注册号: 'reg_id',
-        类别: 'category',
-        商标状态: 'status_text',
-        商标名称: 'name',
-        申请日期: 'date_app',
-        初审日期: 'date_pre',
-        注册日期: 'date_reg',
-        有效期: 'date_end',
-        代理机构: 'agent_name'
-      },
-      exportExcelData: [],
-      exportExcelName: undefined,
       loading: false,
       eid: undefined,
       busType: 'mine', // 商机类型
@@ -244,6 +181,7 @@ export default {
       activeTableGenre: undefined,
       showSelectPhone: false,
       exportData: {},
+      exportExcelName: undefined,
       exportExcelHeaderMap: {
         异议: {
           description: '商机',
@@ -342,25 +280,7 @@ export default {
           agent_name: '代理机构'
         }
       },
-      exportDataHeaders: {},
-      dataMap: {
-        基本信息: { 姓名: 'name', 性别: 'sex', 年龄: 'age' },
-        成绩: { 专业: 'class', 教师: 'teacher', 成绩: 'score' }
-      },
-      data: {
-        基本信息: [
-          { name: '李四', sex: 'nan', age: 12 },
-          { name: '李而四', sex: '女', age: 32 }
-        ],
-        成绩: [
-          { class: '计算机', teacher: 'Mrs wang', score: 90 },
-          { class: '计算机', teacher: 'Mrs wang', score: 70 }
-        ]
-      },
-      columnHeaders: {
-        基本信息: ['姓名', '性别', '年龄'],
-        成绩: ['专业', '教师', '成绩']
-      }
+      exportDataHeaders: {}
     }
   },
   created() {
@@ -471,8 +391,6 @@ export default {
               temp.tips = item.count
               return temp
             })
-            // 将table数据综合到一起用于直接导出为excel
-            this.exportExcelData = []
             // 导出的文件名
             this.exportExcelName = `${
               this.companyInfo.name || this.companyInfo.name_en || ''
