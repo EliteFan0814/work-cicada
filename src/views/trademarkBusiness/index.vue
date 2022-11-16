@@ -114,23 +114,21 @@
             </el-badge>
           </div>
         </div>
-        <export-excel
+        <el-button
+          class="export-excel"
+          type="primary"
+          size="mini"
+          @click="outputXlsxFile(exportData)"
+        >
+          导出到Excel
+        </el-button>
+        <!-- <export-excel
           class="export-excel"
           type="xls"
           :data="exportExcelData"
           :fields="exportExcelHeaderConfig"
           :name="exportExcelName"
         >
-          <el-button type="primary" size="mini">导出到Excel</el-button>
-        </export-excel>
-        <!-- <export-excel
-          class="export-excel"
-          :data="json_data"
-          :fields="json_fields"
-          worksheet="My Worksheet"
-          name="filename.xls"
-        >
-          Download Excel
         </export-excel> -->
       </div>
       <div class="table-detail">
@@ -151,6 +149,7 @@
 </template>
 
 <script>
+import * as XLSX from 'xlsx'
 import rowSingle from './components/rowSingle.vue'
 import rowDouble from './components/rowDouble.vue'
 import tableDetail from './components/tableDetail.vue'
@@ -243,7 +242,125 @@ export default {
       tableInfoList: [],
       activeTableInfo: [],
       activeTableGenre: undefined,
-      showSelectPhone: false
+      showSelectPhone: false,
+      exportData: {},
+      exportExcelHeaderMap: {
+        异议: {
+          description: '商机',
+          reg_id: '注册号',
+          category: '类别',
+          status_text: '商标状态',
+          name: '商标名称',
+          date_app: '申请日期',
+          date_pre: '初审日期',
+          date_reg: '注册日期',
+          date_end: '有效期',
+          agent_name: '代理机构'
+        },
+        无效: {
+          description: '商机',
+          reg_id: '注册号',
+          category: '类别',
+          status_text: '商标状态',
+          name: '商标名称',
+          date_app: '申请日期',
+          date_pre: '初审日期',
+          date_reg: '注册日期',
+          date_end: '有效期',
+          agent_name: '代理机构'
+        },
+        撤三: {
+          description: '商机',
+          reg_id: '注册号',
+          category: '类别',
+          status_text: '商标状态',
+          name: '商标名称',
+          date_app: '申请日期',
+          date_pre: '初审日期',
+          date_reg: '注册日期',
+          date_end: '有效期',
+          agent_name: '代理机构'
+        },
+        注册驳回: {
+          description: '商机',
+          reg_id: '注册号',
+          category: '类别',
+          status_text: '商标状态',
+          name: '商标名称',
+          date_app: '申请日期',
+          date_pre: '初审日期',
+          date_reg: '注册日期',
+          date_end: '有效期',
+          agent_name: '代理机构'
+        },
+        驳回复审: {
+          description: '商机',
+          reg_id: '注册号',
+          category: '类别',
+          status_text: '商标状态',
+          name: '商标名称',
+          date_app: '申请日期',
+          date_pre: '初审日期',
+          date_reg: '注册日期',
+          date_end: '有效期',
+          agent_name: '代理机构'
+        },
+        初审近似: {
+          description: '商机',
+          reg_id: '注册号',
+          category: '类别',
+          status_text: '商标状态',
+          name: '商标名称',
+          date_app: '申请日期',
+          date_pre: '初审日期',
+          date_reg: '注册日期',
+          date_end: '有效期',
+          agent_name: '代理机构'
+        },
+        续展: {
+          description: '商机',
+          reg_id: '注册号',
+          category: '类别',
+          status_text: '商标状态',
+          name: '商标名称',
+          date_app: '申请日期',
+          date_pre: '初审日期',
+          date_reg: '注册日期',
+          date_end: '有效期',
+          agent_name: '代理机构'
+        },
+        变更: {
+          description: '商机',
+          reg_id: '注册号',
+          category: '类别',
+          status_text: '商标状态',
+          name: '商标名称',
+          date_app: '申请日期',
+          date_pre: '初审日期',
+          date_reg: '注册日期',
+          date_end: '有效期',
+          agent_name: '代理机构'
+        }
+      },
+      exportDataHeaders: {},
+      dataMap: {
+        基本信息: { 姓名: 'name', 性别: 'sex', 年龄: 'age' },
+        成绩: { 专业: 'class', 教师: 'teacher', 成绩: 'score' }
+      },
+      data: {
+        基本信息: [
+          { name: '李四', sex: 'nan', age: 12 },
+          { name: '李而四', sex: '女', age: 32 }
+        ],
+        成绩: [
+          { class: '计算机', teacher: 'Mrs wang', score: 90 },
+          { class: '计算机', teacher: 'Mrs wang', score: 70 }
+        ]
+      },
+      columnHeaders: {
+        基本信息: ['姓名', '性别', '年龄'],
+        成绩: ['专业', '教师', '成绩']
+      }
     }
   },
   created() {
@@ -254,6 +371,62 @@ export default {
     this.getBusinessInfo()
   },
   methods: {
+    /**
+     * @param {array} exportData 表格数据
+     * @param {array} exportDataHeaders 表头信息
+     * @param {string} key excel sheet name
+     * @param {object} exportExcelHeaderMap 表头和数据的映射
+     */
+    transferData(exportData, exportDataHeaders, key, exportExcelHeaderMap) {
+      const content = []
+      // 把第一行的表头传入
+      content.push(exportDataHeaders)
+      // 遍历原始数据，把转换后的数据导入 content
+      exportData.forEach((item, index) => {
+        const arr = []
+        // 通过遍历表头获取对应的数据
+        exportDataHeaders.map((column) => {
+          let mapKey = ''
+          for (const tempKey in exportExcelHeaderMap[key]) {
+            if (exportExcelHeaderMap[key][tempKey] == column) {
+              mapKey = tempKey
+            }
+          }
+          arr.push(item[mapKey])
+        })
+        content.push(arr)
+      })
+      return content
+    },
+    // 导出为excel
+    outputXlsxFile(data) {
+      this.loading = true
+      try {
+        const sheetNames = []
+        const sheetsList = {}
+        const wb = XLSX.utils.book_new()
+        for (const key in data) {
+          sheetNames.push(key)
+          const columnHeader = this.exportDataHeaders[key] // 此处是每个sheet的表头
+          const temp = this.transferData(
+            data[key],
+            columnHeader,
+            key,
+            this.exportExcelHeaderMap
+          )
+          sheetsList[key] = XLSX.utils.aoa_to_sheet(temp)
+          // sheetsList[key]['!cols'] = wscols
+        }
+        // 每个sheet的名字
+        wb.SheetNames = sheetNames
+        // 每个sheet的数据
+        wb.Sheets = sheetsList
+        XLSX.writeFile(wb, this.exportExcelName + '.xlsx')
+        this.loading = false
+      } catch (err) {
+        this.loading = false
+      }
+    },
     // 复制
     handleCopy(copyValue) {
       this.$copyText(copyValue)
@@ -300,16 +473,20 @@ export default {
             })
             // 将table数据综合到一起用于直接导出为excel
             this.exportExcelData = []
+            // 导出的文件名
             this.exportExcelName = `${
               this.companyInfo.name || this.companyInfo.name_en || ''
             }_${this.$dayjs().format('YYYY-MM-DD')}`
+            // 生成表头映射 生成所需的表数据格式
             this.tableInfoList.map((item) => {
-              const tempItem = item.brands || []
-              tempItem.map((item) => {
-                this.exportExcelData.push(item)
-              })
+              this.exportData[item.name] = item.brands
+              const tempArr = []
+              const tempSheetMapObj = this.exportExcelHeaderMap[item.name]
+              for (const sheetName in tempSheetMapObj) {
+                tempArr.push(tempSheetMapObj[sheetName])
+              }
+              this.exportDataHeaders[item.name] = tempArr
             })
-            console.log(this.exportExcelName)
           })
           .catch(() => {
             this.loading = false
